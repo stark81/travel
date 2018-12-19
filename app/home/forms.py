@@ -59,7 +59,7 @@ class LoginForm(FlaskForm):
         label="邮箱",
         validators=[
             DataRequired("邮箱不能为空!"),
-            Email("邮箱地址不正确")
+            Email("邮箱地址不正确"),
         ],
         render_kw={
             "placeholder":"请输入邮箱"
@@ -71,6 +71,7 @@ class LoginForm(FlaskForm):
             DataRequired("密码不能为空!")
         ],
         render_kw={
+            "type":"password",
             "placeholder":"请输入密码"
         }
     )
