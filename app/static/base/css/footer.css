@@ -1,0 +1,56 @@
+.footer-top{
+    height: 160px;
+    padding-top: 40px;
+    background: #333;
+}
+.boxul{
+    float: left;
+    margin-left: 50px;
+}
+
+.boxli{
+    float: left;
+    margin-right: 50px;
+    
+}
+.boxli a:hover{
+    color: aqua;
+}
+
+.boxli li{
+    line-height: 30px;
+    color: white;
+}
+.boxli a{
+    color: white;
+}
+
+.erweima{
+    float: right; 
+    width: 400px;
+}
+.erweima div{
+    margin-top:20px;
+    float: left;
+}
+.erweima p{
+    color: white;
+    line-height: 30px;
+}
+.erweima img{
+    float: left;
+    margin-left:30px; 
+    width: 120px;
+}
+.footer-bottom{
+    height: 80px;
+    background: #222;
+    line-height: 80px;
+    text-align: center;
+}
+.footer-bottom p{
+    color: white;
+}
+.footer-bottom p a{
+    color: white;
+}

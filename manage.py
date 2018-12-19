@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 from app.models import *
 from app import app,db
 from flask_script import Manager,Shell

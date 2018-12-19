@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -15,5 +14,10 @@ class User(db.Model):
     # uinfo = db.Column(db.text)
     uface = db.Column(db.String(255))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
-    
+
+    def __init__(self,uname,uemail,upwd):
+        '''uname,uemail,upwd'''
+        self.uname = uname
+        self.uemail = uemail
+        self.upwd = upwd
 

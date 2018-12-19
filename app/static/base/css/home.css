@@ -1,0 +1,39 @@
+#header{
+    height: 80px;
+    border: 1px solid #ddd;
+    box-shadow: 0 3px 10px #aaa;
+}
+.logo{
+    float: left;
+}
+
+.head-ul{
+   float: left;
+   margin-left: 50px; 
+}
+.head-ul li{
+    float: left;
+    margin-left:50px;
+    line-height: 80px;  
+}
+.head-ul a:hover{
+    color: aqua;
+}
+.head-ul a:active{
+    outline: none
+}
+.search{
+    float: left;
+    margin-left: 50px;
+}
+.search input{
+    max-width: 250px;
+    width: 200px;
+    height: 30px;
+    margin: 0 20px;
+    margin-top: 25px;
+    line-height: center;
+}
+.search input:focus{
+    outline: none;
+}

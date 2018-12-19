@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>悦游</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/home.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/common.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/footer.css')}}">
+</head>
+<body>
+    <div id="header">
+        <div class="inner">
+            <div class="logo">
+                <a href="/">
+                    <img src="static/base/image/logo.png" style="height:60px;margin-top: 10px;">
+                </a>
+            </div>
+            <!-- 导航栏 -->
+            <ul class="head-ul">
+                <li><a href="/">旅游圈</a></li>
+                <li><a href="/">全部景点</a></li>
+                <li><a href="/">全部游记</a></li>
+                <li><a href="/">关于我们</a></li>
+                <!-- 搜索框 -->
+                <form class="search" action="search" method="POST">
+                    <input type="search" name="searchinfo" 
+                    placeholder="请输入搜索内容">
+                </form>
+            </ul>  
+            <ul class="head-ul" style="float:right;margin-right:50px;">
+                {% if username %}
+                    <li style="float:right"><a href="/">退出</a></li>
+                {% else %}
+                    <li style="float:right"><a href="/register">注册</a> | <a href="/login">登录</a></li>
+                {% endif %}
+            </ul>   
+        </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    {% include 'base/footer.html' %}
+</body>
+</html>
