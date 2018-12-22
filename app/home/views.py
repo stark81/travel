@@ -13,15 +13,14 @@ def index():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(uemail=form.data["uemail"])
-        print(user)
+        user = User.query.filter_by(uemail=form.data["uemail"]).first()
         if not user:
             flash("邮箱未注册","err")
             return redirect(url_for("home.login"))
-        # if not user.check_password_hash(form.upwd["upwd"]):
-        #     flash("密码不正确","err")
-        #     return redirect(url_for("home.login"))
-        # return redirect(url_for("home.index"))
+        if check_password_hash(user.upwd,form.data["upwd"]) is False:
+            flash("密码不正确","err")
+            return redirect(url_for("home.login"))
+        return redirect(url_for("home.index"))
     return render_template("base/login.html",form=form)
 
 @home.route("/register/",methods=["GET","POST"])

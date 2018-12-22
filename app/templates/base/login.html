@@ -16,10 +16,6 @@
             {% for msg in get_flashed_messages(category_filter=["err"]) %}
                 <p class="login-box-msg" style="color: red">{{ msg }}</p>
             {% endfor %}
-            {% for msg in get_flashed_messages(category_filter=["ok"]) %}
-                <p class="login-box-msg">{{ msg }},请去<a href="\login\">登录！</a></p>
-            {% endfor %}
-            <div style="height:20px"></div>
             {% for err in form.uemail.errors %}
                 <ul class="errors">
                     <li>{{ err }}</li>
@@ -39,11 +35,6 @@
             </div>
             <div style="height:20px"></div>
             <div style="height:20px"></div>
-            {% for msg in get_flashed_messages(category_filter=["err"]) %}
-                <ul class="errors">
-                    <li>{{ msg }}</li>
-                </ul>
-            {% endfor %}
             <div class="form-control">
                 {{ form.csrf_token }}
                 {{ form.submit }}

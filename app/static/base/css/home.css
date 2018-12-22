@@ -9,11 +9,11 @@
 
 .head-ul{
    float: left;
-   margin-left: 50px; 
+   margin-left: 30px; 
 }
 .head-ul li{
     float: left;
-    margin-left:50px;
+    margin-left:30px;
     line-height: 80px;  
 }
 .head-ul a:hover{
@@ -24,7 +24,7 @@
 }
 .search{
     float: left;
-    margin-left: 50px;
+    margin-left: 30px;
 }
 .search input{
     max-width: 250px;

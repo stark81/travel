@@ -21,3 +21,5 @@ class User(db.Model):
         self.uemail = uemail
         self.upwd = upwd
 
+    
+
