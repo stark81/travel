@@ -5,35 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>悦游</title>
-    <link rel="stylesheet" href="{{url_for('static',filename='base/css/home.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/index.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/common.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/footer.css')}}">
+    <script src="{{url_for('static',filename='base/js/jquery-1.11.1.min.js')}}"></script>
+    <script src="{{url_for('static',filename='base/js/kxbdSuperMarquee.js')}}"></script>
+    <script src="{{url_for('static',filename='base/js/index.js')}}"></script>
 </head>
 <body>
     <div id="header">
         <div class="inner">
             <div class="logo">
                 <a href="/">
-                    <img src="static/base/image/logo.png" style="height:60px;margin-top: 10px;">
+                    <img src="{{url_for('static',filename='base/image/logo.png')}}" style="height:60px;margin-top: 10px;">
                 </a>
             </div>
             <!-- 导航栏 -->
-            <ul class="head-ul">
-                <li><a href="/">旅游圈</a></li>
+            <ul class="leftNav">
+                <li class="currentLi"><a href="/">旅游圈</a></li>
                 <li><a href="/">全部景点</a></li>
                 <li><a href="/">全部游记</a></li>
                 <li><a href="/">关于我们</a></li>
                 <!-- 搜索框 -->
-                <form class="search" action="search" method="POST">
-                    <input type="search" name="searchinfo" 
-                    placeholder="请输入搜索内容">
+                <form action="/search" method="POST">
+                    <input type="text" name="search" placeholder="请输入搜索内容">
                 </form>
             </ul>  
-            <ul class="head-ul" style="float:right;margin-right:50px;">
-                {% if username %}
-                    <li style="float:right"><a href="/">退出</a></li>
+            <ul class="rightNav">
+                {% if session['user_name'] %}
+                    <li><a href="">[ {{session["user_name"]}} ]</a></li>
+                    <li><a href="/logout/">退出</a></li>
                 {% else %}
-                    <li style="float:right"><a href="/register">注册</a> | <a href="/login">登录</a></li>
+                    <li>
+                        <a href="/login/">登录</a>
+                        |
+                        <a href="/register/">注册</a>
+                    </li>
                 {% endif %}
             </ul>   
         </div>

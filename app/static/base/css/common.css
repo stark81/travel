@@ -1,8 +1,9 @@
-body,h1,p,ul,li,ol{
-    padding: 0;
-    margin: 0;
+*{margin:0;padding:0;}
+body{
+    color: #666;
+    font-size: 16px;
 }
-ul,li{
+li{
     list-style: none;
 }
 a{
@@ -10,6 +11,6 @@ a{
     color: #666;
 }
 .inner{
-    width: 80%;
+    width: 1200px;
     margin: 0 auto;
 }

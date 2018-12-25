@@ -1,11 +1,29 @@
 {% extends 'base/home.html' %}
 
 {% block content %}
-
-    <!-- 游记 -->
-    <div id="travels">
-        <ul>
-            <li></li>
-        </ul>
+    <!-- 导入banner -->
+    {% include 'base/banner.html' %}
+    <!-- 主体内容 -->
+    <div id="main">
+        <div class="inner">
+            <!-- 最新游记 -->
+            <div class="travels">
+                <div class="title">
+                    <h3>最新游记</h3>
+                    <a href="">查看更多 ></a>
+                </div>
+                <div class="travelsItem">
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- 返回顶部按钮 -->
+    <div id="writeTravels">
+        <a href="">写游记</a>
+        <div class="go-top">
+            <p>返回顶部</p>
+        </div>
     </div>
 {% endblock %}

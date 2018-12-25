@@ -2,6 +2,9 @@
     height: 160px;
     padding-top: 40px;
     background: #333;
+    border-top: 5px #00a6c9 solid;
+    margin-top: 40px;
+    /* background: rgba(0, 166, 201, 0.6); */
 }
 .boxul{
     float: left;
@@ -14,7 +17,7 @@
     
 }
 .boxli a:hover{
-    color: aqua;
+    color: #00a6c9;
 }
 
 .boxli li{
@@ -44,7 +47,8 @@
 }
 .footer-bottom{
     height: 80px;
-    background: #222;
+    background: rgba(0, 166, 201, 1);
+    /* background: #ddd; */
     line-height: 80px;
     text-align: center;
 }
