@@ -1,0 +1,150 @@
+/* 头部区 */
+#header{
+    height: 100px;
+    border-bottom: 1px #ddd solid;
+    box-shadow: 0 1px 4px #ddd;
+    border-top: 1px solid transparent;
+}
+.logo{
+    height: 80px;
+    float: left;
+    margin-top: 10px;
+}
+
+#header ul{
+    float: left;
+    line-height: 94px;
+}
+#header form{
+    float: left;
+    margin-left: 40px;
+}
+#header form>input{
+    height: 36px;
+    margin-top: 30px;
+    width: 250px;
+    border: 1px solid #7d7d7d;
+    font-size: 14px;
+    padding-left: 12px;
+    border-radius: 10px;
+    outline: none;
+}
+#header .leftNav{
+    float: left;
+    margin-left: 120px;
+
+}
+#header .rightNav{
+    float: right;
+}
+#header ul>li{
+    float: left;
+    margin-left: 20px;
+    padding: 0 10px;
+}
+#header .leftNav>li:hover{
+    border-bottom: 6px solid #00a6c9;
+}
+#header .leftNav>li:hover a{
+    color: #00a6c9;
+}
+#header .leftNav .currentLi{
+    border-bottom: 6px solid #00a6c9;
+}
+#header .leftNav .currentLi>a{
+    color: #00a6c9;
+}
+
+/* banner轮播图 */
+#banner{
+    position:relative;
+    /* margin-bottom: 40px; */
+}
+#big-box{
+    /* width:100%; */
+    margin: 0 auto;
+	overflow:hidden;
+    }
+
+#big-box ul{
+	width:5000px;
+	}
+#big-box li{
+	float:left;
+    }
+#big-boxNav{
+	width:72px;
+	height:18px;
+	position:absolute;
+	right:5%;
+	bottom:10%;
+	overflow:hidden;
+	z-index:1
+	}
+#big-boxNav li{
+	width:16px;
+	height:16px;
+	margin-right:8px;
+    background-color:#fff;
+    border: 1px #00a6c9 solid;
+	float:left;
+	border-radius:50%;
+	text-indent:10000px;
+	cursor:pointer;
+	}
+#big-boxNav .navOn{
+	background-color:#00a6c9;
+    }
+
+/* 主体区域 */
+#main{
+    padding-top: 55px;
+}
+/* 最新游记 */
+.travels{
+    height: 600px;
+    border:1px red solid;
+}
+.travels .title{
+    height: 30px;
+    line-height: 30px;
+    border: 1px red solid;
+    border-left: 5px #00a6c9 solid;
+    margin-bottom: 26px;
+}
+.travels .title>h3{
+    float: left;
+    font-size: 20px;
+    margin-left: 10px;
+}
+.travels .title>a{
+    float: right;
+    font-size: 16px;
+}
+
+
+
+
+/* 返回顶部 */
+#writeTravels{
+    position: fixed;
+    width: 100px;
+    padding:10px 0;
+    border-radius: 10px;
+    color: white;
+    line-height: 40px;
+    text-align: center;
+    background: #333;
+    right: 10px;
+    bottom: 150px;
+    opacity:0.7;
+    transition: 0.6s;
+    z-index: 100;
+}
+#writeTravels a{
+    color: white;
+}
+#writeTravels:hover{
+    opacity: 1;
+    cursor: pointer;
+}
