@@ -7,6 +7,7 @@
     <title>悦游-后台管理系统</title>
     <link rel="stylesheet" href="/static/admin/css/admin.css">
     <link rel="stylesheet" href="/static/admin/css/common.css">
+    <link rel="stylesheet" href="/static/admin/css/index.css">
     <script src="/static/admin/js/jquery-1.11.1.min.js"></script>
     <script src="/static/admin/js/kxbdSuperMarquee.js"></script>
     <script src="/static/admin/js/admin.js"></script>
@@ -14,19 +15,20 @@
 </head>
 <body>
     <!-- 左侧开始 -->
-    <div id="left">
-        <div class="logo">
-            <img src="/static/admin/image/admin_03.png">
-            <p>后台管理系统</p>
-        </div>
-        <p>菜单管理</p>
-        <!-- 左侧导航开始 -->
-        {% include "admin/nav.html" %}
-    </div>
+    
     <!-- 左侧栏结束 -->
 
     <!-- 右侧 -->
     <div id="right">
+        <div id="left">
+            <div class="logo">
+                <img src="/static/admin/image/admin_03.png">
+                <p>后台管理系统</p>
+            </div>
+            <p>菜单管理</p>
+            <!-- 左侧导航开始 -->
+            {% include "admin/nav.html" %}
+        </div>
         <!-- 右侧头部 -->
         <div class="top">
             <div class="headshot">
@@ -36,13 +38,19 @@
         </div>
         <!-- 右侧内容 -->
         <div class="content">
-            <h1>悦游后台管理系统</h1>
-            <div class="breadcrumb"></div>
-            {% block content %}
-            {% endblock %}
+            <div class="contentTitle">
+                <h1>悦游后台管理系统</h1>
+                <div class="breadcrumb"></div>
+            </div>
+            <div class="main">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
         <!-- 右侧底部 -->
-        <div class="bottom"></div>
+        <div class="bottom">
+            <p>版权归<a href=""> 悦游 </a>所有</p>
+        </div>
     </div>
 </body>
 </html>

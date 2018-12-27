@@ -1,0 +1,8 @@
+.indexLeft{
+    width: 44%;
+    float: left;
+}
+.indexRight{
+    float: right;
+    width: 50%;
+}

@@ -1,5 +1,11 @@
 $(function(){
     $(".navTitle").click(function(){
+        $(".navTitle").next().css({
+            "height":"0",
+            "overflow":"hidden",
+            "padding":"0",
+            "transition":"all 0.6s",
+        });
         $(this).next().css({
             "visibility":"visible",
             "height":"auto",
@@ -41,7 +47,7 @@ $(function(){
     });
     var addr1 = $(".current").find("p").html();
     var addr2 = $(".current").next().find("p").html()
-    var addr = addr1 + " > " + addr2;
+    var addr = "当前位置 : " + addr1 + " > " + "<span>" + addr2 + "</span>";
     $(".breadcrumb").html(addr)
 
 
