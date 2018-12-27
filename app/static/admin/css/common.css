@@ -1,0 +1,20 @@
+/* 公共样式 */
+*{
+    padding: 0;
+    margin: 0;
+}
+html{
+    font-size: 100px;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+    background: #ddd;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #ccc;
+}

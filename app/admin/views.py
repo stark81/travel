@@ -17,6 +17,10 @@ def admin_login(f):
     return decorated_function
 
 @admin.route("/")
-@admin_login
+# @admin_login
 def admin_index():
-    return "这里是后台首页"
+    return render_template("admin/index.html")
+
+@admin.route("/list")
+def user_list():
+    return render_template("admin/list.html")
