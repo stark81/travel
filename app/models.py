@@ -44,3 +44,6 @@ class Area(db.Model):
     introduce = db.Column(db.Text)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+class Suggest(db.Model):
+    __tablename__ = "suggestion"
+    __table_args__ = {"useexisting": True}

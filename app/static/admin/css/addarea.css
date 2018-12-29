@@ -1,5 +1,5 @@
 .addArea .form-group{
-    margin-bottom: 0.1rem;
+    padding-bottom: 0.1rem;
 }
 
 .addArea .form-group>p{
@@ -19,5 +19,66 @@
     outline: none;
 }
 .addArea .form-group>input[type="radio"]{
-    margin-right: 0.1rem;
+    margin: 0.08rem 0.1rem 0.08rem 0;
+}
+
+.addArea .form-group>textarea{
+    width: 100%;
+    min-height: 1.2rem;
+    box-sizing: border-box;
+    margin: 0.06rem 0 0 0;
+    outline: none;
+    font-size: 0.16rem;
+    border-radius: 0.06rem;
+    line-height: 0.2rem;
+    padding: 0.08rem 0.12rem;
+    resize: none;
+}
+
+.addArea .form-group>input[type="submit"]{
+    height: 0.36rem;
+    width: 0.8rem;
+    border-radius: 0.06rem;
+    background: #00a6c9;
+    color: white;
+    border:none;
+    font-size: 0.15rem;
+    outline: none;
+}
+.addArea .form-group>input[type="submit"]:hover{
+    cursor: pointer;
+}
+
+.addArea .form-group .err{
+    color: red;
+    font-size: 0.14rem;
+    margin-bottom: 0.04rem;
+}
+
+.alert{
+    width: 100%;
+    height: 0.74rem;
+    box-sizing: border-box;
+    padding:0 0.1rem;
+    border-radius: 0.06rem;
+    color: white;
+}
+.alert-false{
+    background: #e27b27;
+}
+.alert-success{
+    background: #00a6c9;
+}
+.alert>h4{
+    font-size: 0.18rem;
+    line-height: 0.4rem;
+}
+
+.close{
+    border: 0;
+    margin-top: 0.06rem;
+    background: transparent;
+    float: right;
+    font-size: 0.2rem;
+    color: white;
 }

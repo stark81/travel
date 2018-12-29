@@ -1,6 +1,7 @@
 .userList .table>li{
     height: 0.4rem;
     line-height: 0.4rem;
+    text-align: center;
     border-bottom: 1px #ddd solid;
 }
 
@@ -36,4 +37,20 @@
     height: 0.2rem;
     padding: 0 0.06rem;
     border: 1px #ddd solid;
+}
+.userList .table>li>div>a{
+    padding: 0 0.1rem;
+    height: 0.26rem;
+    font-size: 0.12rem;
+    margin-top: 0.07rem;
+    color: white;
+    line-height: 0.26rem;
+    border-radius: 0.04rem;
+    display: inline-block;
+}
+.userList .table>li>div .edit{
+    background: #00a6c9;
+}
+.userList .table>li>div .del{
+    background: #e27b27;
 }

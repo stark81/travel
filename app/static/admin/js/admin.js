@@ -28,14 +28,21 @@ $(function(){
             $(this).css({"color":"white"});
             $(this).find("div").css({"background":"white"})
             $(this).parents(".navHidden").prev().addClass('current');
+            var addr1 = $(".current").find("p").html();
+            var addr2 = $(this).find("p").html()
+            var addr = "当前位置 : " + addr1 + " > " + "<span>" + addr2 + "</span>";
+            $(".breadcrumb").html(addr);
         }
     });
     //以下为截取url的方法
     function returnUrl(href){
-        var number=href.lastIndexOf("/");
-        suburl = href.substring(number+1).split("?")[0];
-        // return href.substring(number+1);
-        return suburl;
+        // var number=href.lastIndexOf("/");
+        // suburl = href.substring(number+1).split("?")[0];
+        // // return href.substring(number+1);
+        // return suburl;
+        var number = href.lastIndexOf("/admin")
+        var subrul = href.substring(number+1).split("/")[2];
+        return subrul;
     }
     function returnFileName(href){
         var number1=href.lastIndexOf("/");
@@ -47,10 +54,18 @@ $(function(){
         "height":"auto",
         "padding":"0.1rem 0",
     });
-    var addr1 = $(".current").find("p").html();
-    var addr2 = $(".current").next().find("p").html()
-    var addr = "当前位置 : " + addr1 + " > " + "<span>" + addr2 + "</span>";
-    $(".breadcrumb").html(addr)
+    // var addr1 = $(".current").find("p").html();
+    // var addr2 = $(".current").next().find("p").html()
+    // var addr = "当前位置 : " + addr1 + " > " + "<span>" + addr2 + "</span>";
+    // $(".breadcrumb").html(addr);
 
+    // 添加地区成功或失败后,点击x关闭弹框
+    $(".close").click(function(){
+        $(this).parent().css({
+            "height":"0",
+            "overflow":"hidden",
+            "transition":"all 0.2s"
+        })
+    });
 
 })

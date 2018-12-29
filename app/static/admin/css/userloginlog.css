@@ -1,6 +1,7 @@
 .userloginlog .table>li{
     height: 0.4rem;
     line-height: 0.4rem;
+    text-align: center;
     border-bottom: 1px #ddd solid;
 }
 
