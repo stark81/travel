@@ -11,9 +11,8 @@ class User(db.Model):
     upwd = db.Column(db.String(100))
     uemail = db.Column(db.String(100),unique=True)
     uphone = db.Column(db.String(11),unique=True)
-    # uinfo = db.Column(db.text)
-    uface = db.Column(db.String(255))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
+    isActive = db.Column(db.Boolean,default=True)
     userlogs = db.relationship('Userlog', backref='user')
 
     def __init__(self,uname,uemail,upwd):
@@ -21,6 +20,8 @@ class User(db.Model):
         self.uname = uname
         self.uemail = uemail
         self.upwd = upwd
+    def __repr__(self):
+        return "<User %r>" % self.uname
     
 class Userlog(db.Model):
     __tablename__ = "userlog"
@@ -33,5 +34,13 @@ class Userlog(db.Model):
     def __init__(self,user_id,ip):
         self.user_id = user_id
         self.ip = ip
-    
+
+class Area(db.Model):
+    __tablename__ = "area"
+    __table_args__ = {"useexisting": True}
+    id = db.Column(db.Integer,primary_key=True)
+    areaName = db.Column(db.String(100))
+    is_recommend = db.Column(db.Boolean,default=None)
+    introduce = db.Column(db.Text)
+    addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 

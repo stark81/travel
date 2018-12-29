@@ -106,6 +106,7 @@
 /* 右边样式开始 */
 #right{
     width: 100%;
+    min-width: 9.7rem;
     min-height: 100%;
     position: relative;
 }
@@ -168,10 +169,10 @@
 }
 .content .main>div{
     border-radius: 0.1rem;
-    font-size: 0.16rem;
+    font-size: 0.15rem;
     line-height: 0.24rem;
     background: white;
-    padding:0 0.1rem 0.1rem 0.1rem;
+    padding:0 0.1rem 0.12rem 0.1rem;
     color: #666;
     border-top: 0.05rem #00a6c9 solid;
 }
@@ -203,3 +204,4 @@
 .bottom>p>a{
     color: #00a6c9;
 }
+

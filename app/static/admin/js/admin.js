@@ -33,7 +33,9 @@ $(function(){
     //以下为截取url的方法
     function returnUrl(href){
         var number=href.lastIndexOf("/");
-        return href.substring(number+1);
+        suburl = href.substring(number+1).split("?")[0];
+        // return href.substring(number+1);
+        return suburl;
     }
     function returnFileName(href){
         var number1=href.lastIndexOf("/");

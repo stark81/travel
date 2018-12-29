@@ -6,7 +6,7 @@ from flask import Blueprint
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config["SECRET_KEY"] = 'mrsoft'
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:123456@127.0.0.1:3306/travel"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@127.0.0.1:3306/travel"
 track_modifications = app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', True)
 db = SQLAlchemy(app)
 

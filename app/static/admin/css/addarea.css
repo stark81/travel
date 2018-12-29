@@ -1,0 +1,23 @@
+.addArea .form-group{
+    margin-bottom: 0.1rem;
+}
+
+.addArea .form-group>p{
+    font-weight: bold;
+}
+
+.addArea .form-group>input[type="text"]{
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0.06rem 0;
+    height: 0.36rem;
+    border: 1px #bbb solid;
+    padding-left: 0.12rem;
+    border-radius: 0.06rem;
+    font-size: 0.14rem;
+    color: #666;
+    outline: none;
+}
+.addArea .form-group>input[type="radio"]{
+    margin-right: 0.1rem;
+}

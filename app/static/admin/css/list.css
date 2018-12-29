@@ -1,0 +1,39 @@
+.userList .table>li{
+    height: 0.4rem;
+    line-height: 0.4rem;
+    border-bottom: 1px #ddd solid;
+}
+
+.userList .table .tableTitle{
+    font-weight: bold;
+}
+.userList .table>li>div{
+    /* float: left; */
+    height: 0.4rem;
+    overflow: hidden;
+    font-size: 0.15rem;
+    margin-right: 0.2rem;
+}
+
+.userList .table>li{
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    /* border-spacing: 10px; Optional */
+ }
+ .userList .table>li>div{
+    display: table-cell; 
+ }
+
+.userList .table>li .off{
+    color: red;
+}
+.userListNav{
+    height: 0.2rem;
+}
+.userListNav>div{
+    float: left;
+    height: 0.2rem;
+    padding: 0 0.06rem;
+    border: 1px #ddd solid;
+}
