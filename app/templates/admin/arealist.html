@@ -4,31 +4,31 @@
 {% block content %}
     <div class="userList">
         <h1>地区列表</h1>
-        <ul class="table">
-            <li class="tableTitle">
-                <div>编号</div>
-                <div>地区名</div>
-                <div>推荐</div>
-                <!-- <div>地区介绍</div> -->
-                <div>添加时间</div>
-                <div>操作</div>
-            </li>
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>地区名</th>
+                <th>是否推荐</th>
+                <th>添加时间</th>
+                <th>操作</th>
+            </tr>
             {% for area in page_data.items %}
-                <li>
-                    <div>{{area["id"]}}</div>
-                    <div>{{area["areaName"]}}</div>
-                    {% if area["is_recommend"] %}
-                        <div>是</div>
-                    {% else %}
-                        <div>否</div>
-                    {% endif %}
-                    <div>{{area["addtime"]}}</div>
-                    <div>
-                        <a class="edit" href="arealist/edit/{{area['id']}}">编辑</a>
-                    </div>
-                </li>
+            <tr>
+                <td>{{area["id"]}}</td>
+                <td>{{area["areaName"]}}</td>
+                {% if area["is_recommend"] %}
+                    <td>是</td>
+                {% else %}
+                    <td>否</td>
+                {% endif %}
+
+                <td>{{area["addtime"]}}</td>
+                <td>
+                    <a class="edit" href="arealist/edit/{{area['id']}}">编辑</a>
+                </td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
         <div class="box-footer clearfix">
             {{ pg.page(page_data,'admin.arealist') }}
         </div>

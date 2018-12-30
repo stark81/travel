@@ -18,9 +18,13 @@ def admin_login(f):
         return f(*args, **kwargs)
     return decorated_function
 
+@admin.route("/")
+def index():
+    return redirect(url_for("admin.admin_index"))
+
 @admin.route("/index/firstpage")
 # @admin_login
-def admin_index(index=None,firstpage=None):
+def admin_index():
     return render_template("admin/index.html")
 
 @admin.route("/user/userlist")
@@ -28,7 +32,7 @@ def user_list():
     page = request.args.get('page', 1, type=int)
     page_data = User.query.order_by(
             User.addtime.desc()
-        ).paginate(page=page, per_page=7)
+        ).paginate(page=page, per_page=6)
     return render_template("admin/list.html", page_data=page_data)
 
 @admin.route("/log/userloginlog")
@@ -36,7 +40,7 @@ def userLoginLog():
     page = request.args.get('page', 1, type=int)
     page_data = Userlog.query.order_by(
             Userlog.addtime.desc()
-        ).paginate(page=page, per_page=7)
+        ).paginate(page=page, per_page=6)
     return render_template("admin/userloginlog.html", page_data=page_data)
 
 @admin.route("/area/addarea",methods=["GET","POST"])
@@ -63,7 +67,7 @@ def arealist():
     page = request.args.get('page', 1, type=int)
     page_data = Area.query.order_by(
             Area.addtime.desc()
-        ).paginate(page=page, per_page=7)
+        ).paginate(page=page, per_page=6)
     return render_template("admin/arealist.html",page_data=page_data)
 
 @admin.route("/area/arealist/edit/<area_id>",methods=["GET","POST"])
@@ -88,4 +92,12 @@ def areaEdit(area_id=None):
         flash("修改成功","ok")
         return redirect(url_for("admin.areaEdit",area_id=area.id))
     return render_template("admin/areachange.html",form=form)
+
+@admin.route("/user/suggest")
+def suggest():
+    page = request.args.get('page', 1, type=int)
+    page_data = Suggest.query.order_by(
+            Suggest.addtime.desc()
+        ).paginate(page=page, per_page=6)
+    return render_template("admin/suggestion.html",page_data=page_data)
 

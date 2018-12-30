@@ -1,37 +1,18 @@
-.userloginlog .table>li{
-    height: 0.4rem;
-    line-height: 0.4rem;
-    text-align: center;
-    border-bottom: 1px #ddd solid;
-}
-
-.userloginlog .table .tableTitle{
-    font-weight: bold;
-}
-.userloginlog .table>li>div{
-    height: 0.4rem;
-    overflow: hidden;
-    font-size: 0.15rem;
-    margin-right: 0.2rem;
-}
-
- .userloginlog .table>li{
-    display: table;
-    width: 100%; /*Optional*/
-    table-layout: fixed; /*Optional*/
-    /* border-spacing: 10px; Optional */
- }
- .userloginlog .table>li>div{
-    display: table-cell;
-    
- }
-
-.userListNav{
-    height: 0.2rem;
-}
-.userListNav>div{
-    float: left;
-    height: 0.2rem;
-    padding: 0 0.06rem;
+.userloginlog>table{
     border: 1px #ddd solid;
+    border-left: none;
+    border-right: none;
+    border-collapse:collapse;
+}
+.userloginlog>table tr{
+    height: 0.44rem;
+    border-bottom: 1px #ddd solid;
+    
+}
+.userloginlog>table td{
+    text-align: center;
+}
+.userloginlog th,td{
+    min-width: 0.42rem;
+    padding: 0 0.1rem;
 }

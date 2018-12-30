@@ -4,7 +4,31 @@
 {% block content %}
     <div class="userList">
         <h1>会员列表</h1>
-        <ul class="table">
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>用户名</th>
+                <th>邮箱</th>
+                <th>手机</th>
+                <th>注册时间</th>
+                <th>账号状态</th>
+            </tr>
+            {% for user in page_data.items %}
+            <tr>
+                <td>{{user["id"]}}</td>
+                <td>{{user["uname"]}}</td>
+                <td>{{user["uemail"]}}</td>
+                <td>{{user["uphone"]}}</td>
+                <td>{{user["addtime"]}}</td>
+                {% if user["isActive"] %}
+                    <td class="isactive on">正常</td>
+                {% else %}
+                    <td class="isactive off">已注销</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        <!-- <ul class="table">
             <li class="tableTitle">
                 <div class="uid">编号</div>
                 <div class="uname">用户名</div>
@@ -27,7 +51,7 @@
                     {% endif %}
                 </li>
             {% endfor %}
-        </ul>
+        </ul> -->
         <div class="box-footer clearfix">
             {{ pg.page(page_data,'admin.user_list') }}
         </div>

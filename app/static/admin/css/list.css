@@ -1,56 +1,29 @@
-.userList .table>li{
-    height: 0.4rem;
-    line-height: 0.4rem;
-    text-align: center;
-    border-bottom: 1px #ddd solid;
-}
-
-.userList .table .tableTitle{
-    font-weight: bold;
-}
-.userList .table>li>div{
-    /* float: left; */
-    height: 0.4rem;
-    overflow: hidden;
-    font-size: 0.15rem;
-    margin-right: 0.2rem;
-}
-
-.userList .table>li{
-    display: table;
-    width: 100%; /*Optional*/
-    table-layout: fixed; /*Optional*/
-    /* border-spacing: 10px; Optional */
- }
- .userList .table>li>div{
-    display: table-cell; 
- }
-
-.userList .table>li .off{
-    color: red;
-}
-.userListNav{
-    height: 0.2rem;
-}
-.userListNav>div{
-    float: left;
-    height: 0.2rem;
-    padding: 0 0.06rem;
-    border: 1px #ddd solid;
-}
-.userList .table>li>div>a{
-    padding: 0 0.1rem;
-    height: 0.26rem;
-    font-size: 0.12rem;
-    margin-top: 0.07rem;
-    color: white;
-    line-height: 0.26rem;
-    border-radius: 0.04rem;
-    display: inline-block;
-}
-.userList .table>li>div .edit{
+.userList .edit{
     background: #00a6c9;
+    padding: 0.04rem 0.06rem;
+    border-radius: 0.02rem;
+    font-size: 0.12rem;
+    color:white;
 }
 .userList .table>li>div .del{
     background: #e27b27;
+}
+
+.userList>table{
+    border: 1px #ddd solid;
+    border-left: none;
+    border-right: none;
+    border-collapse:collapse;
+}
+.userList>table tr{
+    height: 0.44rem;
+    border-bottom: 1px #ddd solid;
+    
+}
+.userList>table td{
+    text-align: center;
+}
+.userList th,td{
+    min-width: 0.42rem;
+    padding: 0 0.1rem;
 }

@@ -4,22 +4,22 @@
 {% block content %}
     <div class="userloginlog">
         <h1>会员登陆日志</h1>
-        <ul class="table">
-            <li class="tableTitle">
-                <div class="uid">编号</div>
-                <div class="uname">用户ID</div>
-                <div class="uemail">登陆IP</div>
-                <div class="addtime">登陆时间</div>
-            </li>
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>用户ID</th>
+                <th>登陆IP</th>
+                <th>登陆时间</th>
+            </tr>
             {% for log in page_data.items %}
-                <li>
-                    <div class="uid">{{log["id"]}}</div>
-                    <div class="uname">{{log["user_id"]}}</div>
-                    <div class="uemail">{{log["ip"]}}</div>
-                    <div class="addtime">{{log["addtime"]}}</div>
-                </li>
+            <tr>
+                <td>{{log["id"]}}</td>
+                <td>{{log["user_id"]}}</td>
+                <td>{{log["ip"]}}</td>
+                <td>{{log["addtime"]}}</td>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
         <div class="box-footer clearfix">
             {{ pg.page(page_data,'admin.userLoginLog') }}
         </div>

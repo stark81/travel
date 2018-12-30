@@ -36,13 +36,9 @@ $(function(){
     });
     //以下为截取url的方法
     function returnUrl(href){
-        // var number=href.lastIndexOf("/");
-        // suburl = href.substring(number+1).split("?")[0];
-        // // return href.substring(number+1);
-        // return suburl;
-        var number = href.lastIndexOf("/admin")
-        var subrul = href.substring(number+1).split("/")[2];
-        return subrul;
+        var number=href.lastIndexOf("/");
+        suburl = href.substring(number+1).split("?")[0];
+        return suburl;
     }
     function returnFileName(href){
         var number1=href.lastIndexOf("/");
