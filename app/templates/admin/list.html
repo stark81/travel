@@ -21,37 +21,14 @@
                 <td>{{user["uphone"]}}</td>
                 <td>{{user["addtime"]}}</td>
                 {% if user["isActive"] %}
-                    <td class="isactive on">正常</td>
+                    <td class="on">正常</td>
                 {% else %}
-                    <td class="isactive off">已注销</td>
+                    <td class="off">已注销</td>
                 {% endif %}
             </tr>
             {% endfor %}
         </table>
-        <!-- <ul class="table">
-            <li class="tableTitle">
-                <div class="uid">编号</div>
-                <div class="uname">用户名</div>
-                <div class="uemail">邮箱</div>
-                <div class="addtime">注册时间</div>
-                <div class="uphone">手机</div>
-                <div class="isactive">账号状态</div>
-            </li>
-            {% for user in page_data.items %}
-                <li>
-                    <div class="uid">{{user["id"]}}</div>
-                    <div class="uname">{{user["uname"]}}</div>
-                    <div class="uemail">{{user["uemail"]}}</div>
-                    <div class="addtime">{{user["addtime"]}}</div>
-                    <div class="uphone">{{user["uphone"]}}</div>
-                    {% if user["isActive"] %}
-                        <div class="isactive on">正常</div>
-                    {% else %}
-                        <div class="isactive off" >已注销</div>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul> -->
+       
         <div class="box-footer clearfix">
             {{ pg.page(page_data,'admin.user_list') }}
         </div>

@@ -27,3 +27,7 @@
     min-width: 0.42rem;
     padding: 0 0.1rem;
 }
+
+.userList>table .off{
+    color: red;
+}

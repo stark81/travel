@@ -1,0 +1,28 @@
+{% extends "admin/admin.html" %}
+{% import "admin/admin_page.html" as pg %}
+
+{% block content %}
+    <div class="userList">
+        <h1>管理员登陆日志</h1>
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>账号</th>
+                <th>登陆IP</th>
+                <th>登录时间</th>
+            </tr>
+            {% for adminlog in page_data.items %}
+            <tr>
+                <td>{{adminlog["id"]}}</td>
+                <td>{{adminlog.adminlist.uname}}</td>
+                <td>{{adminlog["ip"]}}</td>
+                <td>{{adminlog["addtime"]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+       
+        <div class="box-footer clearfix">
+            {{ pg.page(page_data,'admin.adminlog') }}
+        </div>
+    </div>
+{% endblock %}

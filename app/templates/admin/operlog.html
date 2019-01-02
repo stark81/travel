@@ -1,0 +1,30 @@
+{% extends "admin/admin.html" %}
+{% import "admin/admin_page.html" as pg %}
+
+{% block content %}
+    <div class="userList">
+        <h1>操作日志</h1>
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>账号</th>
+                <th>登陆IP</th>
+                <th>具体操作</th>
+                <th>操作时间</th>
+            </tr>
+            {% for operlog in page_data.items %}
+            <tr>
+                <td>{{operlog["id"]}}</td>
+                <td>{{operlog.adminlist.uname}}</td>
+                <td>{{operlog["ip"]}}</td>
+                <td>{{operlog["reason"]}}</td>
+                <td>{{operlog["addtime"]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+       
+        <div class="box-footer clearfix">
+            {{ pg.page(page_data,'admin.user_list') }}
+        </div>
+    </div>
+{% endblock %}

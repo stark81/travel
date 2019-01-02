@@ -10,10 +10,10 @@
     width: 100%;
     box-sizing: border-box;
     margin: 0.06rem 0;
-    height: 0.36rem;
+    height: 0.3rem;
     border: 1px #bbb solid;
     padding-left: 0.12rem;
-    border-radius: 0.06rem;
+    /* border-radius: 0.06rem; */
     font-size: 0.14rem;
     color: #666;
     outline: none;
@@ -81,4 +81,15 @@
     float: right;
     font-size: 0.2rem;
     color: white;
+}
+
+select{
+    height: 0.3rem;
+    width: 100%;
+    line-height: 0.3rem;
+    /* border-radius: 0.06rem; */
+    outline: none;
+    padding-left: 0.12rem;
+    border: 1px #bbb solid;
+    color: #666;
 }

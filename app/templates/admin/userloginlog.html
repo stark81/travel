@@ -7,21 +7,23 @@
         <table width=100%>
             <tr>
                 <th>编号</th>
-                <th>用户ID</th>
+                <th>用户名</th>
+                <th>用户邮箱</th>
                 <th>登陆IP</th>
                 <th>登陆时间</th>
             </tr>
             {% for log in page_data.items %}
             <tr>
                 <td>{{log["id"]}}</td>
-                <td>{{log["user_id"]}}</td>
+                <td>{{log.user.uname}}</td>
+                <td>{{log.user.uemail}}</td>
                 <td>{{log["ip"]}}</td>
                 <td>{{log["addtime"]}}</td>
             </tr>
             {% endfor %}
         </table>
         <div class="box-footer clearfix">
-            {{ pg.page(page_data,'admin.userLoginLog') }}
+            {{ pg.page(page_data,'admin.userLog') }}
         </div>
     </div>
 {% endblock%}

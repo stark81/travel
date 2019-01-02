@@ -2,6 +2,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Blueprint
+import os
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -9,6 +10,9 @@ app.config["SECRET_KEY"] = 'mrsoft'
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@127.0.0.1:3306/travel"
 track_modifications = app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', True)
 db = SQLAlchemy(app)
+
+UP_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "static/uploads/")  # 文件上传路径
+FC_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "static/uploads/users/")  # 用户头像上传路径
 
 from app.home import home as home_blueprint
 from app.admin import admin as admin_blueprint
