@@ -4,7 +4,7 @@
     <div class="addArea">
         <h1>
             {% block title %}
-                添加景区
+                添加游记
             {% endblock %}
         </h1>
         <form action="" method="POST" enctype="multipart/form-data">
@@ -25,58 +25,35 @@
                 </div>
             {% endfor %}
             <div class="form-group">
-                <p>{{form.scenicname.label}}</p>{{form.scenicname}}
-                {% for err in form.scenicname.errors%}
+                <p>{{form.title.label}}</p>{{form.title}}
+                {% for err in form.title.errors%}
+                    <div class="err">{{ err }}</div>
+                {% endfor %}
+            </div>
+
+            
+
+            <div class="form-group">
+                <p>{{form.author.label}}</p>{{form.author}}
+                {% for err in form.author.errors%}
                     <div class="err">{{ err }}</div>
                 {% endfor %}
             </div>
 
             <div class="form-group">
-                <p>{{form.area_id.label}}</p>{{form.area_id}}
-                {% for err in form.area_id.errors%}
-                    <div class="err">{{ err }}</div>
-                {% endfor %}
-            </div>
-
-            <div class="form-group">
-                <p>{{form.address.label}}</p>{{form.address}}
-                {% for err in form.address.errors%}
-                    <div class="err">{{ err }}</div>
-                {% endfor %}
-            </div>
-
-            <div class="form-group">
-                <p>{{form.star.label}}</p>{{form.star}}
-                {% for err in form.star.errors%}
-                    <div class="err">{{ err }}</div>
-                {% endfor %}
-            </div>
-
-            <div class="form-group">
-                <p>{{form.is_recommend.label}}</p>{{form.is_recommend}}
-                {% for err in form.is_recommend.errors%}
+                <p>{{form.scenic_id.label}}</p>{{form.scenic_id}}
+                {% for err in form.scenic_id.errors%}
                     <div class="err">{{ err }}</div>
                 {% endfor %}
             </div>
 
             <div class="form-group">
                 <p>{{form.cover.label}}</p>{{form.cover}}
-
-                {% block img%}
-                {% endblock %}
-                
                 {% for err in form.cover.errors%}
                     <div class="err">{{ err }}</div>
                 {% endfor %}
             </div>
-
-            <div class="form-group">
-                <p>{{form.introduce.label}}</p>{{form.introduce}}
-                {% for err in form.introduce.errors%}
-                    <div class="err">{{ err }}</div>
-                {% endfor %}
-            </div>
-
+            
             <div class="form-group">
                 <p>{{form.content.label}}</p>{{form.content}}
                 {% for err in form.content.errors%}

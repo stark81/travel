@@ -4,7 +4,7 @@ from app.models import *
 from flask import render_template,flash,request,redirect,url_for,session,make_response,current_app
 from werkzeug.security import generate_password_hash,check_password_hash
 from functools import wraps
-from app.admin.forms import AddAreaForm,LoginForm,AddScenicForm
+from app.admin.forms import AddAreaForm,LoginForm,AddScenicForm,AddTravelsForm
 import os,uuid
 from werkzeug.utils import secure_filename
 
@@ -29,7 +29,7 @@ def login():
         # adminlist.upwd = generate_password_hash(form.data["upwd"])
         # db.session.add(adminlist)
         # db.session.commit()
-        # return "ok"
+        # return "注册成功"
         adminlist = db.session.query(AdminList).filter_by(uname=form.data["uname"]).first()
         if not adminlist:
             flash("账号不存在","err")
@@ -43,7 +43,7 @@ def login():
         db.session.add(adminlog)
         db.session.commit()
         session["admin"] = adminlist.id
-        return render_template("admin/index.html")
+        return redirect(url_for("admin.admin_index"))
     return render_template("admin/login.html",form=form)
 
 @admin.route("/")
@@ -115,6 +115,7 @@ def arealist():
 def areaEdit(area_id=None):
     form = AddAreaForm()
     area = Area.query.get_or_404(area_id)
+    areaNameOld = area.areaName
     if request.method == "GET":
         form.sname.data = area.areaName
         form.is_recommend.data = area.is_recommend
@@ -132,14 +133,13 @@ def areaEdit(area_id=None):
 
         operlog = Operlog()
         operlog.admin_id = session["admin"]
-        print(operlog.admin_id)
         operlog.ip = request.remote_addr
-        operlog.reason = "修改地区"+area.areaName
+        operlog.reason = '修改地区"' + areaNameOld + '"为"' + area.areaName + '"'
 
         db.session.add(area)
         db.session.add(operlog)
         db.session.commit()
-        flash("修改成功","ok")
+        flash("修改地区成功","ok")
         return redirect(url_for("admin.areaEdit",area_id=area.id))
     return render_template("admin/areachange.html",form=form)
 
@@ -215,13 +215,116 @@ def addscenic():
         
         db.session.add(scenic)
         db.session.add(operlog)
-        db.session.commit() 
+        db.session.commit()
+
+        flash("添加景区成功","ok") 
         return redirect(url_for("admin.addscenic"))
     return render_template("admin/addscenic.html",form=form)
 
+@admin.route("/scenic/sceniclist/edit/<scenic_id>",methods=["GET","POST"])
+def scenicedit(scenic_id=None):
+    form = AddScenicForm()
+    form.area_id.choices = [(v.id, v.areaName) for v in Area.query.all()] 
+    form.cover.validators = []
+    scenic = Scenic.query.get_or_404(scenic_id)
+    scenicNameOld = scenic.scenicname
+
+    if request.method == "GET":
+        form.scenicname.data = scenic.scenicname
+        form.star.data =scenic.star
+        form.is_recommend.data = scenic.is_recommend
+        form.introduce.data = scenic.introduce
+        form.content.data = scenic.content
+        form.area_id.data = scenic.area_id
+        form.address.data = scenic.address
+        form.cover.data = scenic.cover
+
+    if form.validate_on_submit():
+        data = form.data
+        scenic_count = db.session.query(Scenic).filter(Scenic.scenicname==form.data["scenicname"]).count()
+        if scenic.scenicname != form.data["scenicname"] and scenic_count == 1:
+            flash("景区已存在","err")
+            return redirect(url_for("admin.scenicedit",scenic_id=scenic.id))
+        if not os.path.exists(UP_DIR):
+            os.makedirs(UP_DIR)           
+            os.chmod(UP_DIR,664)
+        if form.cover.data != "":
+            file_cover = secure_filename(form.cover.data.filename)     
+            scenic.cover = change_filename(file_cover)                       
+            form.cover.data.save(UP_DIR + scenic.cover)
+        
+        scenic.scenicname = data["scenicname"]
+        scenic.star = data["star"]
+        scenic.is_recommend = data["is_recommend"]
+        scenic.area_id = data["area_id"]
+        scenic.address = data["address"]
+        scenic.introduce = data["introduce"]
+        scenic.content = data["content"]
+
+        operlog = Operlog()
+        operlog.admin_id = session["admin"]
+        operlog.ip = request.remote_addr
+        operlog.reason = '修改景区"' +scenicNameOld + '"为"' + scenic.scenicname +'"'
+
+        db.session.add(scenic)
+        db.session.add(operlog)
+        db.session.commit()
+
+        flash("修改景区成功","ok")
+        return redirect(url_for("admin.scenicedit",scenic_id=scenic.id))
+    return render_template("admin/scenicchange.html",form=form)
+
+
+@admin.route("/travels/travelslist")
+def travelslist():
+    page = request.args.get('page', 1, type=int)
+    page_data = Travels.query.order_by(
+            Travels.addtime.desc()
+        ).paginate(page=page, per_page=6)
+    return render_template("admin/travelslist.html",page_data=page_data)
+
+@admin.route("/travels/addtravels",methods=["GET","POST"])
+def addtravels():
+    form = AddTravelsForm()
+    form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+    if form.validate_on_submit():
+        data = form.data
+        travels = Travels()
+        operlog = Operlog()
+        travel_count = Travels.query.filter_by(title=data["title"]).count()
+        if travel_count == 1:
+            flash("已存在同名游记,请使用别的标题","err")
+            return render_template("admin/addtravels.html",form = form)
+
+        file_cover = secure_filename(form.cover.data.filename)
+        if not os.path.exists(UP_DIR):
+            os.makedirs(UP_DIR)           
+            os.chmod(UP_DIR,664)
+        cover = change_filename(file_cover) 
+        form.cover.data.save(UP_DIR + cover)   
+
+        travels.title = data["title"]
+        travels.author = data["author"]
+        travels.scenic_id = data["scenic_id"]
+        travels.cover = cover
+        travels.content = data["content"]
+
+        operlog.admin_id = session["admin"]
+        operlog.ip = request.remote_addr
+        operlog.reason = '添加游记"'+ travels.title +'"'
+
+        db.session.add(travels)
+        db.session.add(operlog)
+        db.session.commit()
+
+        flash("添加游记成功","ok")
+        return render_template("admin/addtravels.html",form = form) 
+    return render_template("admin/addtravels.html",form = form)
 
 
 
+
+# 设置ck编辑器相关配置
 def gen_rnd_filename():
     return datetime.now().strftime("%Y%m%d%H%M%S") + str(uuid.uuid4().hex)
 

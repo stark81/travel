@@ -36,9 +36,23 @@ $(function(){
     });
     //以下为截取url的方法
     function returnUrl(href){
-        var number=href.lastIndexOf("/");
-        suburl = href.substring(number+1).split("?")[0];
-        return suburl;
+        // var number=href.lastIndexOf("/");
+        // console.log(number)
+        // suburl = href.substring(number+1).split("?")[0];
+        // console.log("地址是:"+suburl)
+        // console.log(suburl,suburl.length)
+        // return suburl;
+        if(href.split("/").length-1==3){
+            var number=href.lastIndexOf("/");
+            suburl = href.substring(number+1).split("?")[0];
+            return suburl;
+        }else{
+            number=href.indexOf("/",5)
+            suburl = href.substring(number+1).split("/")[4].split("?")[0]
+            console.log("这里是"+suburl)
+            return suburl;
+        }
+          
     }
     function returnFileName(href){
         var number1=href.lastIndexOf("/");

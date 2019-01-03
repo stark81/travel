@@ -97,6 +97,7 @@ class Scenic(db.Model):
     is_recommend = db.Column(db.Boolean,default=False)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
     sceniccollects = db.relationship("ScenicCollect",backref="scenic")
+    travels = db.relationship("Travels",backref="scenic")
 
 class Travels(db.Model):
     __tablename__ = "travels"
@@ -104,9 +105,11 @@ class Travels(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(255),unique=True)
     author = db.Column(db.String(255))
+    cover = db.Column(db.String(255),unique=True)
     scenic_id = db.Column(db.Integer,db.ForeignKey("scenic.id"))
     content = db.Column(db.Text)
     reviews = db.relationship("Review",backref="travels")
+    addtime = db.Column(db.DateTime,index=True,default=datetime.now)
     travelscollects = db.relationship("TravelsCollect",backref="travels")
 
 class Review(db.Model):

@@ -72,7 +72,7 @@ class AddScenicForm(FlaskForm):
         validators=[
             DataRequired("请选择所属地区!")
         ],
-        coerce=int
+        coerce = int,
     )
 
     address = StringField(
@@ -132,4 +132,66 @@ class AddScenicForm(FlaskForm):
 
     submit = SubmitField(
         label="添加",
+    )
+
+    change = SubmitField(
+        label="修改",
+    )
+
+
+class AddTravelsForm(FlaskForm):
+    title = StringField(
+        label="标题",
+        validators=[
+            DataRequired("标题不能为空!")
+        ],
+        render_kw={
+            "placeholder":"请输入标题"
+        }
+    )
+
+    author = StringField(
+        label="作者",
+        validators=[
+            DataRequired("作者不能为空!")
+        ],
+        render_kw={
+            "placeholder":"请输入作者"
+        }
+    )
+
+    cover = FileField(
+        label="游记封面",
+        validators=[
+            DataRequired("封面图片不能为空!"),
+            FileAllowed(["png","jpg"],"仅支持png和jpg格式的文件")
+        ]
+    )
+
+    scenic_id = SelectField(
+        label="所属景区",
+        validators=[
+            DataRequired("请选择所属景区!")
+        ],
+        coerce=int,
+    )
+
+    content = TextAreaField(
+        label="游记内容",
+        validators=[
+            DataRequired("景区内容不能为空！")
+        ],
+        render_kw={
+            "class": "form-control ckeditor",
+            "rows": 10
+        }
+    )
+
+
+    submit = SubmitField(
+        label="添加",
+    )
+
+    change = SubmitField(
+        label="修改",
     )

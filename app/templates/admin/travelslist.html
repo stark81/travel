@@ -1,0 +1,39 @@
+{% extends "admin/admin.html" %}
+{% import "admin/admin_page.html" as pg %}
+
+{% block content %}
+    <div class="userList">
+        <h1>游记列表</h1>
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>标题</th>
+                <th>作者</th>
+                <th>封面</th>
+                <th>所属景区</th>
+                <th>上传时间</th>
+                <th>操作</th>
+            </tr>
+            {% for travels in page_data.items %}
+            <tr>
+                <td>{{travels["id"]}}</td>
+                <td>{{travels["title"]}}</td>
+                <td>{{travels["author"]}}</td>
+                <td>
+                    <img style="width:70px;height:70px;margin-top: 6px"
+                    src="{{ url_for('static', filename='uploads/'+ travels.cover) }}"
+                    class="img-responsive center-block" alt="">
+                </td>
+                <td>{{travels.scenic.scenicname}}</td>
+                <td>{{travels["addtime"]}}</td>
+                <td>
+                    <a class="edit" href="travelslist/edit/{{travels['id']}}">编辑</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="box-footer clearfix">
+            {{ pg.page(page_data,'admin.travelslist') }}
+        </div>
+    </div>
+{% endblock %}
