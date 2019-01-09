@@ -20,8 +20,19 @@ def admin_login(f):
         return f(*args, **kwargs)
     return decorated_function
 
+@admin.route("/logout")
+def logout():
+    del session["admin"]
+    del session["adminname"]
+    return redirect(url_for("admin.login"))
+
 @admin.route("/login",methods=["GET","POST"])
 def login():
+    if request.method == "GET":
+        url = request.headers.get("Referer","/admin")
+        session["url"] = url
+        if "admin" in session:
+            return redirect(url)
     form = LoginForm()
     if form.validate_on_submit():
         # adminlist = AdminList()
@@ -42,6 +53,7 @@ def login():
         adminlog.ip = request.remote_addr
         db.session.add(adminlog)
         db.session.commit()
+        session["adminname"] = adminlist.uname
         session["admin"] = adminlist.id
         return redirect(url_for("admin.admin_index"))
     return render_template("admin/login.html",form=form)
@@ -224,6 +236,7 @@ def addscenic():
 @admin.route("/scenic/sceniclist/edit/<scenic_id>",methods=["GET","POST"])
 def scenicedit(scenic_id=None):
     form = AddScenicForm()
+    form.submit.label.text = "修改"
     form.area_id.choices = [(v.id, v.areaName) for v in Area.query.all()] 
     form.cover.validators = []
     scenic = Scenic.query.get_or_404(scenic_id)
@@ -277,21 +290,55 @@ def scenicedit(scenic_id=None):
 
 @admin.route("/travels/travelslist")
 def travelslist():
+    adminName = session["adminname"]
     page = request.args.get('page', 1, type=int)
     page_data = Travels.query.order_by(
             Travels.addtime.desc()
         ).paginate(page=page, per_page=6)
-    return render_template("admin/travelslist.html",page_data=page_data)
+    return render_template("admin/travelslist.html",page_data=page_data,adminName=adminName)
+
+@admin.route("/travels/dele/<travels_id>")
+def travels_dele(travels_id):
+    travels = Travels.query.filter_by(id=travels_id).first()
+    travels.isactive = 0
+
+    operlog = Operlog()
+    operlog.admin_id = session["admin"]
+    operlog.ip = request.remote_addr
+    operlog.reason = '删除游记"' + travels.title + '"'
+    
+    db.session.add(travels)
+    db.session.add(operlog)
+    db.session.commit()
+    return redirect(url_for("admin.travelslist"))
+
+@admin.route("/travels/recover/<travels_id>")
+def travels_recover(travels_id):
+    travels = Travels.query.filter_by(id=travels_id).first()
+    travels.isactive = 1
+
+    operlog = Operlog()
+    operlog.admin_id = session["admin"]
+    operlog.ip = request.remote_addr
+    operlog.reason = '恢复游记"' + travels.title + '"'
+
+    db.session.add(travels)
+    db.session.add(operlog)
+    db.session.commit()
+    return redirect(url_for("admin.travelslist"))
 
 @admin.route("/travels/addtravels",methods=["GET","POST"])
 def addtravels():
     form = AddTravelsForm()
     form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+    admins = AdminList.query.filter_by(id=session["admin"]).first()
+    authors = admins.uname
+    form.author.data = authors
     if form.validate_on_submit():
         data = form.data
-        travels = Travels()
         operlog = Operlog()
         travel_count = Travels.query.filter_by(title=data["title"]).count()
+        travels = Travels()
         if travel_count == 1:
             flash("已存在同名游记,请使用别的标题","err")
             return render_template("admin/addtravels.html",form = form)
@@ -304,8 +351,9 @@ def addtravels():
         form.cover.data.save(UP_DIR + cover)   
 
         travels.title = data["title"]
-        travels.author = data["author"]
+        # travels.author_id = session["admin"]
         travels.scenic_id = data["scenic_id"]
+        travels.is_recommend = data["is_recommend"]
         travels.cover = cover
         travels.content = data["content"]
 
@@ -321,7 +369,91 @@ def addtravels():
         return render_template("admin/addtravels.html",form = form) 
     return render_template("admin/addtravels.html",form = form)
 
+@admin.route("/travels/travelslist/edit/<travels_id>",methods=["GET","POST"])
+def travels_edit(travels_id):
+    form = AddTravelsForm()
+    form.submit.label.text = "修改"
+    form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+    form.cover.validators = []
+    travels = Travels.query.get_or_404(travels_id)
+    travels_old = travels.title
 
+    if request.method == "GET":
+        form.title.data = travels.title
+        form.is_recommend.data = travels.is_recommend
+        form.scenic_id.data = travels.scenic_id
+        form.cover.data = travels.cover
+        form.content.data = travels.content
+
+    if form.validate_on_submit():
+        data = form.data
+        travels_count = Travels.query.filter_by(title=data["title"]).count()
+        if travels.title != data["title"] and travels_count == 1:
+            flash("游记已经存在","err")
+            return render_template("admin/travelsedit.html",form=form)
+        if not os.path.exists(UP_DIR):
+            os.makedirs(UP_DIR)           
+            os.chmod(UP_DIR,664)
+        if form.cover.data != "":
+            file_cover = secure_filename(form.cover.data.filename)     
+            travels.cover = change_filename(file_cover)                       
+            form.cover.data.save(UP_DIR + travels.cover)
+
+        travels.title = data["title"]
+        travels.is_recommend = data["is_recommend"]
+        travels.scenic_id = data["scenic_id"]
+        travels.content = data["content"]
+
+        operlog = Operlog()
+        operlog.admin_id = session["admin"]
+        operlog.ip = request.remote_addr
+        operlog.reason = '修改游记"' + travels.title +'"'
+
+        db.session.add(travels)
+        db.session.add(operlog)
+        db.session.commit()
+
+        flash("修改游记成功","ok")
+        return render_template("admin/addtravels.html",form = form) 
+    return render_template("admin/travelsedit.html",form=form)
+
+@admin.route("/travels/reviews")
+def reviews():
+    page = request.args.get('page', 1, type=int)
+    page_data = Review.query.order_by(
+            Review.addtime.desc()
+        ).paginate(page=page, per_page=6)
+    return render_template("admin/review.html",page_data=page_data)
+
+@admin.route("/travels/review/dele/<review_id>")
+def review_dele(review_id):
+    review = Review.query.filter_by(id=review_id).first()
+    review.isactive = 0
+
+    operlog = Operlog()
+    operlog.admin_id = session["admin"]
+    operlog.ip = request.remote_addr
+    operlog.reason = '删除' + review.travels.reviewers.first().uname + '在游记"' + review.travels.title +'"中的评论'
+    
+    db.session.add(review)
+    db.session.add(operlog)
+    db.session.commit()
+    return redirect(url_for("admin.reviews"))
+
+@admin.route("/travels/review/recover/<review_id>")
+def review_recover(review_id):
+    review = Review.query.filter_by(id=review_id).first()
+    review.isactive = 1
+
+    operlog = Operlog()
+    operlog.admin_id = session["admin"]
+    operlog.ip = request.remote_addr
+    operlog.reason = '恢复' + review.travels.reviewers.first().uname + '在游记"' + review.travels.title +'"中的评论'
+    
+    db.session.add(review)
+    db.session.add(operlog)
+    db.session.commit()
+    return redirect(url_for("admin.reviews"))
 
 
 # 设置ck编辑器相关配置

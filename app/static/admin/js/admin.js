@@ -49,7 +49,6 @@ $(function(){
         }else{
             number=href.indexOf("/",5)
             suburl = href.substring(number+1).split("/")[4].split("?")[0]
-            console.log("这里是"+suburl)
             return suburl;
         }
           
@@ -77,5 +76,11 @@ $(function(){
             "transition":"all 0.2s"
         })
     });
+
+    $(".disable").click(function(){
+        return false
+    })
+
+    $("#author").attr("readonly","readonly")
 
 })

@@ -1,0 +1,35 @@
+{% extends "base/home.html" %}
+
+{% block content %}
+    <div id="usermain">
+        <div class="inner">
+            <div class="userbanner">
+            </div>
+            <div class="userinfo">
+                <div class="userimg">
+                    {{ user.cover }}
+                </div>
+                <div class="username">
+                    <h2>{{ user.uname }}</h2>
+                    <p>
+                        {% if user.introduce %}
+                            {{ user.introduce }}
+                        {% else %}
+                            这个人很懒,什么也没留下
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="edit">
+                    {% if session["user_id"] == user.id %}
+                        <div class="change"><a href='/info_edit/{{ session["user_id"]}}'>编辑资料</a></div>
+                    {% else %}
+                        <div class="change">关注</div>
+                        <div class="change">留言</div>
+                    {% endif %}
+                </div>
+                
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock %}

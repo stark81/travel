@@ -134,9 +134,6 @@ class AddScenicForm(FlaskForm):
         label="添加",
     )
 
-    change = SubmitField(
-        label="修改",
-    )
 
 
 class AddTravelsForm(FlaskForm):
@@ -150,22 +147,18 @@ class AddTravelsForm(FlaskForm):
         }
     )
 
-    author = StringField(
-        label="作者",
-        validators=[
-            DataRequired("作者不能为空!")
-        ],
-        render_kw={
-            "placeholder":"请输入作者"
-        }
-    )
-
     cover = FileField(
         label="游记封面",
         validators=[
             DataRequired("封面图片不能为空!"),
             FileAllowed(["png","jpg"],"仅支持png和jpg格式的文件")
         ]
+    )
+
+    is_recommend = RadioField(
+        label="是否推荐",
+        coerce = int,
+        choices=[ (1,'是'),(0, '否')], default=0, 
     )
 
     scenic_id = SelectField(
@@ -190,8 +183,4 @@ class AddTravelsForm(FlaskForm):
 
     submit = SubmitField(
         label="添加",
-    )
-
-    change = SubmitField(
-        label="修改",
     )

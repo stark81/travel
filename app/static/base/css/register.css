@@ -26,7 +26,6 @@ body{
 .form-control{
     line-height: 30px;
     height: 30px;
-    text-align: center;
 }
 #main .errors{
     margin:0;
@@ -44,10 +43,11 @@ body{
     display: inline-block;
     width: 100%;
 }
-.form-control input{
+.form-control input[type="text"],input[type="password"]{
     width: 240px;
     height: 30px;
     float: left;
+    box-sizing: border-box;
     border-radius: 5px;
     border: 1px #999 solid;
     outline: none;
@@ -66,13 +66,19 @@ body{
 }
 .form-control .btn{
     padding: 0px;
-    margin-left: 30px;
     height: 40px;
-    width:300px;
+    width:335px;
     color:white;
     font-size: 18px;
+    border-radius: 8px;
+    border: none;
     background: #00b2ec;
 }
 .btn:hover{
     cursor: pointer;
+}
+
+.form-control input[name="issave"]{
+    float: left;
+    margin: 9px 6px 0 14px ;
 }

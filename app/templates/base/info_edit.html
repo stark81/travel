@@ -1,0 +1,37 @@
+{% extends "base/home.html" %}
+
+{% block content %}
+    <div class="lestmain">
+        <div class="inner">
+            <div class="userbanner">
+            </div>
+            <div class="userinfo">
+                <div class="userimg">
+                    {{ user.cover }}
+                </div>
+                <div class="userinfoform">
+                    <div class="uname">
+                        <input type="hidden" name="infoid" value="{{ user.id }}">
+                        <div class="uname1"></div>
+                    </div>
+                    <div class="backmypage"><a href="/userinfo/{{user.id}}">返回我的主页 ></a></div>
+                    <div class="uemail">
+                        <input type="hidden" name="infoemail" value="{{ user.id }}">
+                        <div class="uemail1"></div>
+                    </div>
+                    <div class="uphone">
+                        <input type="hidden" name="infophone" value="{{ user.id }}">
+                        <div class="uphone1"></div>
+                    </div>
+                    <div class="uintroduce">
+                        <input type="hidden" name="infointro" value="{{ user.id }}">
+                        <div class="infointr1"></div>
+                    </div>
+                    <div class="clear"></div>
+                    
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock %}

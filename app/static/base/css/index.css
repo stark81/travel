@@ -61,7 +61,6 @@
     /* margin-bottom: 40px; */
 }
 #big-box{
-    /* width:100%; */
     margin: 0 auto;
 	overflow:hidden;
     }
@@ -96,36 +95,7 @@
 	background-color:#00a6c9;
     }
 
-/* 主体区域 */
-#main{
-    padding-top: 55px;
-}
-/* 最新游记 */
-.travels{
-    height: 600px;
-    border:1px red solid;
-}
-.travels .title{
-    height: 30px;
-    line-height: 30px;
-    border: 1px red solid;
-    border-left: 5px #00a6c9 solid;
-    margin-bottom: 26px;
-}
-.travels .title>h3{
-    float: left;
-    font-size: 20px;
-    margin-left: 10px;
-}
-.travels .title>a{
-    float: right;
-    font-size: 16px;
-}
-
-
-
-
-/* 返回顶部 */
+    /* 返回顶部 */
 #writeTravels{
     position: fixed;
     width: 100px;
@@ -147,4 +117,225 @@
 #writeTravels:hover{
     opacity: 1;
     cursor: pointer;
+}
+
+/* 主体区域 */
+#main{
+    padding-top: 55px;
+    
+}
+/* 最新游记 */
+/* .travels{
+    height: 600px;
+} */
+
+.travels:after{
+    content:' ';
+    display:table;
+    clear:both;
+}
+.title{
+    height: 30px;
+    width: 1200px;
+    margin: 0 auto;
+    line-height: 30px;
+    border-left: 5px #00a6c9 solid;
+    margin-bottom: 26px;
+}
+.title>h3{
+    float: left;
+    font-size: 20px;
+    margin-left: 10px;
+}
+.title>a{
+    float: right;
+    font-size: 16px;
+}
+.travelsItem>li{
+    float: left;
+    width: 390px;
+    margin-right: 15px;
+}
+.travelsItem>li .text{
+    padding: 0px 10px 14px 10px;
+}
+.travelsItem>li .text>h3{
+    line-height: 44px;
+    font-size: 18px;
+}
+.travelsItem>li .text .introduce{
+    line-height: 25px;
+    font-size: 16px;
+    color: #777;
+    /* text-indent: 2em; */
+}
+
+.reviews{
+    margin-top: 10px;
+}
+
+.travelsItem>li>div>img{
+    transition: 0.6s;
+}
+
+.travelsItem>li>div>img:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
+#scenic{
+    margin: 50px auto;
+    overflow: hidden;
+    position: relative;
+}
+#scenic:after{
+    content:' ';
+    display:table;
+    clear:both;
+}
+
+#scenic ul{
+    width: 20000px;
+}
+#scenic li{
+    float: left;
+    width: 390px;
+    height: 450px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+#scenicItem{
+    width: 1200px;
+    height: 450px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+#scenicItem>li .text{
+    padding: 40px 10px 40px 10px;
+}
+#scenicNav{
+	width: 200px;
+    height:18px;
+    margin: 0 auto;
+	/* position:absolute; */
+	/* left:100px;
+    bottom:0%; */
+	overflow:hidden;
+    z-index:10;
+    margin-top: 10px;
+    text-align: justify;
+    }
+
+#scenicNav li{
+	width:16px;
+    height:16px;
+	/* margin-right:8px; */
+    background-color:#fff;
+    border: 1px #00a6c9 solid;
+	float:left;
+	border-radius:50%;
+	text-indent:10000px;
+	cursor:pointer;
+	}
+#scenicNav .navOn{
+	background-color:#00a6c9;
+    }
+
+#scenicItem .text{
+    height: 130px;
+    padding: 0 10px 0 10px;
+    transition: 0.6s;
+    border-bottom: 5px transparent solid;
+}
+#scenicItem .text h3{
+    height: 24px;
+    font-size: 18px;
+    margin: 20px 0 10px 0;
+    transition: 0.6s;
+}
+
+#scenicItem .text h3 span{
+    font-size: 15px;
+    color: #e27b27;
+    font-weight: normal;
+    margin-left: 14px;
+}
+
+#scenicItem .text>p{
+    line-height: 30px;
+    color: #777;
+}
+
+.starRight{
+    float: right;
+    width: 70px;
+    background: #fff;
+    border: 2px #00a6c9 solid;
+    border-radius: 4px;
+    color: #00a6c9;
+    line-height: 35px;
+    text-align: center;
+    transition: all 0.6s;
+    transition: 0.6s;
+}
+
+.starRight:hover{
+    background: #00a6c9;
+    color: white;
+}
+
+#scenicItem li:hover .text>h3{
+    color: #00a6c9;
+}
+
+#scenicItem li:hover .text{
+    border-bottom: 5px #00a6c9 solid
+}
+
+.img{
+    height:266px;
+    width:390px;
+    overflow:hidden;
+    position: relative;
+}
+
+.img .imgintroduce{
+    opacity: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 150px;
+    width: 366px;
+    padding: 0 12px 0 12px;
+    line-height: 26px;
+    background: rgba(0,166,201,0.7);
+    color:white;
+    transition: all 0.6s
+}
+
+.img .imgintroduce>h3{
+    margin: 20px 0 10px 0;
+    font-size: 18px;
+}
+.img .imgintroduce>h3>span{
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 14px;
+}
+
+#scenicItem li:hover .img .imgintroduce{
+    opacity: 1;
+}
+
+
+.lestmain{
+    background: #efefef;
+    padding-top: 10px;
+}
+
+.lestmain .inner{
+    background:  white;
 }

@@ -1,0 +1,148 @@
+.userinfoform{
+    padding: 20px 0;
+}
+
+.lestmain .userinfo{
+    height: auto;
+    border: 1px red solid;
+}
+
+.uname{
+    width: 600px;
+    float: left;
+    padding-bottom: 30px;
+    border-bottom: 2px #ddd solid;
+}
+
+
+.backmypage{
+    padding: 0 10px;
+    float: right;
+}
+
+.uname1>h2>b{
+    margin-right: 30px;
+}
+.uname1>h2>label{
+    font-size: 16px;
+    font-weight: normal;
+    display: none;
+}
+.uname1:hover label{
+    display: inline-block;
+    cursor: pointer;
+}
+.uemail{
+    float: left;
+    padding: 40px 0;
+    width: 600px;
+    border-bottom: 2px #ddd solid;
+}
+.uemail1 span{
+    width: 100px;
+    font-weight: bold;
+    text-align: justify;
+    display:inline-block;
+}
+
+.uemail1 label .hidden{
+    margin-left: 30px;
+    font-weight: normal;
+    display: none;
+}
+
+.uemail1:hover .hidden{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.uphone{
+    float: left;
+    padding: 40px 0;
+    width: 600px;
+    border-bottom: 2px #ddd solid;
+}
+.uphone1 span{
+    width: 100px;
+    font-weight: bold;
+    text-align: justify;
+    display:inline-block;
+}
+
+.uphone1 label .hidden{
+    margin-left: 30px;
+    font-weight: normal;
+    display: none;
+}
+
+.uphone1:hover .hidden{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.uintroduce{
+    float: left;
+    padding: 40px 0;
+    width: 600px;
+    border-bottom: 2px #ddd solid;
+}
+.infointr1 span{
+    width: 100px;
+    font-weight: bold;
+    text-align: justify;
+    display:inline-block;
+}
+
+.infointr1 label .hidden{
+    margin-left: 30px;
+    font-weight: normal;
+    display: none;
+}
+
+.infointr1:hover .hidden{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.userinfoform>div>div>div>label{
+    display:inline-block;
+    width: 100px;
+    font-weight: bold;
+}
+
+#username,#uemail,#uphone,#uintroduce{
+    height: 30px;
+    width: 400px;
+    border-radius: 2px;
+    outline: none;
+    padding: 0 12px ;
+    border: 1px #aaa solid;
+}
+
+#uintroduce {
+    height: 90px;
+    resize: none;
+}
+
+.userinfoform>div>div>div input[name="save"],input[name="cancel"]{
+    margin-top: 20px;
+    height: 32px;
+    padding: 0 16px;
+    border-radius: 3px;
+    background: white;
+    border: 1px #aaa solid;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.6s;
+}
+
+.userinfoform>div>div>div input[name="save"]{
+    margin:0 20px 0 105px;
+    background: #00a6c9;
+    color: white;
+    border:none;
+}
+
+.userinfoform>div>div>div input[name="cancel"]:hover{
+    background: #eee;
+}

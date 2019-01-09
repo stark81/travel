@@ -116,15 +116,12 @@
 }
 .headshot{
     float: right;
-    width: 0.96rem;
     height: 0.6rem;
     line-height: 0.6rem;
     background: #0093b2;
     padding:0 0.34rem 0 0.3rem;
 }
-.headshot:hover{
-    cursor: pointer;
-}
+
 .headshot div{
     height: 0.4rem;
     width: 0.4rem;
@@ -132,6 +129,10 @@
     margin-top: 0.1rem;
     border-radius: 50%;
     background: white;
+    background-image:url("../image/admin_03.png") ;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .headshot p{
     float: right;

@@ -9,14 +9,17 @@ class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     uname = db.Column(db.String(100),unique=True)
     upwd = db.Column(db.String(100))
+    cover = db.Column(db.String(255))
+    introduce = db.Column(db.Text)
     uemail = db.Column(db.String(100),unique=True)
     uphone = db.Column(db.String(11),unique=True)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
     isActive = db.Column(db.Boolean,default=True)
     userlogs = db.relationship('Userlog', backref='user')
-    reviews = db.relationship("Review",backref="user")
+    reviews = db.relationship("Review",backref="reviewers")
     sceniccollects = db.relationship("ScenicCollect",backref="user")
     travelscollects = db.relationship("TravelsCollect",backref="user")
+    travelarticle = db.relationship("Travels",backref="travelauthor")
 
     def __init__(self,uname,uemail,upwd):
         '''uname,uemail,upwd'''
@@ -104,13 +107,21 @@ class Travels(db.Model):
     __table_args__ = {"useexisting":True}
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(255),unique=True)
-    author = db.Column(db.String(255))
+    author_id = db.Column(db.Integer,db.ForeignKey("user.id"))
     cover = db.Column(db.String(255),unique=True)
     scenic_id = db.Column(db.Integer,db.ForeignKey("scenic.id"))
     content = db.Column(db.Text)
+    is_recommend = db.Column(db.Boolean,default=False)
+    isactive = db.Column(db.Boolean,default=True)
     reviews = db.relationship("Review",backref="travels")
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
     travelscollects = db.relationship("TravelsCollect",backref="travels")
+    reviewers = db.relationship(
+        "User",
+        secondary = "review",
+        lazy="dynamic",
+        backref=db.backref("travels",lazy="dynamic")
+    )
 
 class Review(db.Model):
     __tablename__ = "review"
@@ -119,6 +130,7 @@ class Review(db.Model):
     travels_id = db.Column(db.Integer,db.ForeignKey("travels.id"))
     user_id = db.Column(db.Integer,db.ForeignKey("user.id"))
     content = db.Column(db.Text)
+    isactive = db.Column(db.Boolean,default=True)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
 class ScenicCollect(db.Model):

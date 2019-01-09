@@ -4,7 +4,22 @@
     border-radius: 0.02rem;
     font-size: 0.12rem;
     color:white;
+    cursor: pointer;
 }
+
+.userList .disable{
+    background: #5b686b;
+    padding: 0.04rem 0.06rem;
+    border-radius: 0.02rem;
+    font-size: 0.12rem;
+    color:white;
+    cursor: default;
+}
+
+.userList .dele{
+    border: none
+}
+
 .userList .table>li>div .del{
     background: #e27b27;
 }

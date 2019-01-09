@@ -25,7 +25,7 @@
                 </ul>
             {% endfor %}
             <div class="form-control">
-                <p>用户名:</p>{{ form.username }}
+                <p>{{ form.username.label }}</p>{{ form.username }}
             </div>
             <div style="height:20px"></div>
             {% for err in form.uemail.errors %}
@@ -34,7 +34,7 @@
                 </ul>
             {% endfor %}
             <div class="form-control">
-                <p>邮箱:</p>{{ form.uemail }}
+                <p>{{ form.uemail.label }}</p>{{ form.uemail }}
             </div>
             <div style="height:20px"></div>
             {% for err in form.upwd.errors %}                
@@ -43,7 +43,7 @@
                 </ul>               
             {% endfor %}
             <div class="form-control">
-                <p>密码:</p>{{ form.upwd }}
+                <p>{{ form.upwd.label }}</p>{{ form.upwd }}
             </div>
             <div style="height:20px"></div>
             {% for err in form.repwd.errors %}
@@ -52,7 +52,7 @@
                 </ul>                
             {% endfor %}
             <div class="form-control">
-                <p>确认密码:</p>{{ form.repwd }}
+                <p>{{ form.repwd.label }}</p>{{ form.repwd }}
             </div>
             <div style="height:20px"></div>
             {% for msg in get_flashed_messages(category_filter=["err"]) %}
@@ -64,8 +64,6 @@
                 {{ form.csrf_token }}
                 {{ form.submit }}
             </div>  
-            <p style="margin-top:30px;text-align:center;">已有账号?去
-                <a style="color: #00b2ec" href="/login/">登陆</a></p>
         </form>
     </div>
     <script type="text/javascript">

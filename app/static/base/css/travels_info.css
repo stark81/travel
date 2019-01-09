@@ -1,0 +1,44 @@
+#travelmain{
+    background: #efefef;
+}
+
+.clear{
+    clear: both;
+}
+
+.travel_content{
+    width: 850px;
+    float: left;
+    padding:30px 20px;
+    background: white;
+    margin-right: 20px;
+}
+.otherinfo{
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #888;
+}
+.travel_content h2{
+    margin-bottom: 10px;
+}
+.travel_content p{
+    margin: 10px 0 ;
+    line-height: 30px;
+    text-indent: 2em;
+}
+
+.travel_author{
+    width: 250px;
+    float: left;
+    padding: 16px 20px;
+    background: white;
+}
+.travel_scenicinfo{
+    background: white;
+    width: 250px;
+    padding:16px 20px;
+    float: left;
+    margin-top: 20px;
+}
+
+

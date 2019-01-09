@@ -1,0 +1,19 @@
+<label>
+    <span>个人简介</span>
+    {% if user.introduce %}
+        {{ user.introduce }}
+        <span class="hidden" onclick="getintroducechange()">修改</span>
+    {% else %}
+        <label class="addphone" onclick="getintroducechange()">添加个人简介</label>
+    {% endif %}
+</label>
+
+<script>
+    function getintroducechange(){
+        var uid = $("[name=infoid]").val();
+        console.log(uid);
+        $.get("/getintroducechangepage",{uid:uid},function(data){
+            $(".infointr1").html(data);
+        });
+    }
+</script>

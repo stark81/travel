@@ -30,12 +30,17 @@
                     <div class="err">{{ err }}</div>
                 {% endfor %}
             </div>
-
-            
-
-            <div class="form-group">
+            {#
+            <!-- <div class="form-group">
                 <p>{{form.author.label}}</p>{{form.author}}
                 {% for err in form.author.errors%}
+                    <div class="err">{{ err }}</div>
+                {% endfor %}
+            </div> -->
+            #}
+            <div class="form-group">
+                <p>{{form.is_recommend.label}}</p>{{form.is_recommend}}
+                {% for err in form.is_recommend.errors%}
                     <div class="err">{{ err }}</div>
                 {% endfor %}
             </div>
@@ -49,6 +54,8 @@
 
             <div class="form-group">
                 <p>{{form.cover.label}}</p>{{form.cover}}
+                {% block img %}
+                {% endblock %}
                 {% for err in form.cover.errors%}
                     <div class="err">{{ err }}</div>
                 {% endfor %}

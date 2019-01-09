@@ -11,6 +11,11 @@
     <script src="{{url_for('static',filename='base/js/jquery-1.11.1.min.js')}}"></script>
     <script src="{{url_for('static',filename='base/js/kxbdSuperMarquee.js')}}"></script>
     <script src="{{url_for('static',filename='base/js/index.js')}}"></script>
+    <script src="{{url_for('static',filename='base/js/ajax.js')}}"></script>
+    <script src="{{url_for('static',filename='base/js/getreviews.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/travels_info.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/userinfo.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/info_edit.css')}}">
 </head>
 <body>
     <div id="header">
@@ -22,7 +27,7 @@
             </div>
             <!-- 导航栏 -->
             <ul class="leftNav">
-                <li class="currentLi"><a href="/">旅游圈</a></li>
+                <li><a href="/tourism_sircle">旅游圈</a></li>
                 <li><a href="/">全部景点</a></li>
                 <li><a href="/">全部游记</a></li>
                 <li><a href="/">关于我们</a></li>
@@ -33,7 +38,7 @@
             </ul>  
             <ul class="rightNav">
                 {% if session['user_name'] %}
-                    <li><a href="">[ {{session["user_name"]}} ]</a></li>
+                    <li><a href="/userinfo/{{session['user_id']}}">[ {{session["user_name"]}} ]</a></li>
                     <li><a href="/logout/">退出</a></li>
                 {% else %}
                     <li>
@@ -45,9 +50,9 @@
             </ul>   
         </div>
     </div>
-
+   
     {% block content %}{% endblock %}
-
+    
     {% include 'base/footer.html' %}
 </body>
 </html>

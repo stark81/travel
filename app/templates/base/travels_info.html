@@ -1,0 +1,47 @@
+{% extends "base/home.html" %}
+
+{% block content %}
+    <div id="travelmain">
+        <div class="inner">
+            <div class="travel_content">
+                <h2>{{ travel.title }}</h2>
+                <div class="otherinfo">
+                    <label>作者 : 
+                        {% if travel.travelauthor.uname %}
+                            {{ travel.travelauthor.uname }}
+                        {% else %}
+                            悦游管理员
+                        {% endif %}
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>所属景区 : {{ travel.scenic.scenicname }}</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>发表时间 : {{ travel.addtime }}</label>
+                </div>
+                {{ travel.content|safe }}
+            </div>
+            <div class="travel_author">
+                <b>关于作者</b><br>
+                <div class="authorcover">
+                    <div>这里是作者的头像</div>
+                    <h3>{{ travel.travelauthor.uname }}</h3>
+                    <p>{{ travel.travelauthor.introduce }}</p>
+                </div>
+                <div>
+
+                </div>
+            </div>
+            <div class="travel_scenicinfo">
+                这里是游记对应的景区的相关信息
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!-- 返回顶部按钮 -->
+    <div id="writeTravels">
+        <a href="">写游记</a>
+        <div class="go-top">
+            <p>返回顶部</p>
+        </div>
+    </div>
+{% endblock %}

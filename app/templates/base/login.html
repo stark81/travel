@@ -33,14 +33,16 @@
             <div class="form-control">
                 <p>密码:</p>{{ form.upwd }}
             </div>
-            <div style="height:20px"></div>
-            <div style="height:20px"></div>
+            <div style="height:10px"></div>
+            <div class="form-control">
+                    <p>&nbsp;</p><input type="checkbox" 
+                    name="issave" checked="checked" >记住密码
+            </div>
+            <div style="height:16px"></div>
             <div class="form-control">
                 {{ form.csrf_token }}
                 {{ form.submit }}
-            </div>  
-            <p style="margin-top:30px;text-align:center;">没有账号?去
-                <a style="color: #00b2ec" href="/register/">注册</a></p>
+            </div>
         </form>
     </div>
     <script type="text/javascript">

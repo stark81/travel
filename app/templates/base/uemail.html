@@ -1,0 +1,14 @@
+<label>
+    <span>电子邮箱</span>
+    {{ user.uemail }}
+    <span class="hidden" onclick="getemailchange()">修改</span>
+</label>
+<script>
+    function getemailchange(){
+        var uid = $("[name=infoid]").val();
+        console.log(uid);
+        $.get("/getemailchangepage",{uid:uid},function(data){
+            $(".uemail1").html(data);
+        });
+    }
+</script>

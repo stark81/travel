@@ -1,0 +1,18 @@
+<label>
+    <span>手机号码</span>
+    {% if user.uphone %}
+        {{ user.uphone }}
+        <span class="hidden" onclick="getphonechange()">修改</span>
+    {% else %}
+        <label class="addphone" onclick="getphonechange()">添加手机号码</label>
+    {% endif %}
+</label>
+<script>
+        function getphonechange(){
+            var uid = $("[name=infoid]").val();
+            console.log(uid);
+            $.get("/getphonechangepage",{uid:uid},function(data){
+                $(".uphone1").html(data);
+            });
+        }
+    </script>

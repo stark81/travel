@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config["SECRET_KEY"] = 'mrsoft'
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@127.0.0.1:3306/travel"
-track_modifications = app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', True)
+track_modifications = app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
 db = SQLAlchemy(app)
 
 UP_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), "static/uploads/")  # 文件上传路径

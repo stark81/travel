@@ -12,13 +12,20 @@
                 <th>封面</th>
                 <th>所属景区</th>
                 <th>上传时间</th>
+                <th>游记状态</th>
                 <th>操作</th>
             </tr>
             {% for travels in page_data.items %}
             <tr>
                 <td>{{travels["id"]}}</td>
                 <td>{{travels["title"]}}</td>
-                <td>{{travels["author"]}}</td>
+                <td>
+                    {% if travels.travelauthor.uname %}
+                        {{travels.travelauthor.uname }}
+                    {% else %}
+                        悦游管理员
+                    {% endif %}
+                </td>
                 <td>
                     <img style="width:70px;height:70px;margin-top: 6px"
                     src="{{ url_for('static', filename='uploads/'+ travels.cover) }}"
@@ -27,7 +34,28 @@
                 <td>{{travels.scenic.scenicname}}</td>
                 <td>{{travels["addtime"]}}</td>
                 <td>
-                    <a class="edit" href="travelslist/edit/{{travels['id']}}">编辑</a>
+                    {% if travels["isactive"] %}
+                        正常
+                    {% else %}
+                        已删除
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not travels.travelauthor.uname  %}
+                        <a class="edit" href="travelslist/edit/{{travels['id']}}">编辑</a><br>
+                    {% else %}
+                        <a class="disable" href="travelslist/edit/{{travels['id']}}">编辑</a><br>
+                    {% endif %}
+                    <div style="height:0.06rem"></div>
+                    <form action="dele" method="POST">
+                        {% if travels.isactive %}
+                        <a class="edit" style="background:#e27b27"
+                        href="dele/{{travels['id']}}">删除</a>
+                        {% else %}
+                        <a class="edit" style="background:#e27b27"
+                        href="recover/{{travels['id']}}">恢复</a>
+                        {% endif %}
+                    </form>    
                 </td>
             </tr>
             {% endfor %}

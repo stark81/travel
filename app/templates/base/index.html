@@ -5,20 +5,92 @@
     {% include 'base/banner.html' %}
     <!-- 主体内容 -->
     <div id="main">
-        <div class="inner">
+        
             <!-- 最新游记 -->
-            <div class="travels">
+        <div class="travels">
+            <div class="inner">
                 <div class="title">
                     <h3>最新游记</h3>
                     <a href="">查看更多 ></a>
                 </div>
-                <div class="travelsItem">
-                    
-                </div>
+                <ul class="travelsItem">
+                    {% for travel in travels %}
+                    <li>
+                        <div style="height:210px;width:390px;overflow:hidden">
+                            <img style="width:100%" src="{{url_for('static',filename='uploads/'+ travel.cover )}}">
+                        </div>
+                        <div class="text">
+                            <h3> <a href="/travels/info/{{ travel.id }}">{{travel.title}}</a> </h3>
+                            <div class="introduce">
+                                {{ travel.content|safe }}
+                            </div> 
+                            <div class="reviews" style="font-size:15px;color:#888">
+                                <b>
+                                    {% if travel.travelauthor.uname %}
+                                        <a href="/userinfo/{{ travel.travelauthor.id }}">{{ travel.travelauthor.uname }}</a> 
+                                    {% else %}
+                                        悦游管理员
+                                    {% endif %}
+                                </b>
+                                
+                                &nbsp;&nbsp;
+                                <label>
+                                    <span class="getreviews">
+                                        <input type="hidden" name="travel_id" value="{{ travel.id }}">
+                                    </span>
+                                    条评论
+                                </label>
+                                &nbsp;&nbsp;
+                                {{ travel.addtime }}
+                            </div>
+                        </div>
+                        
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
-            
+        </div>
+        <!-- 景区推荐 -->
+        <div id="scenic">
+            <div class="title">
+                <h3>景区推荐</h3>
+                <a href="">查看更多 ></a>
+            </div>
+            <div id="scenicItem">
+                <ul>
+                    {% for scenic in scenics %}
+                        <li>
+                            <div class="img">
+                                <img style="width:100%;height:100%" src="{{url_for('static',filename='uploads/'+ scenic.cover )}}">
+                                <div class="imgintroduce">
+                                    <h3>{{ scenic.scenicname }}<span>{{ scenic.area.areaName }}</span></h3>
+                                    {{ scenic.introduce }}
+                                </div>
+                            </div>
+                            <div class="text">
+                                <h3>{{ scenic.scenicname }}<span>{{ scenic.area.areaName }}</span></h3>
+                                <p>{{ scenic.address }}</p>
+                                <div style="height:40px">
+                                    {% for i in range(5) %}
+                                        {% if i < scenic.star %}
+                                            <img style="margin-top: 13px" src="{{url_for('static',filename='base/image/star1.png')}}">
+                                        {% else %}
+                                            <img style="margin-top: 13px" src="{{url_for('static',filename='base/image/star2.png')}}">
+                                        {% endif %}
+                                    {% endfor %}
+                                    <a href="">
+                                        <div class="starRight">查看</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="scenicNav"></div>
         </div>
     </div>
+
     <!-- 返回顶部按钮 -->
     <div id="writeTravels">
         <a href="">写游记</a>
