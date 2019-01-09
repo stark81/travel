@@ -1,7 +1,56 @@
 <div>
     {{ form.username.label }}
     {{ form.username }}
+    <span id="unamemsg"></span>
     <br>
-    <input type="submit" name="save" value="保存">
-    <input type="submit" name="cancel" value="取消">
+    <input type="submit" name="unamesave" onclick="postuname()" value="保存">
+    <input type="submit" name="unamecancel" onclick="getuname()" value="取消">
 </div>
+<script>
+    function getuname(){
+        var uid = $("[name=infoid]").val();
+        $.get("/getunamepage",{uid:uid},function(data){
+            $(".uname1").html(data);
+        });
+    }
+
+    function postuname(){
+        var uid = $("[name=infoid]").val();
+        var uname = $("[name='username']").val()
+        $.post("/postunamepage",{
+            uid:uid,
+            uname:uname
+        },
+        function(data){
+            $(".uname1").html(data);
+        })
+    }
+
+    $("input[name='username']").bind('input propertychange',function(){
+        $("#unamemsg").html('');
+        var val = $(this).val();   
+        if(val != ""){
+            $("#unamemsg").load("/checkname","user_name="+val,
+            function(data){
+                if(data=="1"){
+                    $("#unamemsg").html('用户名已存在');
+                    $("[name='unamesave']").attr("disabled",true);
+                    $("[name='unamesave']").css({
+                        "cursor":"default"
+                    })
+                }else{
+                    $("#unamemsg").html('ok');
+                    $("[name='unamesave']").attr("disabled",false);
+                    $("[name='unamesave']").css({
+                        "cursor":"pointer"
+                    })
+                }
+            })
+        }else{
+            $("[name='unamesave']").attr("disabled",true);
+            $("[name='unamesave']").css({
+                    "cursor":"default"
+                })
+        }
+     })
+</script>

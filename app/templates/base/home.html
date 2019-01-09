@@ -37,8 +37,19 @@
                 </form>
             </ul>  
             <ul class="rightNav">
-                {% if session['user_name'] %}
-                    <li><a href="/userinfo/{{session['user_id']}}">[ {{session["user_name"]}} ]</a></li>
+                {% if session['user_id'] %}
+                    <li class="userinfoli">
+                        <input type="hidden" name="homeuser" value="{{ session['user_id'] }}">
+                        <a id="firstusername" href="/userinfo/{{session['user_id']}}"></a>
+                    </li>
+                    <script>
+                        $(function(){
+                            var uid = $("[name=homeuser]").val();
+                            $.get("/getusername",{uid:uid},function(data){
+                                $("#firstusername").html(data);
+                            });
+                        })
+                    </script>
                     <li><a href="/logout/">退出</a></li>
                 {% else %}
                     <li>

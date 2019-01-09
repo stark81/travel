@@ -98,7 +98,7 @@ class InfoEditForm(FlaskForm):
     uemail = StringField(
         label="电子邮箱",
         validators=[
-            DataRequired("电子邮箱不能为空!")
+            DataRequired("电子邮箱不能为空!"),
         ],
         render_kw={
             "placeholder":"请输入邮箱地址"

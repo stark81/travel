@@ -1,5 +1,6 @@
 from . import home
 from app import db
+from functools import wraps
 from app.models import User,Userlog,Travels,Scenic,Review
 from app.home.forms import RegisterForm,LoginForm,InfoEditForm
 from flask import render_template,flash,request,redirect,url_for,session
@@ -14,7 +15,6 @@ def user_login(f):
         if "user_id" not in session:
             return redirect(url_for("home.login"))
         return f(*args, **kwargs)
-
     return decorated_function
 
 @home.route("/")
@@ -39,13 +39,9 @@ def getreviews():
 def logout():
     url = request.headers.get("Referer","/")
     resp = redirect(url)
-    if "user_name" in session:
+    if "user_id" in session:
         del session["user_id"]
-        del session["user_name"]
-    if "user_name" in request.cookies:
-        resp.delete_cookie("user_name")
     return resp
-    # return redirect(url_for("home.login"))
 
 @home.route("/login/",methods=["GET","POST"])
 def login():
@@ -63,22 +59,20 @@ def login():
             return redirect(url_for("home.login"))
         if check_password_hash(user.upwd,form.data["upwd"]) is False:
             flash("密码不正确","err")
-            return redirect(url_for("home.login"))
-        session["user_name"] = user.uname   
+            return redirect(url_for("home.login")) 
         session["user_id"] = user.id
         userlog = Userlog(user.id,request.remote_addr) #验证通过之后,将用户登录的信息添加
         db.session.add(userlog)                    #到userlog表中,并将网页首页返回给用户
         db.session.commit()
         url = session.get("url","/")
         resp = redirect(url)
-        
         return resp
     return render_template("base/login.html",form=form)
+
 
 @home.route("/register/",methods=["GET","POST"])
 def register():
     if request.method == "GET":
-        del session["user_id"]
         url = request.headers.get("Referer","/")
         session["url"] = url
     form = RegisterForm()
@@ -93,13 +87,15 @@ def register():
             upwd = generate_password_hash(data["upwd"])
             )
         session["user_id"] = user.id
-        session["user_name"] = user.uname
         db.session.add(user)
         db.session.commit()
         url = session.get("url","/")
         resp = redirect(url)
         return resp
     return render_template("base/register.html",form = form)
+
+
+
 
 @home.route("/travels/info/<travel_id>")
 def travels_info(travel_id):
@@ -112,6 +108,7 @@ def userinfo(user_id):
     return render_template("base/userinfo.html",user=user)
 
 @home.route("/info_edit/<user_id>",methods=["GET","POST"])
+@user_login
 def info_edit(user_id):
     form = InfoEditForm()
     user = User.query.filter_by(id=user_id).first()
@@ -122,6 +119,27 @@ def getunamepage():
     uid = request.args["uid"]
     user = User.query.filter_by(id=uid).first()
     return render_template("base/uname.html",user=user)
+
+@home.route("/postunamepage",methods=["POST"])
+def postunamepage():
+    uid = request.form["uid"]
+    uname = request.form["uname"]
+    user = User.query.filter_by(id=uid).first()
+    user.uname = uname
+    db.session.add(user)
+    db.session.commit()
+    print("ok")
+    return render_template("base/uname.html",user=user)
+
+@home.route("/postemailpage",methods=["POST"])
+def postemailpage():
+    uid = request.form["uid"]
+    uemail = request.form["uemail"]
+    user = User.query.filter_by(id=uid).first()
+    user.uemail = uemail
+    db.session.add(user)
+    db.session.commit()
+    return render_template("base/uemail.html",user=user)
 
 @home.route("/getuemailpage")
 def getuemailpage():
@@ -146,8 +164,7 @@ def getunamechangepage():
     form = InfoEditForm()
     uid = request.args["uid"]
     user = User.query.filter_by(id=uid).first()
-    if request.method == "GET":
-        form.username.data = user.uname
+    form.username.data = user.uname
     return render_template("base/unamechange.html",user=user,form=form)
 
 @home.route("/getemailchangepage")
@@ -155,8 +172,7 @@ def getemailchangepage():
     form = InfoEditForm()
     uid = request.args["uid"]
     user = User.query.filter_by(id=uid).first()
-    if request.method == "GET":
-        form.uemail.data = user.uemail
+    form.uemail.data = user.uemail
     return render_template("base/emailchange.html",user=user,form=form)
 
 @home.route("/getphonechangepage")
@@ -164,8 +180,7 @@ def getphonechangepage():
     form = InfoEditForm()
     uid = request.args["uid"]
     user = User.query.filter_by(id=uid).first()
-    if request.method == "GET":
-        form.uphone.data = user.uphone
+    form.uphone.data = user.uphone
     return render_template("base/phonechange.html",user=user,form=form)
 
 @home.route("/getintroducechangepage")
@@ -173,6 +188,25 @@ def getintroducechangepage():
     form = InfoEditForm()
     uid = request.args["uid"]
     user = User.query.filter_by(id=uid).first()
-    if request.method == "GET":
-        form.uintroduce.data = user.introduce
+    form.uintroduce.data = user.introduce
     return render_template("base/introducechange.html",user=user,form=form)
+
+@home.route("/getusername")
+def getusername():
+    uid = request.args["uid"]
+    user = User.query.filter_by(id = uid).first()
+    user_name = user.uname
+    return user_name
+
+@home.route("/checkname")
+def checkname():
+    uname = request.args["user_name"]
+    user_count = User.query.filter_by(uname=uname).count()
+    print(user_count)
+    return str(user_count)
+
+@home.route("/checkemail")
+def checkemail():
+    user_email = request.args["user_email"]
+    user_count = User.query.filter_by(uemail=user_email).count()
+    return str(user_count)
