@@ -19,10 +19,11 @@
                         <div style="height:210px;width:390px;overflow:hidden">
                             <img style="width:100%" src="{{url_for('static',filename='uploads/'+ travel.cover )}}">
                         </div>
+                        
                         <div class="text">
                             <h3> <a href="/travels/info/{{ travel.id }}">{{travel.title}}</a> </h3>
                             <div class="introduce">
-                                {{ travel.content|safe }}
+                                {{ travel.content|safe|truncate(160) }}
                             </div> 
                             <div class="reviews" style="font-size:15px;color:#888">
                                 <b>
@@ -32,7 +33,6 @@
                                         悦游管理员
                                     {% endif %}
                                 </b>
-                                
                                 &nbsp;&nbsp;
                                 <label>
                                     <span class="getreviews">
@@ -50,7 +50,7 @@
                 </ul>
             </div>
         </div>
-        <!-- 景区推荐 -->
+        
         <div id="scenic">
             <div class="title">
                 <h3>景区推荐</h3>
@@ -64,7 +64,7 @@
                                 <img style="width:100%;height:100%" src="{{url_for('static',filename='uploads/'+ scenic.cover )}}">
                                 <div class="imgintroduce">
                                     <h3>{{ scenic.scenicname }}<span>{{ scenic.area.areaName }}</span></h3>
-                                    {{ scenic.introduce }}
+                                    {{ scenic.introduce|truncate(60) }}
                                 </div>
                             </div>
                             <div class="text">

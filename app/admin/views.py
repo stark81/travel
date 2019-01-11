@@ -333,7 +333,6 @@ def addtravels():
     form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
     admins = AdminList.query.filter_by(id=session["admin"]).first()
     authors = admins.uname
-    form.author.data = authors
     if form.validate_on_submit():
         data = form.data
         operlog = Operlog()

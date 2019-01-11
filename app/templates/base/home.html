@@ -37,7 +37,7 @@
                 </form>
             </ul>  
             <ul class="rightNav">
-                {% if session['user_id'] %}
+                {% if session["user_id"] %}
                     <li class="userinfoli">
                         <input type="hidden" name="homeuser" value="{{ session['user_id'] }}">
                         <a id="firstusername" href="/userinfo/{{session['user_id']}}"></a>

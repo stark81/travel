@@ -7,7 +7,7 @@
             </div>
             <div class="userinfo">
                 <div class="userimg">
-                    {{ user.cover }}
+                    <img style="width:100%" src="{{ url_for('static',filename='uploads/user/')+user.cover }}">
                 </div>
                 <div class="username">
                     <h2>{{ user.uname }}</h2>
@@ -21,15 +21,69 @@
                 </div>
                 <div class="edit">
                     {% if session["user_id"] == user.id %}
-                        <div class="change"><a href='/info_edit/{{ session["user_id"]}}'>编辑资料</a></div>
+                        <div class="change"><a href='/info_edit/{{ session["user_id"]}}'>编辑</a></div>
                     {% else %}
                         <div class="change">关注</div>
                         <div class="change">留言</div>
                     {% endif %}
                 </div>
-                
             </div>
+            <div id="aboutUser">
+                <ul id="aboutul">
+                    <li>游记</li>
+                    <li>评论</li>
+                    <li>收藏</li>
+                    <li>关注</li>
+                    <li>留言</li>
+                    <div class="clear"></div>
+                </ul>
+                <div class="aboutmain">
+                    {% if travels %}
+                        {% for travel in travels %}
+                        <li class="usertravelli">
+                            <div class="usertravelimg">
+                                <img style="height:100%;width: 100%" src=
+                                "{{url_for('static',filename='uploads/'+travel.cover)}}">
+                            </div>
+                            <a href="/travels/info/{{ travel.id }}">    
+                                <div class="usertravelinfo">
+                                    <h3>{{ travel.title }}</h3>
+                                    {{ travel.content|safe|truncate(180) }}
+                                </div>
+                            </a>
+                            <div class="usertravereviews">
+                                <span class="getreviews">
+                                    <input type="hidden" name="travel_id" value="{{ travel.id }}">
+                                </span>条评论
+                                <label>{{ travel.addtime }}</label>
+                                {% if travel.author_id == session["user_id"] %}
+                                    <span>删除</span>
+                                    <span>编辑</span>
+                                {% else %}
+                                    <span>收藏</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="clear"></div>
+                        </li>
+                            
+                        {% endfor %}
+                    {% else %}
+                        0
+                    {% endif %}
+                </div>
+            </div>
+            
             <div class="clear"></div>
+        </div>
+    </div>
+
+
+    <!-- 返回顶部按钮 -->
+    <div id="writeTravels">
+        <a href="">写游记</a>
+        <div class="go-top">
+            <p>返回顶部</p>
         </div>
     </div>
 {% endblock %}

@@ -25,12 +25,13 @@
     float: left;
     width: 160px;
     height: 160px;
-    background: #00a6c9;
+    background: white;
     border: 5px white solid;
     border-radius: 6px;
     position: absolute;
     left: 14px;
     top: -60px;
+    overflow: hidden;
 }
 
 .username{
@@ -47,15 +48,81 @@
     float: right;
 }
 
-.edit>div{
+.edit>div,.change{
     float: left;
     height: 30px;
-    width: 120px;
+    width: 80px;
     margin-right: 40px;
     margin-top: 40px;
     text-align: center;
     line-height: 30px;
-    border-radius: 8px;
-    border: 1px #00a6c9 solid;
+    border-radius: 4px;
+    background: #00a6c9
+}
+.change, .change>a{
+    color: white;
 }
 
+#aboutUser{
+    padding: 14px;
+}
+#aboutul{
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 24px;
+}
+#aboutul>li{
+    float: left;
+    width: 20%;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.aboutmain{
+    border:1px red solid;
+    padding-bottom:20px; 
+}
+
+.usertravelli{
+    padding: 10px 0;
+    border-bottom: 1px #ccc solid;
+}
+
+.usertravelimg{
+    height: 200px;
+    width: 313px;
+    float: left;
+    margin-right: 30px;
+    overflow: hidden;
+    
+}
+.usertravelimg img{
+    transition: all 0.6s;
+}
+.usertravelimg:hover>img{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.usertravelinfo{
+    height: 160px;
+    /* width: 100%; */
+    border: 1px red solid;
+    float: left;
+}
+
+.usertravelinfo>h3{
+    line-height: 40px;
+}
+
+.usertravelinfo>p{
+    width: 800px;
+    line-height: 25px;
+    text-indent: 2em;
+}
+
+.usertravereviews{
+    width:800px;
+    line-height: 40px;
+}

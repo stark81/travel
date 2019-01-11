@@ -53,7 +53,7 @@ class RegisterForm(FlaskForm):
         if User.query.filter_by(uemail=field.data).first():
             raise  ValidationError('该邮箱已被注册，请选用其它邮箱')
     def validate_username(self,field):
-        if User.query.filter_by(username=field.data).first():
+        if User.query.filter_by(uname=field.data).first():
             raise  ValidationError('用户名已被注册，请使用其他名称')
 
 

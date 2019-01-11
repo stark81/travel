@@ -35,3 +35,10 @@ $(function(){
     });
 })
 
+$(function(){
+    var uid = $("[name='getimg']").val();
+    $.get("/getusercover",{uid:uid},function(data){
+        $(".userCover").attr("src","/static/uploads/user/"+data);
+    })
+})
+

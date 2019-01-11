@@ -9,7 +9,7 @@
 </label>
 <script>
         function getphonechange(){
-            var uid = $("[name=infoid]").val();
+            var uid = $("[name=infophone]").val();
             console.log(uid);
             $.get("/getphonechangepage",{uid:uid},function(data){
                 $(".uphone1").html(data);

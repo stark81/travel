@@ -1,58 +1,48 @@
 <div>
     {{ form.uphone.label }}
     {{ form.uphone }}
+    <span id="phonemsg"></span>
     <br>
-    <input type="submit" name="phonesave" value="保存">
-    <input type="submit" name="phonecancel" value="取消">
+    <input type="submit" name="phonesave" onclick="postphone()" value="保存">
+    <input type="submit" name="phonecancel" onclick="getphone()" value="取消">
 </div>
 
 <script>
-    function getemail(){
-        var uid = $("[name=infoemail]").val();
-        $.get("/getuemailpage",{uid:uid},function(data){
-            $(".uemail1").html(data);
+    function getphone(){
+        var uid = $("[name=infophone]").val();
+        console.log("收到个体phone");
+        $.get("/getuphonepage",{uid:uid},function(data){
+            $(".uphone1").html(data);
         });
     }
 
-    function postemail(){
-        var uid = $("[name=infoemail]").val();
-        var uemail = $("[name='uemail']").val()
-        $.post("/postemailpage",{
+    function postphone(){
+        var uid = $("[name=infophone]").val();
+        var uphone = $("[name='uphone']").val();
+        $.post("/postphonepage",{
             uid:uid,
-            uemail:uemail
+            uphone:uphone
         },
         function(data){
-            $(".uemail1").html(data);
+            $(".uphone1").html(data);
         })
     }
 
-    $("input[name='uemail']").bind('input propertychange',function(){
-        $("#emailmsg").html('');
+    $("input[name='uphone']").bind('input propertychange',function(){
+        $("#phonemsg").html('');
         var val = $(this).val(); 
-        lastone = (val.length-1);
-        if(val.indexOf('@')>0&&val.indexOf('@')!=lastone){
-            $("#emailmsg").load("/checkemail","user_email="+val,
-            function(data){
-                if(data=="1"){
-                    $("#emailmsg").html('邮箱已存在');
-                    $("[name='emailsave']").attr("disabled",true);
-                    $("[name='emailsave']").css({
-                        "cursor":"default"
-                    })
-                }else{
-                    $("#emailmsg").html('ok');
-                    $("[name='emailsave']").attr("disabled",false);
-                    $("[name='emailsave']").css({
-                        "cursor":"pointer"
-                    })
-                }
-            })
+        if(val.length != 11 || isNaN(val)){
+            $("#phonemsg").html('号码错误');
+            $("[name='phonesave']").attr("disabled",true);
+            $("[name='phonesave']").css({
+                "cursor":"default"})
         }else{
-            $("#emailmsg").html('邮箱格式不正确');
-            $("[name='emailsave']").attr("disabled",true);
-            $("[name='emailsave']").css({
-                "cursor":"default"
+            $("#phonemsg").html('ok');
+            $("[name='phonesave']").attr("disabled",false);
+            $("[name='phonesave']").css({
+                "cursor":"pointer"
             })
         }
-     })
+    })
+        
 </script>

@@ -4,7 +4,6 @@
 
 .lestmain .userinfo{
     height: auto;
-    border: 1px red solid;
 }
 
 .uname{
@@ -13,7 +12,6 @@
     padding-bottom: 30px;
     border-bottom: 2px #ddd solid;
 }
-
 
 .backmypage{
     padding: 0 10px;
@@ -159,4 +157,82 @@
 
 .addphone{
     cursor: pointer;
+}
+
+.userimgbotton{
+    width: 160px;
+    height: 160px;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.userimgbotton .changeimg{
+    width: 40px;
+    margin: 46px auto 10px;
+}
+
+.coverfile{
+    display: block;
+    height: 160px;
+    width: 300px;
+    padding-left: 170px;
+    position: absolute;
+    top: 0px;
+    cursor: pointer;
+}
+
+#tankuang {
+	margin: 40px auto;
+	width: 400px;
+	height: 523px;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+#tankuang>h2{
+    margin-bottom: 20px;
+}
+#clipArea {
+	/* margin: 20px; */
+	width:360px;
+	height: 200px;
+	margin: 0 auto;
+}
+#file,
+.clipBtn {
+    margin: 20px;
+}
+.clipBtn{
+    height: 34px;
+    width: 300px;
+    border: none;
+    background: #00a6c9;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+#clipBtn1{
+    margin-top: 0;
+}
+#view {
+	margin: 0 auto;
+	width: 200px;
+	height: 200px;
+}
+
+#tankuangHidden{
+    display: none;
+    height: 100%;
+    width: 100%;
+    background: rgba(26, 26, 26, 0.65);
+    position: fixed;
+    top: 0;
+    z-index: 100000;
+    scroll-behavior: unset;
 }

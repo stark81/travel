@@ -48,17 +48,11 @@ $(document).ready(function(e){
             navId:'#scenicNav', //导航容器ID，导航DOM:<ul><li>1</li><li>2</li><ul>,导航CSS:.navOn
             });
 
-        $(".imgintroduce").each(function(){
-            var intr = $(this).html();
-            if (intr.length>160){
-                $(this).html(intr.substr(0,160)+" . . . ");
-            };
-        });
-
-        $(".travel_content img").parent().css({
+        $(".travel_content>.article222>p>img").parent().css({
             "text-align":"center",
         })
 
+        
         
     });
 
