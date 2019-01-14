@@ -44,8 +44,13 @@
                         <div class="infointr1"></div>
                     </div>
                     <div class="clear"></div>
-                    
                 </div>
+                <script>
+                    getunamepage();
+                    getuemailpage();
+                    getuphonepage();
+                    getintroducepage();
+                </script>
             </div>
             <div class="clear"></div>
             {% else %}
@@ -99,6 +104,7 @@
                 ok: "#clipBtn",
                 clipFinish: function(dataURL) { 
                     var uid = {{ user.id }};
+                    console.log(uid)
                     ucover = dataURL;
                     ucover1 = ucover.split(",")[1];
                     ucover_type = ucover.split(",")[0].split("/")[1].split(";")[0];
@@ -118,11 +124,5 @@
         </div>
     </div>
 
-    <!-- 返回顶部按钮 -->
-    <div id="writeTravels">
-        <a href="">写游记</a>
-        <div class="go-top">
-            <p>返回顶部</p>
-        </div>
-    </div>
+    
 {% endblock %}

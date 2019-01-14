@@ -40,6 +40,9 @@
                                     </span>
                                     条评论
                                 </label>
+                                <script>
+                                    getreviewsCount()
+                                </script>
                                 &nbsp;&nbsp;
                                 {{ travel.addtime }}
                             </div>
@@ -78,7 +81,7 @@
                                             <img style="margin-top: 13px" src="{{url_for('static',filename='base/image/star2.png')}}">
                                         {% endif %}
                                     {% endfor %}
-                                    <a href="">
+                                    <a href="/showscenic/{{scenic.id}}">
                                         <div class="starRight">查看</div>
                                     </a>
                                 </div>
@@ -91,11 +94,4 @@
         </div>
     </div>
 
-    <!-- 返回顶部按钮 -->
-    <div id="writeTravels">
-        <a href="">写游记</a>
-        <div class="go-top">
-            <p>返回顶部</p>
-        </div>
-    </div>
 {% endblock %}

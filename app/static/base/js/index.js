@@ -16,7 +16,6 @@ $(document).ready(function(e){
         var url = window.location.href;    
         $(".leftNav li a").each(function(){
             if (returnUrl($(this).attr('href'))== returnUrl(url)){
-                console.log($(this).parent());
                 $(this).parent().addClass('currentLi');
             }
         }); 
@@ -50,9 +49,8 @@ $(document).ready(function(e){
 
         $(".travel_content>.article222>p>img").parent().css({
             "text-align":"center",
+            "text-indent": "0",
         })
-
-        
         
     });
 

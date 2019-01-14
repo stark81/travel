@@ -161,6 +161,14 @@ class AddTravelsForm(FlaskForm):
         choices=[ (1,'是'),(0, '否')], default=0, 
     )
 
+    area_id = SelectField(
+        label="所属地区",
+        validators=[
+            DataRequired("请选择所属地区")
+        ],
+        coerce=int,
+    )
+
     scenic_id = SelectField(
         label="所属景区",
         validators=[

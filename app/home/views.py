@@ -6,7 +6,8 @@ from app.home.forms import RegisterForm,LoginForm,InfoEditForm
 from flask import render_template,flash,request,redirect,url_for,session
 from werkzeug.security import generate_password_hash,check_password_hash
 from werkzeug.utils import secure_filename
-import os,uuid,base64
+import os,uuid,base64,json
+from app.admin.forms import AddTravelsForm
 
 def user_login(f):
     """
@@ -25,11 +26,10 @@ def index():
 
 @home.route("/tourism_sircle")
 def tourism_sircle():
-    travels = db.session.query(Travels).filter_by(isactive=1).all()
+    travels = db.session.query(Travels).filter_by(isactive=1).order_by(Travels.addtime.desc()).limit(6).all()
     scenics = db.session.query(Scenic).all()
-    reviews = db.session.query(Review).all()
     return render_template("base/index.html",travels=travels,
-    scenics=scenics,reviews=reviews)
+    scenics=scenics)
 
 @home.route("/getreviews")
 def getreviews():
@@ -107,7 +107,7 @@ def register():
 
 @home.route("/travels/info/<travel_id>")
 def travels_info(travel_id):
-    travel = Travels.query.filter_by(id=travel_id).first()
+    travel = Travels.query.filter(Travels.id==travel_id,Travels.isactive==1).first()
     return render_template("base/travels_info.html",travel=travel)
 
 @home.route("/userinfo/<user_id>")
@@ -138,7 +138,6 @@ def postunamepage():
     user.uname = uname
     db.session.add(user)
     db.session.commit()
-    print("ok")
     return render_template("base/uname.html",user=user)
 
 @home.route("/postemailpage",methods=["POST"])
@@ -167,7 +166,6 @@ def postintroducepage():
     introduce = request.form["introduce"]
     user = User.query.filter_by(id=uid).first()
     user.introduce = introduce
-    print(user.introduce)
     db.session.add(user)
     db.session.commit()
     return render_template("base/uintroduce.html",user=user)
@@ -233,7 +231,6 @@ def getusername():
 def checkname():
     uname = request.args["user_name"]
     user_count = User.query.filter_by(uname=uname).count()
-    print(user_count)
     return str(user_count)
 
 @home.route("/checkemail")
@@ -268,12 +265,56 @@ def postcover():
 
 @home.route("/getusercover")
 def getusercover():
-    uid = request.args["uid"]
-    user = User.query.filter_by(id=uid).first()
+    authorid = request.args["uid"]
+    user = User.query.filter_by(id=authorid).first()
     cover = user.cover
     return cover
 
+@home.route("/gettravelreviews")
+def gettravelreviews():
+    travel_id = request.args["uid"]
+    page = request.args.get('page', 1, type=int)
+    # page_data = Scenic.query.paginate(page=page, per_page=3)
+    reviews = Review.query.filter(Review.travels_id==travel_id,Review.isactive==1).order_by(Review.addtime.desc()).all()
+    return render_template("base/reviews.html",reviews=reviews)
 
+@home.route("/userpostreviews",methods=["POST"])
+def userpostreviews():
+    uid = request.form["uid"]
+    travel_id = request.form["travel_id"]
+    review_content = request.form["review_content"]
+    review = Review()
+    review.travels_id = travel_id
+    review.content = review_content
+    review.user_id = uid
+    db.session.add(review)
+    db.session.commit()
+    reviews = Review.query.filter(Review.travels_id==travel_id,Review.isactive==1).order_by(Review.addtime.desc()).all()
+    return render_template("base/reviews.html",reviews=reviews)
+
+@home.route("/delreviews",methods=["POST"])
+def delreviews():
+    review_id = request.form["review_id"]
+    travel_id =request.form["travel_id"]
+    review = Review.query.filter_by(id=review_id).first()
+    review.isactive = False
+    db.session.add(review)
+    db.session.commit()
+    reviews = Review.query.filter(Review.travels_id==travel_id,Review.isactive==1).order_by(Review.addtime.desc()).all()
+    return render_template("base/reviews.html",reviews=reviews)
+
+
+@home.route("/showscenic/<scenic_id>")
+def showscenic(scenic_id):
+    scenic = Scenic.query.filter_by(id=scenic_id).first()
+    travels = Travels.query.filter(Travels.scenic_id==scenic_id,Travels.isactive==1).limit(5)
+    return render_template("base/scenic_info.html",scenic=scenic,travels=travels)
+
+@home.route("/writetravels")
+def writetravels():
+    form = AddTravelsForm()
+    form.area_id.choices = [(v.id, v.areaName) for v in Area.query.all()]
+    return render_template("base/writetravels.html",form=form)
 
 
 

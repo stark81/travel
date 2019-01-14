@@ -1,0 +1,47 @@
+
+.reviewLi>.usercover{
+    height:40px;
+    width:40px;
+    float: left;
+    margin-top: 13px;
+}
+
+.reviewLi>div{
+    width: 663px;
+    float: left;
+    margin-right: 10px;
+}
+.reviewLi>div>p{
+    text-indent: 0;
+    width: 100%;
+    padding-left: 10px;
+    line-height: 26px;
+    margin: 10px 0 5px 0;
+}
+.reviewLi>div>p>a{
+    font-weight: bold;
+}
+.reviewLi>div>.time{
+    font-size: 13px;
+    line-height: 14px;
+    margin: 5px 0 10px 0;
+}
+
+.reviewLi>input{
+    float: left;
+    margin: 16px 0 0 10px;
+    height: 34px;
+    padding: 0 20px;
+    border-radius: 4px;
+    background: white;
+    border: 1px #666 solid;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.6s
+}
+
+.reviewLi>input:hover{
+    border: 1px #e27b27 solid;
+    background: #e27b27;
+    color: white;
+}

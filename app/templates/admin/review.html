@@ -18,7 +18,7 @@
             {% for review  in page_data.items %}
             <tr>
                 <td>{{review["id"]}}</td>
-                <td>{{review.travels.title}}</td>
+                <td>{{review.travels.title|truncate(8)}}</td>
                 <td>
                     {% if review.travels.travelauthor.uname %}
                         {{ review.travels.travelauthor.uname}}
@@ -27,7 +27,7 @@
                     {% endif %}
                 </td>
                 <td>{{ review.reviewers.uname }}</td>
-                <td>{{review.content}}</td>
+                <td>{{review.content|truncate(8)}}</td>
                 <td>{{review["addtime"]}}</td>
                 <td>
                     {% if review.isactive %}
@@ -51,7 +51,7 @@
             {% endfor %}
         </table>
         <div class="box-footer clearfix">
-            {{ pg.page(page_data,'admin.travelslist') }}
+            {{ pg.page(page_data,'admin.reviews') }}
         </div>
     </div>
 {% endblock %}

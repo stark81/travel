@@ -340,3 +340,14 @@
 .lestmain .inner{
     background:  white;
 }
+
+.userinfoli{
+    line-height: 26px;
+    margin-top: 7px;
+}
+.userinfoli>a>img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: block;
+}

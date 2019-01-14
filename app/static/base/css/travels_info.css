@@ -20,6 +20,7 @@
 }
 .travel_content h2{
     margin-bottom: 10px;
+    text-align: center;
 }
 .travel_content p{
     margin: 10px 0 ;
@@ -28,17 +29,17 @@
 }
 
 .travel_author{
-    width: 250px;
+    width: 290px;
     float: left;
     padding: 16px 20px;
     background: white;
+    margin-bottom: 20px;
 }
 .travel_scenicinfo{
     background: white;
-    width: 250px;
+    width: 288px;
     padding:16px 20px;
     float: left;
-    margin-top: 20px;
 }
 
 .article222{
@@ -81,3 +82,16 @@
     padding-bottom: 20px;
     border-bottom: 1px #ccc solid;
 }
+
+.authorimg{
+    width: 80px;
+    margin: 10px 10px 0 0;
+    float: left;
+}
+.authorimg>a>img{
+    width: 100%;
+}
+.authorcover>a>h3{
+    line-height: 50px;
+}
+

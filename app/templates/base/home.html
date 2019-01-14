@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>悦游</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='admin/image/admin_03.png')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/index.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/common.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/footer.css')}}">
@@ -16,6 +17,10 @@
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/travels_info.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/userinfo.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/info_edit.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/reviews.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/scenic_info.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/addarea.css')}}">
+    
 </head>
 <body>
     <div id="header">
@@ -40,9 +45,12 @@
                 {% if session["user_id"] %}
                     <li class="userinfoli">
                         <input type="hidden" name="homeuser" value="{{ session['user_id'] }}">
+                        <input type="hidden" name="getimg" value="{{ session['user_id'] }}">
+                        <a href="/userinfo/{{session['user_id']}}"><img class="userCover"></a>
                         <a id="firstusername" href="/userinfo/{{session['user_id']}}"></a>
                     </li>
                     <script>
+                        getusercover();
                         $(function(){
                             var uid = $("[name=homeuser]").val();
                             $.get("/getusername",{uid:uid},function(data){
@@ -61,9 +69,20 @@
             </ul>   
         </div>
     </div>
-   
     {% block content %}{% endblock %}
     
-    {% include 'base/footer.html' %}
+    <!-- 返回顶部按钮 -->
+    {% block writetravels %}
+        <div id="writeTravels">
+            <a href="/writetravels">写游记</a>
+            <div class="go-top">
+                <p>返回顶部</p>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'base/footer.html' %}
+    {% endblock %}
 </body>
 </html>

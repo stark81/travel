@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime,date
 from . import db
+import json
 
 class User(db.Model):
     __tablename__ = "user"
@@ -132,6 +133,17 @@ class Review(db.Model):
     content = db.Column(db.Text)
     isactive = db.Column(db.Boolean,default=True)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
+    def to_dic(self):
+        dic = {
+            "id":self.id,
+            "travels_id":self.travels_id,
+            "user_id":self.user_id,
+            "content":self.content,
+            "isactive":self.isactive,
+            "addtime":self.addtime.strftime('%Y-%m-%d %H:%M:%S'),
+        }
+        return dic
+
 
 class ScenicCollect(db.Model):
     __tablename__ = "sceniccollect"
