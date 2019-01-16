@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/reviews.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/scenic_info.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/addarea.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/userinfo_review.css')}}">
     
 </head>
 <body>
@@ -32,12 +33,12 @@
             </div>
             <!-- 导航栏 -->
             <ul class="leftNav">
-                <li><a href="/tourism_sircle">旅游圈</a></li>
-                <li><a href="/">全部景点</a></li>
-                <li><a href="/">全部游记</a></li>
-                <li><a href="/">关于我们</a></li>
+                <li id="firstnav"><a href="/tourism_sircle">旅游圈</a></li>
+                <li><a href="/allscenics">全部景点</a></li>
+                <li><a href="/alltravels">全部游记</a></li>
+                <li><a href="/aboutus">关于我们</a></li>
                 <!-- 搜索框 -->
-                <form action="/search" method="POST">
+                <form>
                     <input type="text" name="search" placeholder="请输入搜索内容">
                 </form>
             </ul>  
@@ -46,17 +47,15 @@
                     <li class="userinfoli">
                         <input type="hidden" name="homeuser" value="{{ session['user_id'] }}">
                         <input type="hidden" name="getimg" value="{{ session['user_id'] }}">
-                        <a href="/userinfo/{{session['user_id']}}"><img class="userCover"></a>
-                        <a id="firstusername" href="/userinfo/{{session['user_id']}}"></a>
+                        <a href="/userinfo/travel/{{session['user_id']}}"><img class="userCover"></a>
+                        <a id="firstusername" href="/userinfo/travel/{{session['user_id']}}"></a>
                     </li>
                     <script>
                         getusercover();
-                        $(function(){
-                            var uid = $("[name=homeuser]").val();
-                            $.get("/getusername",{uid:uid},function(data){
-                                $("#firstusername").html(data);
-                            });
-                        })
+                        var uid = $("[name=homeuser]").val();
+                        $.get("/getusername",{uid:uid},function(data){
+                            $("#firstusername").html(data);
+                        });
                     </script>
                     <li><a href="/logout/">退出</a></li>
                 {% else %}

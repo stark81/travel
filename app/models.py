@@ -51,6 +51,13 @@ class Area(db.Model):
     introduce = db.Column(db.Text)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
     scenics = db.relationship("Scenic",backref="area")
+    def to_dic(self):
+        dic = {
+            "id":self.id,
+            "areaName":self.areaName
+        }
+        return dic
+        
 
 class Suggest(db.Model):
     __tablename__ = "suggestion"
@@ -102,6 +109,12 @@ class Scenic(db.Model):
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
     sceniccollects = db.relationship("ScenicCollect",backref="scenic")
     travels = db.relationship("Travels",backref="scenic")
+    def to_dic(self):
+        dic = {
+            "id":self.id,
+            "scenicname":self.scenicname
+        }
+        return dic
 
 class Travels(db.Model):
     __tablename__ = "travels"
@@ -114,6 +127,7 @@ class Travels(db.Model):
     content = db.Column(db.Text)
     is_recommend = db.Column(db.Boolean,default=False)
     isactive = db.Column(db.Boolean,default=True)
+    isdrafts = db.Column(db.Boolean,default=False)
     reviews = db.relationship("Review",backref="travels")
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
     travelscollects = db.relationship("TravelsCollect",backref="travels")

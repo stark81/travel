@@ -1,5 +1,5 @@
 from . import home
-from app import db,FC_DIR
+from app import db,FC_DIR,UP_DIR
 from functools import wraps
 from app.models import *
 from app.home.forms import RegisterForm,LoginForm,InfoEditForm
@@ -110,7 +110,7 @@ def travels_info(travel_id):
     travel = Travels.query.filter(Travels.id==travel_id,Travels.isactive==1).first()
     return render_template("base/travels_info.html",travel=travel)
 
-@home.route("/userinfo/<user_id>")
+@home.route("/userinfo/travel/<user_id>")
 def userinfo(user_id):
     user = User.query.filter_by(id=user_id).first()
     travels = Travels.query.filter(Travels.isactive==1,Travels.author_id==user_id).all()
@@ -310,11 +310,145 @@ def showscenic(scenic_id):
     travels = Travels.query.filter(Travels.scenic_id==scenic_id,Travels.isactive==1).limit(5)
     return render_template("base/scenic_info.html",scenic=scenic,travels=travels)
 
-@home.route("/writetravels")
+@home.route("/writetravels",methods=["GET","POST"])
 def writetravels():
     form = AddTravelsForm()
-    form.area_id.choices = [(v.id, v.areaName) for v in Area.query.all()]
+    form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+    travels = Travels()
+    form.submit.label.text = "发布"
+    if form.validate_on_submit():
+        data = form.data
+        travel_count = Travels.query.filter_by(title=data["title"]).count()
+        if travel_count == 1:
+            flash("已存在同名游记,请使用别的标题","err")
+            return render_template("base/writetravels.html",form = form)
+        
+        file_cover = secure_filename(form.cover.data.filename)
+        if not os.path.exists(UP_DIR):
+            os.makedirs(UP_DIR)           
+            os.chmod(UP_DIR,664)
+        cover = change_filename(file_cover) 
+        form.cover.data.save(UP_DIR + cover)
+
+        travels.author_id = session["user_id"]
+        travels.title = data["title"]
+        travels.scenic_id = data["scenic_id"]
+        travels.cover = cover
+        travels.content = data["content"]
+        db.session.add(travels)
+        db.session.commit()
+        flash("发布游记成功","ok")
+        return render_template("base/writetravels.html",form=form)
     return render_template("base/writetravels.html",form=form)
+
+@home.route("/traveledit/<travel_id>",methods=["GET","POST"])
+def traveledit(travel_id):
+    form = AddTravelsForm()
+    form.submit.label.text = "修改"
+    form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+    form.cover.validators = []
+    travel = Travels.query.filter_by(id=travel_id).first()
+    if request.method == "GET":
+        form.title.data = travel.title
+        form.is_recommend.data = travel.is_recommend
+        form.scenic_id.data = travel.scenic_id
+        form.cover.data = travel.cover
+        form.content.data = travel.content
+    if form.validate_on_submit():
+        data = form.data
+        travels_count = Travels.query.filter_by(title=data["title"]).count()
+        if travel.title != data["title"] and travels_count == 1:
+            flash("游记已经存在","err")
+            return render_template("base/traveledit.html",form=form)
+
+        if not os.path.exists(UP_DIR):
+            os.makedirs(UP_DIR)           
+            os.chmod(UP_DIR,664)
+
+        if form.cover.data != "":
+            file_cover = secure_filename(form.cover.data.filename)     
+            travel.cover = change_filename(file_cover)                       
+            form.cover.data.save(UP_DIR + travel.cover)
+
+        travel.title = data["title"]
+        travel.is_recommend = data["is_recommend"]
+        travel.scenic_id = data["scenic_id"]
+        travel.content = data["content"]
+
+        db.session.add(travel)
+        db.session.commit()
+        flash("修改游记成功","ok")
+        return render_template("base/traveledit.html",form=form)
+    return render_template("base/traveledit.html",form=form)
+
+
+@home.route("/loadarea")
+def loadarea():
+    areas = Area.query.all()
+    lst1 = []
+    for area in areas:
+        lst1.append(area.to_dic())
+    return json.dumps(lst1)
+
+@home.route("/loadscenic")
+def loadscenic():
+    area_id = request.args["area_id"]
+    scenics = Scenic.query.filter_by(area_id=area_id).all()
+    lst1 = []
+    for scenic in scenics:
+        lst1.append(scenic.to_dic())
+    return json.dumps(lst1)
+
+@home.route("/collecttravel",methods=["POST"])
+def collecttravel():
+    uid = request.form["uid"]
+    travel_id = request.form["travel_id"]
+    travelscollect = TravelsCollect()
+    travelscollect.user_id = uid
+    travelscollect.travels_id = travel_id
+    db.session.add(travelscollect)
+    db.session.commit()
+    return "ok"
+
+@home.route("/checktravelcollected")
+def checktravelcollected():
+    uid = request.args["uid"]
+    travel_id = request.args["travel_id"]
+    trvlcollect_count = TravelsCollect.query.filter(TravelsCollect.user_id==uid,TravelsCollect.travels_id==travel_id).count()
+    return str(trvlcollect_count)
+
+@home.route("/cancelcollecttravel",methods=["POST"])
+def cancelcollecttravel():
+    uid = request.form["uid"]
+    travel_id = request.form["travel_id"]
+    trvlcollect = TravelsCollect.query.filter(TravelsCollect.user_id==uid,TravelsCollect.travels_id==travel_id).first()
+    db.session.delete(trvlcollect)
+    db.session.commit()
+    return "ok"
+
+@home.route("/deletetravels/<travel_id>",methods=["GET","POST"])
+def deletetravels(travel_id):
+    url = request.headers.get("Referer","/")
+    resp = redirect(url)
+    travel = Travels.query.filter_by(id=travel_id).first()
+    travel.isactive = False
+    db.session.add(travel)
+    db.session.commit()
+    return resp
+
+@home.route("/userinfo/review/<user_id>")
+def userinfo_review(user_id):
+    reviews = Review.query.filter(Review.user_id==user_id,Review.isactive==True).all()
+    user = User.query.filter_by(id=user_id).first()
+    return render_template("base/userinfo_review.html",user=user,reviews=reviews)
+
+@home.route("/allscenics")
+def allscenics():
+    return render_template("base/allscenic.html")
+
+@home.route("/alltravels")
+def alltravels():
+    return render_template("base/alltravels.html")
 
 
 

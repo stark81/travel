@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import StringField,RadioField,TextAreaField,SubmitField,PasswordField,SelectField,FileField
+from wtforms import StringField,RadioField,TextAreaField,SubmitField,PasswordField,SelectField,FileField,HiddenField
 from wtforms.validators import DataRequired
 
 class AddAreaForm(FlaskForm):
@@ -161,19 +161,9 @@ class AddTravelsForm(FlaskForm):
         choices=[ (1,'是'),(0, '否')], default=0, 
     )
 
-    area_id = SelectField(
-        label="所属地区",
-        validators=[
-            DataRequired("请选择所属地区")
-        ],
-        coerce=int,
-    )
 
     scenic_id = SelectField(
         label="所属景区",
-        validators=[
-            DataRequired("请选择所属景区!")
-        ],
         coerce=int,
     )
 

@@ -95,3 +95,20 @@
     line-height: 50px;
 }
 
+.collectTravel,.dotravelcollected{
+    display: inline-block;
+    padding: 6px 8px;
+    color: white;
+    font-size: 13px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.collectTravel{
+    border: 1px red solid;
+    background: red
+}
+.dotravelcollected{
+    border: 1px #00a6c9 solid;
+    color: #00a6c9;
+}

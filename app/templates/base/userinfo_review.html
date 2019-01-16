@@ -1,0 +1,9 @@
+{% extends "base/userinfo.html" %}
+
+{% block aboutmain %}
+<div class="userreviewsmain">
+    {% for review in reviews %}
+        <p>{{ review.content }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

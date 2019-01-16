@@ -10,7 +10,7 @@
                         <div class="otherinfo">
                             <label>作者 : 
                                 {% if travel.travelauthor.uname %}
-                                    <a href="/userinfo/{{ travel.travelauthor.id }}"> {{travel.travelauthor.uname }}</a>
+                                    <a href="/userinfo/travel/{{ travel.travelauthor.id }}"> {{travel.travelauthor.uname }}</a>
                                 {% else %}
                                     悦游管理员
                                 {% endif %}
@@ -19,6 +19,13 @@
                             <label>所属景区 : <a href="/showscenic/{{ travel.scenic.id }}">{{ travel.scenic.scenicname }}</a> </label>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <label>发表时间 : {{ travel.addtime }}</label>
+                            {% if session["user_id"] %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="hidden" name="collecttraveluid" value="{{session['user_id']}}">
+                                <input type="hidden" name="collecttravelid" value="{{ travel.id }}">
+                                <label class="collectTravel">取消收藏</label>
+                                <label class="dotravelcollected">收藏游记</label>
+                            {% endif %}
                         </div>
                         {{ travel.content|safe }}
                     </div>
@@ -59,11 +66,11 @@
                     <b>关于作者</b><br>
                     <div class="authorcover">
                         <div class="authorimg">
-                            <a href="/userinfo/{{travel.travelauthor.id}}">
+                            <a href="/userinfo/travel/{{travel.travelauthor.id}}">
                                 <img src="/static/uploads/user/{{travel.travelauthor.cover}}">
                             </a>
                         </div>
-                        <a href="/userinfo/{{travel.travelauthor.id}}">
+                        <a href="/userinfo/travel/{{travel.travelauthor.id}}">
                             <h3>{{ travel.travelauthor.uname }}</h3>
                         </a>
                         <p>{{ travel.travelauthor.introduce|truncate(24) }}</p>

@@ -342,12 +342,14 @@
 }
 
 .userinfoli{
-    line-height: 26px;
-    margin-top: 7px;
+    line-height: 30px;
+    margin-top: 10px;
 }
 .userinfoli>a>img{
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     display: block;
+    margin: 0 auto;
+
 }

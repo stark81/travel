@@ -13,23 +13,6 @@ $(document).ready(function(e){
             $('body,html').animate({scrollTop:0})
             });
 
-        var url = window.location.href;    
-        $(".leftNav li a").each(function(){
-            if (returnUrl($(this).attr('href'))== returnUrl(url)){
-                $(this).parent().addClass('currentLi');
-            }
-        }); 
-        //以下为截取url的方法
-        function returnUrl(href){
-            var number=href.lastIndexOf("/");
-            return href.substring(number+1);
-        }
-        // function returnFileName(href){
-        //     var number1=href.lastIndexOf("/");
-        //     var number2= href.substring(0,number1).lastIndexOf("/");
-        //     return href.substring(number1,number2+1);
-        // };
-
         $(".introduce").each(function(){
             var intr = $(this).html();
             if (intr.length>90){

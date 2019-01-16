@@ -17,7 +17,7 @@
                     {% for travel in travels %}
                     <li>
                         <div style="height:210px;width:390px;overflow:hidden">
-                            <img style="width:100%" src="{{url_for('static',filename='uploads/'+ travel.cover )}}">
+                            <img style="width:100%;height:100%" src="{{url_for('static',filename='uploads/'+ travel.cover )}}">
                         </div>
                         
                         <div class="text">
@@ -28,7 +28,7 @@
                             <div class="reviews" style="font-size:15px;color:#888">
                                 <b>
                                     {% if travel.travelauthor.uname %}
-                                        <a href="/userinfo/{{ travel.travelauthor.id }}">{{ travel.travelauthor.uname }}</a> 
+                                        <a href="/userinfo/travel/{{ travel.travelauthor.id }}">{{ travel.travelauthor.uname }}</a> 
                                     {% else %}
                                         悦游管理员
                                     {% endif %}
@@ -90,7 +90,6 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div id="scenicNav"></div>
         </div>
     </div>
 

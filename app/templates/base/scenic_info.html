@@ -16,16 +16,18 @@
             </div>
 
             <!-- 相关的游记推荐 -->
-            {% for travel in travels %}
-                <div class="travel_scenicinfo" style="margin-bottom:20px">
-                    <b>游记推荐</b>
+            {% if travels %}
+            <div class="travel_scenicinfo" style="margin-bottom:20px">
+                <b>游记推荐</b>
+                {% for travel in travels %}
                     <p class="travelrecommend">
                         <a style="line-height:36px" href="/travels/info/{{travel.id}}">
                             <label class="linktravel">></label>{{travel.title}}
                         </a>
                     </p>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            {% endif %}
 
             <!-- 关于景区 -->
             <div class="travel_scenicinfo" >
