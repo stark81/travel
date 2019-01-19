@@ -71,6 +71,7 @@
     background: #00a6c9;
     color: white;
     font-size: 14px;
+    transition: all 0.3s;
 }
 
 .btn-default:hover{
