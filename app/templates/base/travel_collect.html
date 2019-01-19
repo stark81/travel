@@ -1,0 +1,48 @@
+{% extends "base/userinfo.html" %}
+
+{% block aboutmain %}
+    <div class="aboutmain">
+        {% if travels %}
+            {% for travel in travels %}
+            <li class="usertravelli">
+                <div class="usertravelimg">
+                    <img style="height:100%;width: 100%" src=
+                    "{{url_for('static',filename='uploads/'+travel.cover)}}">
+                </div>
+                <a href="/travels/info/{{ travel.id }}">    
+                    <div class="usertravelinfo">
+                        <h3>{{ travel.title }}</h3>
+                        {{ travel.content|safe|truncate(180) }}
+                    </div>
+                </a>
+                <div class="usertravereviews" id="travelinfoanddel">
+                    <label>游记作者：
+                        {% if travel.travelauthor %}
+                            {{ travel.travelauthor.uname }}
+                        {% else %}
+                            悦游管理员
+                        {% endif %}
+                    </label>
+                    {% if user.id == session["user_id"] %}
+                        <input type="hidden" name="collecttraveluid" value="{{session['user_id']}}">
+                        <input type="hidden" name="collecttravelid" value="{{ travel.id }}">
+                        <label class="collectTravel" style="line-height:17px;float:right">取消收藏</label>
+                    {% endif %}
+                </div>
+
+                <div class="clear"></div>
+            </li>
+                
+            {% endfor %}
+        {% else %}
+        <div style="padding-top:20px">
+            <h2 style="text-align:center;line-height:60px;">
+                <div style="margin: 0 auto;">
+                    <img style="width:600px" src="{{url_for('static',filename='base/image/nothing.png')}}">
+                </div>
+                暂时还没有一篇游记能入得了这位亲的法眼哟~
+            </h2>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

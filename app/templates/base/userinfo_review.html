@@ -2,8 +2,33 @@
 
 {% block aboutmain %}
 <div class="userreviewsmain">
-    {% for review in reviews %}
-        <p>{{ review.content }}</p>
-    {% endfor %}
+    {% if reviews %}
+        {% for review in reviews %}
+        <div class="userinforeviewLi">
+            <p>回复内容 : {{ review.content|truncate(30) }}</p>
+            <a href="/travels/info/{{review.travels.id}}">
+                <div class="travelorginal">
+                    <h4 style="margin-bottom:6px;">原文 : <b>{{ review.travels.title }}</b></h4>
+                    {{ review.travels.content|safe|truncate(50) }}
+                </div>
+            </a>    
+            <label style="font-size:13px;color:#999;line-height:20px">
+                {{ review.addtime }}
+            </label>
+            {% if user.id == session["user_id"] %}
+                <a href="/userinfdeletereviews/{{review.id}}"><div class="userinfodeletereview">删除</div></a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+    <div style="padding-top:20px">
+        <h2 style="text-align:center;line-height:60px;">
+            <div style="margin: 0 auto;">
+                <img style="width:600px" src="{{url_for('static',filename='base/image/nothing.png')}}">
+            </div>
+            这个人很懒，连一句评论都没有留下~
+        </h2>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

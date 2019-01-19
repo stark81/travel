@@ -1,1 +1,117 @@
-{% extends "base/home.html" %}
+{% extends "base/home.html" %} 
+{% import "base/home_page.html" as pg %} 
+
+{% block content %}
+<div id="main" style="padding-top:4px">
+    <!-- 景区搜索 -->
+    <div id="content">
+        <div class="container">
+            <div class="tabs_wrapper tabs1_wrapper">
+                <div class="tabs tabs2">
+                    <div class="tabs_content tabs1_content">
+                        <div id="tabs-1">
+                            {% include "base/search_box.html" %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    {% if not page_data.items %}
+                                    <div
+                                        class="txt1"
+                                        style="padding: 20px;color:red"
+                                    >
+                                        没有符合条件的景区，请重新查询
+                                    </div>
+                                    {% else %}
+                                    <div class="row">
+                                        {% for v in page_data.items %}
+                                        <div class="col-sm-4">
+                                            <div class="thumb4">
+                                                <div class="thumbnail clearfix">
+                                                    <figure>
+                                                        <img
+                                                            style="width:100%;height:100%"
+                                                            src="{{url_for('static',filename='uploads/'+ v.cover)}}"
+                                                            class="img-responsive"
+                                                        />
+                                                    </figure>
+                                                    <div class="caption">
+                                                        <div class="txt1">
+                                                            {{ v.scenicname }}
+                                                        </div>
+                                                        <div class="txt3 clearfix">
+                                                            <div class="left_side">
+                                                                <div class="nums">{{ v.address}}</div>
+                                                            </div>
+                                                            <div class="right_side">
+                                                                <a href="/showscenic/{{ v.id }}" class="btn-default btn1">查看</a>
+                                                            </div>
+                                                            <div class="clear"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page" style="text-align: center;">
+                {{ pg.page(page_data, "home.allscenics") }}
+            </div>
+        </div>
+    </div>
+    <!-- 景区推荐 -->
+    <div id="scenic">
+        <div class="title"><h3>景区推荐</h3></div>
+        <div id="scenicItem">
+            <ul>
+                {% for scenic in scenics %}
+                <li>
+                    <div class="img">
+                        <img
+                            style="width:100%;height:100%"
+                            src="{{url_for('static',filename='uploads/'+ scenic.cover )}}"
+                        />
+                        <div class="imgintroduce">
+                            <h3>
+                                {{ scenic.scenicname
+                                }}<span>{{ scenic.area.areaName }}</span>
+                            </h3>
+                            {{ scenic.introduce|truncate(60) }}
+                        </div>
+                    </div>
+                    <div class="text">
+                        <h3>
+                            {{ scenic.scenicname
+                            }}<span>{{ scenic.area.areaName }}</span>
+                        </h3>
+                        <p>{{ scenic.address }}</p>
+                        <div style="height:40px">
+                            {% for i in range(5) %} {% if i < scenic.star %}
+                            <img
+                                style="margin-top: 13px"
+                                src="{{url_for('static',filename='base/image/star1.png')}}"
+                            />
+                            {% else %}
+                            <img
+                                style="margin-top: 13px"
+                                src="{{url_for('static',filename='base/image/star2.png')}}"
+                            />
+                            {% endif %} {% endfor %}
+                            <a href="/showscenic/{{ scenic.id }}">
+                                <div class="starRight">查看</div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

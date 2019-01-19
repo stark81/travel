@@ -3,6 +3,7 @@
 {% block content %}
     <div id="usermain">
         <div class="inner">
+            {% if user %}
             <div class="userbanner">
             </div>
             <div class="userinfo">
@@ -23,8 +24,8 @@
                     {% if session["user_id"] == user.id %}
                         <div class="change"><a href='/info_edit/{{ session["user_id"]}}'>编辑</a></div>
                     {% else %}
-                        <div class="change">关注</div>
-                        <div class="change">留言</div>
+                        <!-- <div class="change">关注</div>
+                        <div class="change">留言</div> -->
                     {% endif %}
                 </div>
             </div>
@@ -32,12 +33,12 @@
                 <table id="aboutul">
                     <th><a href="/userinfo/travel/{{user.id}}">游记</a></th>
                     <th><a href="/userinfo/review/{{user.id}}">评论</a></th>
-                    <th><a href="/userinfo/sceniccollect/{{user.id}}">景区收藏</a></th>
+                    <!-- <th><a href="/userinfo/sceniccollect/{{user.id}}">景区收藏</a></th> -->
                     <th><a href="/userinfo/travelscollect/{{user.id}}">游记收藏</a></th>
-                    {% if user.id == session["user_id"] %}
+                    <!-- {% if user.id == session["user_id"] %}
                         <th><a href="/userinfo/focus/{{user.id}}">关注</a></th>
                         <th><a href="/userinfo/message/{{user.id}}">留言</a></th>
-                    {% endif %}
+                    {% endif %} -->
                     <div class="clear"></div>
                 </table>
                 {% block aboutmain %}
@@ -67,8 +68,6 @@
                                     <span><a href="/traveledit/{{travel.id}}">编辑</a></span>
                                 {% endif %}
                                 
-                                
-                                
                             </div>
                             <script>
                                 getreviewsCount()
@@ -79,13 +78,33 @@
                             
                         {% endfor %}
                     {% else %}
-                        0
+                        <!-- <h3 style="text-align:center">这个人很懒，连一篇游记都没有留下~</h3> -->
+                        <div style="padding-top:20px">
+                            <h2 style="text-align:center;line-height:60px;">
+                                <div style="margin: 0 auto;">
+                                    <img style="width:600px" src="{{url_for('static',filename='base/image/nothing.png')}}">
+                                </div>
+                                这个人很懒，连一篇游记都没有留下~
+                            </h2>
+                        </div>
                     {% endif %}
                 </div>
                 {% endblock %}
             </div>
             
             <div class="clear"></div>
+            {% else %}
+            <div style="background:white">
+                <h2 style="text-align:center;line-height:60px;">
+                    用户不存在,点击
+                    <a style="color:#e27b27" href="/">返回</a>
+                    首页
+                    <div style="margin: 0 auto;">
+                        <img  src="{{url_for('static',filename='base/image/err.png')}}">
+                    </div>
+                </h2>
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

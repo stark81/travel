@@ -67,21 +67,23 @@
                     {{form.submit}}
                 {% endblock %}
             </div>
-        </form>
-    </div>
-    {% block js %}
+        {% block js %}
         <script src="{{ url_for('static',filename='ckeditor/ckeditor.js') }}"></script>
         <script>
-        $(document).ready(function(){
-            $("#g-4").addClass("active");
-            $("#g-4-1").addClass("active");
-        });
-        // 使用CKeditor编辑器
-        CKEDITOR.replace('content', {
-            filebrowserUploadUrl: '/home/ckupload/',  // 设置文件上传路径
-        });
-        </script>
-    {% endblock %}
+            $(document).ready(function(){
+                $("#g-4").addClass("active");
+                $("#g-4-1").addClass("active");
+            });
+            // 使用CKeditor编辑器
+            CKEDITOR.replace('content', {
+                filebrowserUploadUrl: '/admin/ckupload/',  // 设置文件上传路径
+            });
+            </script>
+        {% endblock %}
+            
+        </form>
+    </div>
+    
     <script>
         checktravleempty()
     </script>

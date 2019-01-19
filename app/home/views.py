@@ -2,12 +2,13 @@ from . import home
 from app import db,FC_DIR,UP_DIR
 from functools import wraps
 from app.models import *
-from app.home.forms import RegisterForm,LoginForm,InfoEditForm
+from app.home.forms import RegisterForm,LoginForm,InfoEditForm,SuggestForm
 from flask import render_template,flash,request,redirect,url_for,session
 from werkzeug.security import generate_password_hash,check_password_hash
 from werkzeug.utils import secure_filename
 import os,uuid,base64,json
 from app.admin.forms import AddTravelsForm
+from sqlalchemy import and_,or_
 
 def user_login(f):
     """
@@ -27,7 +28,7 @@ def index():
 @home.route("/tourism_sircle")
 def tourism_sircle():
     travels = db.session.query(Travels).filter_by(isactive=1).order_by(Travels.addtime.desc()).limit(6).all()
-    scenics = db.session.query(Scenic).all()
+    scenics = db.session.query(Scenic).filter_by(is_recommend=1).all()
     return render_template("base/index.html",travels=travels,
     scenics=scenics)
 
@@ -442,13 +443,91 @@ def userinfo_review(user_id):
     user = User.query.filter_by(id=user_id).first()
     return render_template("base/userinfo_review.html",user=user,reviews=reviews)
 
-@home.route("/allscenics")
+@home.route("/allscenics/")
 def allscenics():
-    return render_template("base/allscenic.html")
+    scenics = db.session.query(Scenic).filter_by(is_recommend=1).all()
+    page = request.args.get('page', 1, type=int) # 获取page参数值 
+    area = Area.query.all()    # 获取所有城市
+    area_id = request.args.get('area_id',type=int)  # 地区
+    star = request.args.get('star',type=int)        # 星级
 
-@home.route("/alltravels")
+    if area_id or star :    # 根据星级搜索景区
+        filters = and_(Scenic.area_id==area_id,Scenic.star==star)
+        page_data = Scenic.query.filter(filters).paginate(page=page, per_page=6)
+    else :                  # 搜索全部景区    
+        page_data = Scenic.query.paginate(page=page, per_page=3)
+    return render_template("base/allscenic.html",scenics=scenics,
+    page_data=page_data,area=area,area_id=area_id,star=star)
+
+@home.route("/alltravels/")
 def alltravels():
-    return render_template("base/alltravels.html")
+    travels = Travels.query.filter(Travels.isactive==1).all()
+    page = request.args.get('page', 1, type=int)
+    areaname = request.args.get("travelArea",type=str)
+    scenic_name = request.args.get("travelScenic",type=str)
+    traveltitle = request.args.get("travelTitle",type=str)
+    travel_author = request.args.get("travelAuthor",type=str)
+        
+    if areaname or scenic_name or traveltitle or travel_author:
+        # 获取地区条件
+        travelareas = Area.query.filter(Area.areaName.like("%"+areaname+"%")).all()
+        travelareas_id = [v.id for v in travelareas]
+        scenics = Scenic.query.filter(Scenic.area_id.in_(travelareas_id)).all()
+        filter1 = and_(Travels.scenic_id.in_(v.id for v in scenics),Travels.isactive==1)
+        
+        # 获取景区条件
+        travelscenics = Scenic.query.filter(Scenic.scenicname.like("%"+scenic_name+"%")).all()
+        filter2 = and_(Travels.scenic_id.in_(v.id for v in travelscenics),Travels.isactive==1)
+        
+        # 获取游记标题
+        filter3 = and_(Travels.title.like("%"+traveltitle+"%"),Travels.isactive==1)
+
+        # 获取作者条件
+        if travel_author:
+            travelauthors = User.query.filter(User.uname.like("%"+travel_author+"%")).all()
+            filter4 = and_(Travels.author_id.in_(v.id for v in travelauthors),Travels.isactive==1)
+        else:
+            filter4 = and_( Travels.isactive == 1 )
+
+        filters = and_(filter1,filter2,filter3,filter4)
+        page_data = Travels.query.filter(filters).paginate(page=page, per_page=6)
+        
+    else :     # 搜索全部景区    
+        page_data = Travels.query.filter_by(isactive=1).paginate(page=page, per_page=3)
+    
+    return render_template("base/alltravels.html",page_data=page_data,travels=travels)
+
+@home.route("/userinfdeletereviews/<review_id>")
+def userinfdeletereviews(review_id):
+    url = request.headers.get("Referer","/")
+    resp = redirect(url)
+    review = Review.query.filter_by(id=review_id).first()
+    review.isactive = False
+    db.session.add(review)
+    db.session.commit()
+    return resp
+
+@home.route("/aboutus",methods=["GET","POST"])
+def aboutus():
+    form = SuggestForm()
+    if form.validate_on_submit():
+        data = form.data
+        suggest = Suggest()
+        suggest.uname = data["uname"]
+        suggest.uemail = data["email"]
+        suggest.content = data["advice"]
+        db.session.add(suggest)
+        db.session.commit()
+        flash("提交成功！谢谢您的意见。","ok")
+    return render_template("base/aboutus.html",form=form)
+
+@home.route("/userinfo/travelscollect/<user_id>")
+def travel_collect(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    travelcollects = TravelsCollect.query.filter(TravelsCollect.user_id==user_id).all()
+    travel_ids = [ v.travels_id for v in travelcollects ]
+    travels = Travels.query.filter(Travels.id.in_(travel_ids),Travels.isactive==1).all()
+    return render_template("base/travel_collect.html",user=user,travels=travels)
 
 
 
@@ -464,43 +543,42 @@ def change_filename(filename):
     filename =  gen_rnd_filename() + fileinfo[-1]
     return filename
 
-@home.route('/ckupload/', methods=['POST', 'OPTIONS'])
-@user_login
-def ckupload():
-    """CKEditor 文件上传"""
-    error = ''
-    url = ''
-    callback = request.args.get("CKEditorFuncNum")
 
-    if request.method == 'POST' and 'upload' in request.files:
-        fileobj = request.files['upload']
-        fname, fext = os.path.splitext(fileobj.filename)
-        rnd_name = '%s%s' % (gen_rnd_filename(), fext)
+# @home.route('/ckupload/', methods=['POST', 'OPTIONS'])
+# @user_login
+# def ckupload():
+#     """CKEditor 文件上传"""
+#     error = ''
+#     url = ''
+#     callback = request.args.get("CKEditorFuncNum")
 
-        filepath = os.path.join(current_app.static_folder, 'uploads/ckeditor', rnd_name)
-        # 检查路径是否存在，不存在则创建
-        dirname = os.path.dirname(filepath)
-        if not os.path.exists(dirname):
-            try:
-                os.makedirs(dirname)
-            except:
-                error = 'ERROR_CREATE_DIR'
-        elif not os.access(dirname, os.W_OK):
-            error = 'ERROR_DIR_NOT_WRITEABLE'
+#     if request.method == 'POST' and 'upload' in request.files:
+#         print("0")
+#         fileobj = request.files['upload']
+#         fname, fext = os.path.splitext(fileobj.filename)
+#         rnd_name = '%s%s' % (gen_rnd_filename(), fext)
 
-        if not error:
-            fileobj.save(filepath)
-            url = url_for('static', filename='%s/%s' % ('uploads/ckeditor', rnd_name))
-    else:
-        error = 'post error'
+#         filepath = os.path.join(current_app.static_folder, 'uploads/ckeditor', rnd_name)
+#         # 检查路径是否存在，不存在则创建
+#         dirname = os.path.dirname(filepath)
+#         if not os.path.exists(dirname):
+#             try:
+#                 os.makedirs(dirname)
+#             except:
+#                 error = 'ERROR_CREATE_DIR'
+#         elif not os.access(dirname, os.W_OK):
+#             error = 'ERROR_DIR_NOT_WRITEABLE'
 
-    res = """<script type="text/javascript">
-  window.parent.CKEDITOR.tools.callFunction(%s, '%s', '%s');
-</script>""" % (callback, url, error)
+#         if not error:
+#             fileobj.save(filepath)
+#             url = url_for('static', filename='%s/%s' % ('uploads/ckeditor', rnd_name))
+#     else:
+#         error = 'post error'
 
-    response = make_response(res)
-    response.headers["Content-Type"] = "text/html"
-    return response
+#     res = """<script type="text/javascript">
+#   window.parent.CKEDITOR.tools.callFunction(%s, '%s', '%s');
+# </script>""" % (callback, url, error)
 
-
-
+#     response = make_response(res)
+#     response.headers["Content-Type"] = "text/html"
+#     return response

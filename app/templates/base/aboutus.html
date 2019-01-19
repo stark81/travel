@@ -1,0 +1,90 @@
+{% extends "base/home.html" %}
+
+{% block content %}
+    <div id="AboutUsMain">
+        <div class="aboutus">
+            <h2>关于悦游</h2>
+            <p>深圳悦游有限公司是一家立足于社交旅游的创业公司。我们将用最真诚的服务,使你真正感受出行的方便与全面周到的服务，给你带来轻松与快乐。
+               悦游拥有强大的组织和接待能力、丰富的设计和安排会展的经验，在组织大型旅游团和国际会议方面取得了巨大的成绩.
+            </p>
+        </div>
+
+
+        <div class="why">
+            <div class="inner">
+                <div class="whytitle">
+                    <h2>为什么选择我们?</h2>
+                    <p>因为专注，所以专业</p>
+                    <p>因为分享，所以快乐</p>
+                </div>
+                <div class="adv-box">
+                    <div class="advantage">
+                        <div class="adv_img">
+                            <img src="{{ url_for('static',filename='base/image/why1.png')}}">
+                            <img src="{{ url_for('static',filename='base/image/why1_hover.png')}}">
+                        </div>
+                        <h3>发现惊喜</h3>
+                        <p>为您展示真实的旅游景区、精彩的旅游照片、全面的旅游攻略以及最新的旅游资讯</p>
+                    </div>
+                    <div class="advantage">
+                        <div class="adv_img">
+                            <img src="{{ url_for('static',filename='base/image/why2.png')}}">
+                            <img src="{{ url_for('static',filename='base/image/why2_hover.png')}}">
+                        </div>
+                        <h3>分享快乐</h3>
+                        <p>这里有志同道合的驴友，这里是优质透明的资源。多一份分享，多一份快乐。</p>
+                    </div>
+                    <div class="advantage">
+                        <div class="adv_img">
+                            <img src="{{ url_for('static',filename='base/image/why4.png')}}">
+                            <img src="{{ url_for('static',filename='base/image/why4_hover.png')}}">
+                        </div>
+                        <h3>资源整合</h3>
+                        <p>这里有最优质的旅游资源，这里有最有追求的游客。资源整合，实现双赢。</p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact">
+            <div class="inner">
+                <h2>建议意见</h2>
+                <form action="" method="POST">
+                    {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+                        <p class="login-box-msg" style="text-align:center;color:#00a6c9">{{ msg }}</p>
+                    {% endfor %}
+                    <div class="form-control">
+                        {{ form.uname }}
+                    </div>
+                    {% for err in  form.uname.errors %}
+                        <ul class="errors">
+                            <li>{{ err }}</li>
+                        </ul>
+                    {% endfor  %}
+                    <div class="form-control">
+                        {{ form.email }}
+                    </div> 
+                    {% for err in form.email.errors %}
+                        <ul class="errors">
+                            <li>{{ err }}</li>
+                        </ul>
+                    {% endfor %}
+                    <div class="form-control">
+                        {{ form.advice }}
+                    </div>
+                    {% for err in form.advice.errors %}
+                        <ul class="errors">
+                            <li>{{ err }}</li>
+                        </ul>
+                    {% endfor %}
+                    <div class="form-control">
+                        {{ form.csrf_token }}
+                        {{ form.submit }}
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

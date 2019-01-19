@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/scenic_info.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/addarea.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='base/css/userinfo_review.css')}}">
-    
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/allscenic.css')}}">
 </head>
 <body>
     <div id="header">
@@ -34,13 +34,13 @@
             <!-- 导航栏 -->
             <ul class="leftNav">
                 <li id="firstnav"><a href="/tourism_sircle">旅游圈</a></li>
-                <li><a href="/allscenics">全部景点</a></li>
-                <li><a href="/alltravels">全部游记</a></li>
+                <li><a href="/allscenics/">全部景点</a></li>
+                <li><a href="/alltravels/">全部游记</a></li>
                 <li><a href="/aboutus">关于我们</a></li>
                 <!-- 搜索框 -->
-                <form>
+                <!-- <form>
                     <input type="text" name="search" placeholder="请输入搜索内容">
-                </form>
+                </form> -->
             </ul>  
             <ul class="rightNav">
                 {% if session["user_id"] %}

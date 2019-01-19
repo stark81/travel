@@ -110,3 +110,39 @@ class InfoEditForm(FlaskForm):
     uintroduce = TextAreaField(
         label="个人简介",
     )
+
+class SuggestForm(FlaskForm):
+    uname = StringField(
+        label="姓名：",
+        validators=[
+            DataRequired("姓名/昵称不能为空")
+        ],
+        render_kw={
+            "placeholder":"请输入您的姓名/昵称"
+        }
+    )
+    email = StringField(
+        label="电子邮箱",
+        validators=[
+            DataRequired("电子邮箱不能为空"),
+            Email("邮箱地址不正确")
+        ],
+        render_kw={
+            "placeholder":"请输入邮箱地址"
+        }
+    )
+    advice = TextAreaField(
+        label="内容",
+        validators=[
+            DataRequired("建议意见不能为空")
+        ],
+        render_kw={
+            "placeholder":"请输入您的建议"
+        }
+    )
+    submit = SubmitField(
+        label="提交",
+        render_kw={
+            "class":"btn btn-primary"
+        }
+    )

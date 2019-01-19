@@ -4,7 +4,7 @@
 }
 
 #usermain .inner{
-    background: white;
+    background: #f8f9fa;
 }
 
 .userbanner{
@@ -163,4 +163,8 @@
 .userSelected{
     border-bottom: 2px #00a6c9 solid;
     color: #00a6c9;
+}
+
+.usertravereviews{
+    background: white;
 }

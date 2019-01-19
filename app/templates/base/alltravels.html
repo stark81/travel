@@ -1,1 +1,104 @@
 {% extends "base/home.html" %}
+{% import "base/home_page.html" as pg %} 
+
+{% block content %}
+<!-- 游记搜索 -->
+<div id="main" style="padding-top:4px;margin-bottom: 50px">
+    <div class="inner">
+        <div class="">
+            {% include "base/search_travels.html" %}
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                {% if not page_data.items %}
+                    <div class="text1" style="padding: 20px;color:red">
+                        没有符合条件的游记，请重新选择
+                    </div>
+                {% else %}
+                    <div class="row">
+                        {% for travel in page_data.items %}
+                            <div class="col-sm-4">
+                                <div class="thumb4">
+                                    <figure>
+                                        <img style="width:100%;height:100%"
+                                        src="{{url_for('static',filename='uploads/'+ travel.cover)}}">
+                                    </figure>
+                                    <div class="caption">
+                                        <div class="txt1">
+                                            {{travel.title}}
+                                        </div>
+                                        <dic class="txt3 clearfix">
+                                            <div class="left_site" style="float:left">
+                                                <div class="nums">
+                                                    所属景区 : <b>{{travel.scenic.scenicname}}</b>
+                                                </div>
+                                            </div>
+                                            <div class="right_side">
+                                                <a href="/travels/info/{{ travel.id }}" class="btn-default btn1">查看</a>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </dic>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="clear"></div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="page" style="text-align: center;">
+            {{ pg.page(page_data, "home.alltravels") }}
+        </div>
+
+        <!-- 最新游记 -->
+        <!-- <div class="travels travels_for_search">
+            <div class="inner">
+                <div class="title">
+                    <h3>推荐游记</h3>
+                </div>
+                <ul class="travelsItem">
+                    {% for travel in travels %}
+                    <li>
+                        <div style="height:210px;width:390px;overflow:hidden">
+                            <img style="width:100%;height:100%" src="{{url_for('static',filename='uploads/'+ travel.cover )}}">
+                        </div>
+                        
+                        <div class="text">
+                            <h3> <a href="/travels/info/{{ travel.id }}">{{travel.title}}</a> </h3>
+                            <div class="introduce">
+                                {{ travel.content|safe|truncate(160) }}
+                            </div> 
+                            <div class="reviews" style="font-size:15px;color:#888">
+                                <b>
+                                    {% if travel.travelauthor.uname %}
+                                        <a href="/userinfo/travel/{{ travel.travelauthor.id }}">{{ travel.travelauthor.uname }}</a> 
+                                    {% else %}
+                                        悦游管理员
+                                    {% endif %}
+                                </b>
+                                &nbsp;&nbsp;
+                                <label>
+                                    <span class="getreviews">
+                                        <input type="hidden" name="travel_id" value="{{ travel.id }}">
+                                    </span>
+                                    条评论
+                                </label>
+                                <script>
+                                    getreviewsCount()
+                                </script>
+                                &nbsp;&nbsp;
+                                {{ travel.addtime }}
+                            </div>
+                        </div>
+                        
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div> -->
+
+    </div>
+</div>
+{% endblock %}

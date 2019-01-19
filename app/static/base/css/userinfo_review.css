@@ -1,5 +1,35 @@
-.userreviewsmain{
-    width: 800px;
-    margin: 0 auto;
-    border: 1px red solid;
+.userinforeviewLi{
+    width: 532px;
+    float: left;
+    margin-right: 20px;
+    background: white;
+    margin-bottom: 20px;
+    padding:10px 20px;
+    border: 1px #ccc solid;
+    border-radius: 4px;
+}
+.travelorginal{
+    margin: 10px;
+    padding:12px 10px;
+    height: 71px;
+    background: #f8f9fa;
+    border: 1px #f8f9fa solid;
+    border-radius: 4px;
+    transition: all 0.6s
+}
+.travelorginal:hover{
+    border: 1px #00a6c9 solid;
+}
+
+.travelorginal>p{
+    font-size: 14px;
+    line-height: 22px;
+    color: #999;
+}
+
+.userinfodeletereview{
+    float: right;
+    font-size: 14px;
+    line-height: 22px;
+    color: red;
 }

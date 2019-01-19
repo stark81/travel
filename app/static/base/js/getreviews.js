@@ -5,6 +5,8 @@ function getuemailpage(){
     });
 };
 
+
+
 function getunamepage(){
     var uid = $("[name=infoid]").val();
     $.get("/getunamepage",{uid:uid},function(data){
@@ -42,6 +44,12 @@ function getreviewsCount(){
         $(".revcurrent").removeClass("revcurrent");
     });
 }
+
+$(function(){
+    $(".userinforeviewLi:odd").css({
+        "margin-right":0,
+    })
+})
 
 $(function(){
     function getreviews(){
@@ -103,50 +111,51 @@ $(document).on("click",".delreview1",function delreview(){
     })
 });
 
-function loadArea(){
-    $.ajax({
-        async:false,
-        url:'/loadarea',
-        type:'get',
-        dataType:'json',
-        success:function(data){
-        //<option value='1'>黑龙江</option>
-        var html = "";
-        $.each(data,function(i,obj){
-            html+="<option value='"+obj.id+"'>";
-            html+=obj.areaName;
-            html+="</option>";
-        });
-        $("#areaname").html(html);
-        }
-    });
-}
+// 写游记功能的地区-景区级联
+// function loadArea(){
+//     $.ajax({
+//         async:false,
+//         url:'/loadarea',
+//         type:'get',
+//         dataType:'json',
+//         success:function(data){
+//         //<option value='1'>黑龙江</option>
+//         var html = "";
+//         $.each(data,function(i,obj){
+//             html+="<option value='"+obj.id+"'>";
+//             html+=obj.areaName;
+//             html+="</option>";
+//         });
+//         $("#areaname").html(html);
+//         }
+//     });
+// }
 
-function loadScenic(area_id){
-    $.ajax({
-        url:'/loadscenic',
-        data:"area_id="+area_id,
-        type:'get',
-        dataType:'json',
-        success:function(data){
-        //循环遍历data并构建成<option>并增加到#selCity中
-        var html = "";
-        $.each(data,function(i,obj){
-            html+="<option value='"+obj.id+"'>";
-            html+=obj.scenicname;
-            html+="</option>";
-        });
-        $("#scenicname").html(html);
-        }
-    });
-}
-$(function(){
-    loadArea();
-    $("#areaname").change(function(){
-        loadScenic(this.value);
-    });
-    loadScenic($("#areaname").val());
-})
+// function loadScenic(area_id){
+//     $.ajax({
+//         url:'/loadscenic',
+//         data:"area_id="+area_id,
+//         type:'get',
+//         dataType:'json',
+//         success:function(data){
+//         //循环遍历data并构建成<option>并增加到#selCity中
+//         var html = "";
+//         $.each(data,function(i,obj){
+//             html+="<option value='"+obj.id+"'>";
+//             html+=obj.scenicname;
+//             html+="</option>";
+//         });
+//         $("#scenicname").html(html);
+//         }
+//     });
+// }
+// $(function(){
+//     loadArea();
+//     $("#areaname").change(function(){
+//         loadScenic(this.value);
+//     });
+//     loadScenic($("#areaname").val());
+// })
 
 
 // function checktravleempty(){
@@ -192,6 +201,7 @@ $(function(){
                     $(".collectTravel").css({
                         "display":"none"
                     })
+                    
                 }
             },
         })
@@ -272,9 +282,6 @@ $(function(){
     }
 })
 
-
-
-
 $(function(){
     $("[name='title']").change(function(){
         checktravleempty();
@@ -296,6 +303,4 @@ $(function(){
 });
 
 })
-
-
 

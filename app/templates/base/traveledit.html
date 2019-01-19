@@ -3,3 +3,10 @@
 {% block title %}
     修改游记
 {% endblock %}
+
+{% block img%}
+<br>
+<img style="margin-top: 6px" width="200px"
+    src="{{ url_for('static', filename='uploads/'+ form.cover.data) }}"
+    class="img-responsive center-block" alt="">
+{% endblock %}

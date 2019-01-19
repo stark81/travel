@@ -31,7 +31,7 @@
 }
 #header .leftNav{
     float: left;
-    margin-left: 120px;
+    margin-left: 450px;
 
 }
 #header .rightNav{
@@ -158,6 +158,8 @@
 }
 .travelsItem>li .text{
     padding: 0px 10px 14px 10px;
+    background: #f8f9fa;
+    margin-bottom: 20px;
 }
 .travelsItem>li .text>h3{
     line-height: 44px;
@@ -352,4 +354,153 @@
     display: block;
     margin: 0 auto;
 
+}
+
+.aboutus{
+    background: rgb(44, 66,81);
+    color: white;
+    text-align: center;
+    padding:80px 0
+}
+.aboutus>p{
+    width: 800px;
+    padding-top: 20px;
+    margin: 0 auto;
+    font-size: 15px;
+    line-height: 30px;
+    text-align: left
+}
+
+.whytitle{
+    text-align: center;
+    padding-top: 80px;
+    margin-bottom: 10px;
+}
+
+.adv-box{
+    width: 960px;
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.advantage{
+    width: 300px;
+    float: left;
+    margin-right: 30px;
+}
+.advantage:nth-child(3){
+    margin-right: 0;
+}
+.why{
+    background: #f8f9fa;
+}
+
+
+.advantage>div{
+    margin: 10px 0 0 0;
+}
+.advantage>h3{
+    line-height: 40px;
+    transition: all 0.6s;
+}
+.advantage>p{
+    font-size: 15px;
+    line-height: 25px;
+    color: #888
+}
+
+.whytitle>h2{
+    line-height: 40px;
+}
+.whytitle>p{
+    line-height: 24px;
+    font-size: 14px;
+}
+
+.adv_img{
+    position: relative;
+    display: inline-block;
+}
+
+.adv_img>img:nth-child(2){
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all 0.6s;
+}
+.advantage:hover>h3{
+    color: #00a6c9;
+}
+
+.advantage:hover>.adv_img>img:nth-child(2){
+    opacity: 1;
+}
+
+.form-control{
+    margin-top: 20px;
+}
+
+.contact{
+    padding-bottom: 50px;
+}
+.contact h2{
+    text-align: center;
+    margin:50px 0 20px 0;
+}
+
+.form-control:nth-child(1){
+    margin-top: 10px;
+}
+
+.errors>li{
+    font-size: 14px;
+    color: red;
+    line-height: 25px;
+    padding-left: 12px;
+}
+
+.contact form{
+    width: 600px;
+    margin: 0 auto;
+}
+
+#uname,#email{
+    box-sizing: border-box;
+    width: 100%;
+    padding:0 12px;
+    height: 34px;
+    color: #888;
+}
+#advice{
+    box-sizing: border-box;
+    width: 600px;
+    padding: 12px;
+    color: #777;
+    resize: vertical;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.btn{
+    padding: 8px 30px;
+    background: #00a6c9;
+    color: white;
+    border: none;
+}
+
+.btn:hover{
+    cursor: pointer;
+}
+
+.collect_Travel{
+    float: right;
+    /* display: inline-block; */
+    margin-right: 20px;
+    padding: 6px 8px;
+    background: red;
+    font-size: 13px;
+    line-height: 18px;
+    color: white;
+    border-radius: 2px;
 }

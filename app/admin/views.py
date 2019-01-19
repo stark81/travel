@@ -146,7 +146,10 @@ def areaEdit(area_id=None):
         operlog = Operlog()
         operlog.admin_id = session["admin"]
         operlog.ip = request.remote_addr
-        operlog.reason = '修改地区"' + areaNameOld + '"为"' + area.areaName + '"'
+        if areaNameOld == area.areaName:
+            operlog.reason = '修改地区"' + area.areaName + '"'
+        else:
+            operlog.reason = '修改地区"' + areaNameOld + '"为"' + area.areaName + '"'
 
         db.session.add(area)
         db.session.add(operlog)
@@ -277,7 +280,10 @@ def scenicedit(scenic_id=None):
         operlog = Operlog()
         operlog.admin_id = session["admin"]
         operlog.ip = request.remote_addr
-        operlog.reason = '修改景区"' +scenicNameOld + '"为"' + scenic.scenicname +'"'
+        if scenicNameOld == scenic.scenicname:
+            operlog.reason = '修改景区"' + scenic.scenicname + '"'
+        else:
+            operlog.reason = '修改景区"' +scenicNameOld + '"为"' + scenic.scenicname +'"'
 
         db.session.add(scenic)
         db.session.add(operlog)
@@ -407,7 +413,10 @@ def travels_edit(travels_id):
         operlog = Operlog()
         operlog.admin_id = session["admin"]
         operlog.ip = request.remote_addr
-        operlog.reason = '修改游记"' + travels.title +'"'
+        if travels_old == travels.title:
+            operlog.reason = '修改游记"' + travels.title +'"'
+        else:
+            operlog.reason = '修改游记"' + travels_old + '"为"' + travels.title + '"'
 
         db.session.add(travels)
         db.session.add(operlog)
