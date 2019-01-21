@@ -18,7 +18,7 @@ $(function(){
                 "height":"0",
                 "overflow":"hidden",
                 "padding":"0",
-                "transition":"all 0.6s",
+                "transition":"all 1s",
             })
     });
     var url = window.location.href;
