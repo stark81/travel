@@ -50,6 +50,9 @@ def logout():
 def login():
     if request.method == "GET":
         url = request.headers.get("Referer","/")
+        last = url.split("/")[-2]
+        if last == "login":
+            url = "/"
         session["url"] = url
         if "user_id" in session:
             return redirect(session["url"])
@@ -108,14 +111,22 @@ def register():
 
 @home.route("/travels/info/<travel_id>")
 def travels_info(travel_id):
+    if "user_id" in session:
+        is_collected = TravelsCollect.query.filter(TravelsCollect.travels_id==travel_id,TravelsCollect.user_id==session["user_id"]).count()
+    else:
+        is_collected = 0
     travel = Travels.query.filter(Travels.id==travel_id,Travels.isactive==1).first()
-    return render_template("base/travels_info.html",travel=travel)
+    return render_template("base/travels_info.html",travel=travel,is_collected=is_collected)
 
 @home.route("/userinfo/travel/<user_id>")
 def userinfo(user_id):
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
     user = User.query.filter_by(id=user_id).first()
     travels = Travels.query.filter(Travels.isactive==1,Travels.author_id==user_id).all()
-    return render_template("base/userinfo.html",user=user,travels=travels)
+    return render_template("base/userinfo.html",user=user,travels=travels,is_friend=is_friend)
 
 
 @home.route("/info_edit/<user_id>",methods=["GET","POST"])
@@ -402,10 +413,9 @@ def loadscenic():
 
 @home.route("/collecttravel",methods=["POST"])
 def collecttravel():
-    uid = request.form["uid"]
     travel_id = request.form["travel_id"]
     travelscollect = TravelsCollect()
-    travelscollect.user_id = uid
+    travelscollect.user_id = session["user_id"]
     travelscollect.travels_id = travel_id
     db.session.add(travelscollect)
     db.session.commit()
@@ -420,9 +430,8 @@ def checktravelcollected():
 
 @home.route("/cancelcollecttravel",methods=["POST"])
 def cancelcollecttravel():
-    uid = request.form["uid"]
     travel_id = request.form["travel_id"]
-    trvlcollect = TravelsCollect.query.filter(TravelsCollect.user_id==uid,TravelsCollect.travels_id==travel_id).first()
+    trvlcollect = TravelsCollect.query.filter(TravelsCollect.user_id==session["user_id"],TravelsCollect.travels_id==travel_id).first()
     db.session.delete(trvlcollect)
     db.session.commit()
     return "ok"
@@ -439,9 +448,13 @@ def deletetravels(travel_id):
 
 @home.route("/userinfo/review/<user_id>")
 def userinfo_review(user_id):
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
     reviews = Review.query.filter(Review.user_id==user_id,Review.isactive==True).all()
     user = User.query.filter_by(id=user_id).first()
-    return render_template("base/userinfo_review.html",user=user,reviews=reviews)
+    return render_template("base/userinfo_review.html",is_friend=is_friend,user=user,reviews=reviews)
 
 @home.route("/allscenics/")
 def allscenics():
@@ -501,7 +514,10 @@ def alltravels():
 def userinfdeletereviews(review_id):
     url = request.headers.get("Referer","/")
     resp = redirect(url)
-    review = Review.query.filter_by(id=review_id).first()
+    if "user_id" in session:
+        review = Review.query.filter_by(id=review_id).first()
+    else:
+        return "err"
     review.isactive = False
     db.session.add(review)
     db.session.commit()
@@ -524,10 +540,125 @@ def aboutus():
 @home.route("/userinfo/travelscollect/<user_id>")
 def travel_collect(user_id):
     user = User.query.filter_by(id=user_id).first()
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
     travelcollects = TravelsCollect.query.filter(TravelsCollect.user_id==user_id).all()
     travel_ids = [ v.travels_id for v in travelcollects ]
     travels = Travels.query.filter(Travels.id.in_(travel_ids),Travels.isactive==1).all()
-    return render_template("base/travel_collect.html",user=user,travels=travels)
+    return render_template("base/travel_collect.html",user=user,travels=travels,is_friend=is_friend)
+
+
+@home.route("/lost_focus",methods=["POST"])
+def lost_focus():
+    focus_id = request.form["focus_id"]
+    lost_friend = Friends.query.filter(Friends.focused_id==focus_id,Friends.focuser_id==session["user_id"]).first()
+    db.session.delete(lost_friend)
+    db.session.commit()
+    return "ok"
+
+@home.route("/get_focus",methods=["POST"])
+def get_focus():
+    focus_id = request.form["focus_id"]
+    friends = Friends()
+    friends.focused_id = focus_id
+    friends.focuser_id = session["user_id"]
+    db.session.add(friends)
+    db.session.commit()
+    return "ok"
+
+
+@home.route("/userinfo/focus/<user_id>")
+def user_focus(user_id):
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
+    be_focus = Friends.query.filter_by(focuser_id=user_id).all()
+    focused_ids = [v.focused_id for v in be_focus]
+    user = User.query.filter_by(id=user_id).first()
+    friends = User.query.filter(User.id.in_(focused_ids)).all()
+    return render_template("base/focus.html",friends=friends,user=user,is_friend=is_friend)
+
+@home.route("/gettravelnums")
+def gettravelnums():
+    checkuserid = request.args["getuserid"]
+    count = Travels.query.filter(Travels.author_id==checkuserid,Travels.isactive==1).count()
+    return str(count)
+
+@home.route("/getuserreviewnums")
+def getuserreviewnums():
+    checkuserid = request.args["getuserid"]
+    count = Review.query.filter(Review.user_id==checkuserid,Review.isactive==1).count()
+    return str(count)
+
+@home.route("/getuserfocusers")
+def getuserfocusers():
+    checkuserid = request.args["getuserid"]
+    count = Friends.query.filter(Friends.focused_id==checkuserid).count()
+    return str(count)
+
+@home.route("/check_is_friend")
+def check_is_friend():
+    focus_id = request.args["focus_id"]
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==focus_id,Friends.focuser_id==session['user_id']).count()
+    else:
+        is_friend = 0
+    return str(is_friend)
+
+@home.route("/domessage",methods=["POST"])
+def domessage():
+    receiver_id = request.form["user_id"]
+    content = request.form["content"]
+    message = Message()
+    message.receiver_id = receiver_id
+    message.content = content
+    message.send_id = session["user_id"]
+    db.session.add(message)
+    db.session.commit()
+    return "发送留言成功！"
+
+@home.route("/userinfo/message/<user_id>")
+def message(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
+    messages = Message.query.filter(Message.receiver_id==user_id,Message.isalive==1).order_by(Message.is_read,Message.addtime.desc()).all()
+    send_ids = [v.send_id for v in messages]
+    senders = User.query.filter(User.id.in_(send_ids)).all()
+    return render_template("base/message.html",user=user,is_friend=is_friend,messages=messages,senders=senders)
+
+@home.route("/delmessage",methods=["POSt"])
+def delmessage():
+    message_id = request.form["message_id"]
+    message = Message.query.filter_by(id=message_id).first()
+    message.isalive = 0 
+    db.session.add(message)
+    db.session.commit()
+    return "ok"
+
+@home.route("/mark_as_read",methods=["POST"])
+def mark_as_read():
+    message_id = request.form["message_id"]
+    message = Message.query.filter(Message.id==message_id).first()
+    message.is_read = 1
+    db.session.add(message)
+    db.session.commit()
+    return "ok"
+
+@home.route("/getunreadcount")
+def getunreadcount():
+    if "user_id" in session:
+        receiver_id = session["user_id"]
+        message_count = Message.query.filter(Message.receiver_id==receiver_id,Message.is_read==0).count()
+        return str(message_count)
+    else:
+        return "0"
+
 
 
 
@@ -553,7 +684,6 @@ def change_filename(filename):
 #     callback = request.args.get("CKEditorFuncNum")
 
 #     if request.method == 'POST' and 'upload' in request.files:
-#         print("0")
 #         fileobj = request.files['upload']
 #         fname, fext = os.path.splitext(fileobj.filename)
 #         rnd_name = '%s%s' % (gen_rnd_filename(), fext)

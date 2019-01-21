@@ -20,13 +20,32 @@
                         {% endif %}
                     </p>
                 </div>
-                <div class="edit">
+                <div class="edit" id="focus_edit">
                     {% if session["user_id"] == user.id %}
                         <div class="change"><a href='/info_edit/{{ session["user_id"]}}'>编辑</a></div>
                     {% else %}
-                        <!-- <div class="change">关注</div>
-                        <div class="change">留言</div> -->
+                        {% if session["user_id"] %}
+                            <input type="hidden" name="focus_id" value="{{user.id}}">
+                            {% if is_friend %}
+                                <div class="change" id = "focused">取消关注</div>
+                            {% else %}
+                                <div class="change" id="focus">关注</div>
+                            {% endif %}
+                            <div class="change" id="message">留言</div>
+                            <div id="message-box">
+                                <div id="message-content">
+                                    <h3>{{user.uname}}</h3>
+                                    <textarea class="message" placeholder="请输入您的留言内容"></textarea>
+                                    <p id="sendmessageok"></p>
+                                    <button id="cancelmessage" style="margin-right:30px">取消</button>
+                                    <button onclick="domessage({{ user.id }})">留言</button>
+                                </div>
+                            </div>
+                        {% endif %}
                     {% endif %}
+                </div>
+                <div class="infotext">
+                    <h3>操作成功！</h3>
                 </div>
             </div>
             <div id="aboutUser">
@@ -35,10 +54,16 @@
                     <th><a href="/userinfo/review/{{user.id}}">评论</a></th>
                     <!-- <th><a href="/userinfo/sceniccollect/{{user.id}}">景区收藏</a></th> -->
                     <th><a href="/userinfo/travelscollect/{{user.id}}">游记收藏</a></th>
-                    <!-- {% if user.id == session["user_id"] %}
-                        <th><a href="/userinfo/focus/{{user.id}}">关注</a></th>
-                        <th><a href="/userinfo/message/{{user.id}}">留言</a></th>
-                    {% endif %} -->
+                    <th><a href="/userinfo/focus/{{user.id}}">关注</a></th>
+                    {% if user.id == session["user_id"] %}
+                        <th id="unreadmessagecount">
+                            <a href="/userinfo/message/{{user.id}}">留言</a>
+                            <div id="a_unread_count"></div>
+                            <script>
+                                get_unread_number()
+                            </script>
+                        </th>
+                    {% endif %}
                     <div class="clear"></div>
                 </table>
                 {% block aboutmain %}
@@ -63,7 +88,7 @@
                                 <label style="margin:0 50px 0 50px">{{ travel.addtime }}</label>
                                 {% if travel.author_id == session["user_id"] %}
                                     <span style="margin:0 20px 0 0">
-                                        <a href="/deletetravels/{{travel.id}}">删除</a>
+                                        <a href="/deletetravels/{{travel.id}}" style="color:red">删除</a>
                                     </span>
                                     <span><a href="/traveledit/{{travel.id}}">编辑</a></span>
                                 {% endif %}

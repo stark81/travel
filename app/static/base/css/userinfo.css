@@ -168,3 +168,143 @@
 .usertravereviews{
     background: white;
 }
+
+#focused,#cancel_focus{
+    background: #e27b27;
+    width: auto;
+    padding: 0 16px;
+}
+
+.focus_change{
+    background: #e27b27
+}
+
+.change:hover{
+    cursor: pointer;
+}
+
+
+.infotext{
+    position: fixed;
+    background: white;
+    border: 1px #ccc solid;
+    border-radius: 6px;
+    height: 120px;
+    width: 240px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    line-height: 120px;
+    display: none;
+}
+
+.be_focus_cover{
+    float: left;
+    height: 80px;
+    width: 80px;
+    margin-right: 40px;
+}
+
+.friendsLi{
+    padding: 20px 0;
+    width: 700px;
+    margin: 0 auto;
+    border-bottom: 1px #ccc solid;
+}
+
+.be_focus_info>p{
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.be_focus_info>.getnums,.getnums>a{
+    font-size: 14px;
+    color: #888;
+    line-height: 15px;
+    margin-top: 10px;
+}
+
+.be_focus_info{
+    float: left;
+    width: 400px;
+}
+
+#message-box{
+    position: fixed;
+    background: rgba(0.26, 0.26, 0.26, 0.6);
+    height: 100%;
+    width: 100%;
+    top: -40px;
+    left: 0;
+    border-radius:0;
+    display: none;
+}
+
+#message-content{
+    width: 440px;
+    height: 380px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 6px;
+    background: white;
+}
+
+#message-content>h3{
+    line-height: 80px;
+}
+#message-content>textarea{
+    width: 300px;
+    height: 180px;
+    resize: none;
+    border-radius: 4px;
+    padding: 10px;
+    outline: none;
+}
+
+#sendmessageok{
+    color: red;
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+#message-content>button{
+    height: 34px;
+    padding: 0 24px;
+    background: #00a6c9;
+    border-radius: 4px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.messageLi{
+    display: inline-block;
+    width: 560px
+}
+
+.change1{
+    height: 34px;
+    padding: 0 24px;
+    background: #e27b27;
+    border-radius: 4px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* .change1:nth-child(1){
+    margin-bottom: 10px;
+    background: #00a6c9
+} */
+
+.button{
+    float: right;
+    width: 140px
+}

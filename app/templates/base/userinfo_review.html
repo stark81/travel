@@ -16,7 +16,9 @@
                 {{ review.addtime }}
             </label>
             {% if user.id == session["user_id"] %}
-                <a href="/userinfdeletereviews/{{review.id}}"><div class="userinfodeletereview">删除</div></a>
+                <a href="/userinfdeletereviews/{{review.id}}">
+                    <div class="userinfodeletereview">删除</div>
+                </a>
             {% endif %}
         </div>
         {% endfor %}

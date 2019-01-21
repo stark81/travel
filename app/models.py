@@ -174,3 +174,22 @@ class TravelsCollect(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey("user.id"))
     travels_id = db.Column(db.Integer,db.ForeignKey("travels.id"))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
+
+class Friends(db.Model):
+    __tablename__ = "friends"
+    __table_args__ = {"useexisting":True}
+    id = db.Column(db.Integer,primary_key=True)
+    focused_id = db.Column(db.Integer)
+    focuser_id = db.Column(db.Integer)
+    addtime = db.Column(db.DateTime,index=True,default=datetime.now)
+
+class Message(db.Model):
+    __tablename__ = "message"
+    __table_args__ = {"useexisting":True}
+    id = db.Column(db.Integer,primary_key=True)
+    receiver_id = db.Column(db.Integer)
+    content = db.Column(db.Text)
+    send_id = db.Column(db.Integer)
+    isalive = db.Column(db.Boolean,default=True)
+    is_read = db.Column(db.Boolean,default=False)
+    addtime = db.Column(db.DateTime,index=True,default=datetime.now)

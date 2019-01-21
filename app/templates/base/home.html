@@ -47,8 +47,14 @@
                     <li class="userinfoli">
                         <input type="hidden" name="homeuser" value="{{ session['user_id'] }}">
                         <input type="hidden" name="getimg" value="{{ session['user_id'] }}">
-                        <a href="/userinfo/travel/{{session['user_id']}}"><img class="userCover"></a>
+                        <a class="userimgsss1" href="/userinfo/travel/{{session['user_id']}}">
+                            <img class="userCover">
+                            <div id="checkunreadmessage"></div>
+                        </a>
                         <a id="firstusername" href="/userinfo/travel/{{session['user_id']}}"></a>
+                        <script>
+                            check_unread_message_numbers();
+                        </script>
                     </li>
                     <script>
                         getusercover();

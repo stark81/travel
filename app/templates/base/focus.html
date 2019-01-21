@@ -1,0 +1,62 @@
+{% extends "base/userinfo.html" %}
+
+{% block aboutmain %}
+<div class="focusmain">
+    {% if friends %}
+        <ul>
+        {% for friend in friends %}
+            <li class="friendsLi">
+                <a href="/userinfo/travel/{{friend.id}}">
+                    <div class="be_focus_cover"><img style="width:100%" src="{{ url_for('static',filename='uploads/user/')+friend.cover }}"></div>
+                </a>
+                <div class="be_focus_info">
+                    <a href="/userinfo/travel/{{friend.id}}"><h3>{{ friend.uname }}</h3></a>
+                    <p>
+                        {% if friend.introduce %}
+                            {{ friend.introduce }}
+                        {% else %}
+                            <p>这个人很懒，并没有写个人简介哟</p>
+                        {% endif %}
+                    </p>
+                    <input type="hidden" name="getnums_id" value="{{ friend.id }}">
+                    <p class="getnums">
+                        <label></label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a></a>
+                    </p>
+                </div>
+                <!-- 判断是在查看自己的主页还是在查看他人的主页 -->
+                {% if session["user_id"] == user.id  %}
+                    <div class="change" id="cancel_focus" onclick="dontfocuse({{ friend.id }})">取关</div>
+                <!-- 查看他人主页 -->
+                {% else %}
+                    {% if "user_id" in session %}
+                        <!-- 他关注的人不是自己，则要判断那个人是否是自己关注的人 -->
+                        {% if session["user_id"] != friend.id %}
+                            <div class="checkfriend">
+                                <input type="hidden" name="check_is_friend" value="{{ friend.id }}">
+                                <div class="change"></div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                <div class="infotext">
+                    <h3>操作成功！</h3>
+                </div>
+                <div class="clear"></div>
+            </li>
+        {% endfor %}
+            <div class="clear"></div>
+        </ul>    
+    {% else %}
+        <div style="padding-top:20px">
+            <h2 style="text-align:center;line-height:60px;">
+                <div style="margin: 0 auto;">
+                    <img style="width:600px" src="{{url_for('static',filename='base/image/nothing.png')}}">
+                </div>
+                他并没有关注任何一个用户~
+            </h2>
+        </div> 
+    {% endif %}
+</div>
+{% endblock %}

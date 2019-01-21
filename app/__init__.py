@@ -6,6 +6,7 @@ import os
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
+app.config["PROCESSES"] = 4
 app.config["SECRET_KEY"] = 'mrsoft'
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:123456@127.0.0.1:3306/travel"
 track_modifications = app.config.setdefault('SQLALCHEMY_TRACK_MODIFICATIONS', False)
@@ -19,3 +20,4 @@ from app.admin import admin as admin_blueprint
 
 app.register_blueprint(home_blueprint)
 app.register_blueprint(admin_blueprint,url_prefix="/admin")
+

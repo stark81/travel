@@ -178,59 +178,37 @@ $(document).on("click",".delreview1",function delreview(){
 // }
 
 $(function(){
-    function checktravelcollected(){
-        var uid = $("[name='collecttraveluid']").val();
-        var travel_id = $("[name='collecttravelid']").val();
-        $.ajax({
-            url:"/checktravelcollected",
-            type:"get",
-            data:"uid="+uid+"&&travel_id="+travel_id,
-            async:true,
-            success:function(data){
-                if(data=="1"){
-                    $(".collectTravel").css({
-                        "display":"inline-block"
-                    })
-                    $(".dotravelcollected").css({
-                        "display":"none"
-                    })
-                }else{
-                    $(".dotravelcollected").css({
-                        "display":"inline-block"
-                    })
-                    $(".collectTravel").css({
-                        "display":"none"
-                    })
-                    
-                }
-            },
-        })
-    };
-    checktravelcollected();
-
     $(".dotravelcollected").on("click",function(){
-        var uid = $("[name='collecttraveluid']").val();
         var travel_id = $("[name='collecttravelid']").val();
         $.ajax({
             url:"/collecttravel",
             type:"post",
-            data:"uid="+uid+"&&travel_id="+travel_id,
+            data:"travel_id="+travel_id,
             async:true,
             success:function(data){
-                checktravelcollected()
+                $(".infotext").css({
+                    "display":"block",
+                });
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
             },
         })
     });
     $(".collectTravel").on("click",function(){
-        var uid = $("[name='collecttraveluid']").val();
         var travel_id = $("[name='collecttravelid']").val();
         $.ajax({
             url:"/cancelcollecttravel",
             type:"post",
-            data:"uid="+uid+"&&travel_id="+travel_id,
+            data:"travel_id="+travel_id,
             async:true,
             success:function(data){
-                checktravelcollected()
+                $(".infotext").css({
+                    "display":"block",
+                });
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
             },
         })
     });
@@ -282,6 +260,249 @@ $(function(){
     }
 })
 
+// 取消关注，需要传入被关注者的id
+function dontfocuse(focus_id){
+    $.ajax({
+        url:"/lost_focus",
+        type:"post",
+        data:"focus_id="+focus_id,
+        async:true,
+        success:function(data){
+            $(".infotext").css({
+                "display":"block",
+            })
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }
+    })
+}
+
+// function is_friend(focus_id){
+//     $.ajax({
+//         url:'/check_is_friend',
+//         data:"focus_id="+focus_id,
+//         type:'get',
+//         async:true,
+//         success:function(data){
+//             if(data==1){
+//                 return true;
+//             }else{
+//                 return false;
+//             }
+//         }
+//     })
+// }
+
+$(function(){
+    $(".checkfriend").each(function(){
+        $(".checkfriendLi").removeClass("checkfriendLi");
+        $(this).addClass("checkfriendLi");
+        var focus_id = $(this).children("[name='check_is_friend']").val();
+        $.ajax({
+            url:'/check_is_friend',
+            data:"focus_id="+focus_id,
+            type:'get',
+            async:false,
+            success:function(data){
+                if(data==1){
+                    $(".checkfriendLi").children(".change").html("取关");
+                    $(".checkfriendLi").children(".change").addClass("focus_change");
+                    $(".checkfriendLi").children(".change").click(function(){
+                        dontfocuse(focus_id);
+                    })
+                }else{
+                    $(".checkfriendLi").children(".change").html("关注");
+                    $(".checkfriendLi").children(".change").click(function(){
+                        follow(focus_id);
+                    })
+                }
+            }
+        })
+    })
+})
+
+// 关注用户，需要传入被关注者的id
+function follow(focus_id){
+    $.ajax({
+        url:"/get_focus",
+        type:"post",
+        data:"focus_id="+focus_id,
+        async:true,
+        success:function(data){
+            $(".infotext").css({
+                "display":"block",
+            });
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }
+    })
+}
+
+$(function(){
+    $("#focused").click(function(){
+        var focus_id = $("[name='focus_id']").val();
+        dontfocuse(focus_id);
+    });
+    $("#focus").click(function(){
+        var focus_id = $("[name='focus_id']").val();
+        follow(focus_id);
+    })
+})
+
+$(function(){
+    $(".getnums").each(function(){
+        var getuserid = $(this).prev().val();
+        $(this).children("label").addClass("current_travelnum");
+        // focus.html页面用于获取用户的游记数量
+        $.ajax({
+            url:'/gettravelnums',
+            type:"get",
+            async:false,
+            data:'getuserid='+getuserid,
+            success:function(data){
+                $(".current_travelnum").html(data+"篇游记");
+                $(".current_travelnum").removeClass("current_travelnum");
+            }
+        });
+    })
+})
+
+$(function(){
+    $(".getnums").each(function(){
+        var getuserid = $(this).prev().val();
+        $(this).children("span").addClass("current_span");
+        $(this).children("a").addClass("current_a")
+        // focus.html页面用于获取用户的评论数量
+        $.ajax({
+            url:"/getuserreviewnums",
+            type:"get",
+            data:"getuserid="+getuserid,
+            async:false,
+            success:function(data){
+                $(".current_span").html(data+"条评论");
+                $(".current_span").removeClass("current_span");
+            }
+        });
+        // focus.html页面用于获取用户的粉丝数量
+        $.ajax({
+            url:"/getuserfocusers",
+            type:"get",
+            data:"getuserid="+getuserid,
+            async:false,
+            success:function(data){
+                $(".current_a").html(data+"个关注者");
+                $(".current_a").removeClass("current_a");
+            }
+        })
+    })
+})
+$(function(){
+    $("#message").click(function(){
+        $("#message-box").css({
+            "display":"block",
+        })
+        var height0 = $("body").height();
+        $("body").css({
+            "height":height0,
+            "overflow":"hidden"
+        })
+    });
+    $("#cancelmessage").click(function(){
+        $("#message-box").css({
+            "display":"none",
+        });
+        $("body").css({
+            "height":"auto",
+            "overflow":"auto"
+        })
+    })
+})
+
+function domessage(user_id){
+    var content = $(".message").val();
+    $.ajax({
+        url:"/domessage",
+        type:"post",
+        data:"user_id="+user_id+"&&content="+content,
+        async:true,
+        success:function(data){
+            $("#sendmessageok").html(data);
+            setTimeout(function(){
+                window.location.reload();
+            },1500)
+        }
+    })
+}
+
+function delmessage(message_id){
+    $.ajax({
+        url:"/delmessage",
+        data:"message_id="+message_id,
+        type:"post",
+        async:false,
+        success:function(data){
+            $(".infotext").css({
+                "display":"block"
+            });
+            setTimeout(function(){
+                window.location.reload();
+            },1500)
+        }
+    })
+}
+
+function mark_read(){
+    $(".unread").each(function(){
+        var message_id = $(this).prev().val();
+        $.ajax({
+            url:"/mark_as_read",
+            data:"message_id="+message_id,
+            type:"post",
+            async:true,
+        })
+    })
+}
+
+function check_unread_message_numbers(){
+    $.ajax({
+        url:"/getunreadcount",
+        type:"get",
+        async:true,
+        success:function(data){
+            if(data != "0"){
+                $("#checkunreadmessage").html(data);
+                $("#checkunreadmessage").css({
+                    "display":"block"
+                })
+            }
+        }
+    })
+}
+
+function get_unread_number(){
+    $.ajax({
+        url:"/getunreadcount",
+        type:"get",
+        async:true,
+        success:function(data){
+            if(data != "0"){
+                $("#a_unread_count").html(data);
+                $("#a_unread_count").css({
+                    "display":"block"
+                })
+            }
+        }
+    })
+}
+
+
+
+
+// 请注意，由于下面这个函数中存在ck编辑器加载报错的问题，
+// 所以要确保下面这个函数在所有用户自己书写的js的最下面，
+// 如果以后要添加js代码，请在上面进行书写。
 $(function(){
     $("[name='title']").change(function(){
         checktravleempty();
@@ -289,6 +510,7 @@ $(function(){
     $("#cover").change(function(){
         checktravleempty();
     });
+    
     var editor = CKEDITOR.instances.content;
     editor.on("change",function(){
         checktravleempty();
@@ -303,4 +525,3 @@ $(function(){
 });
 
 })
-

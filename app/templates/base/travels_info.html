@@ -21,10 +21,12 @@
                             <label>发表时间 : {{ travel.addtime }}</label>
                             {% if session["user_id"] %}
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="hidden" name="collecttraveluid" value="{{session['user_id']}}">
                                 <input type="hidden" name="collecttravelid" value="{{ travel.id }}">
-                                <label class="collectTravel">取消收藏</label>
-                                <label class="dotravelcollected">收藏游记</label>
+                                {% if is_collected %}
+                                    <label class="collectTravel">取消收藏</label>
+                                {% else %}
+                                    <label class="dotravelcollected">收藏游记</label>
+                                {% endif %}
                             {% endif %}
                         </div>
                         {{ travel.content|safe }}
@@ -57,6 +59,9 @@
                             getreviews();
                         </script> -->
                         
+                    </div>
+                    <div class="infotext">
+                        <h3>操作成功！</h3>
                     </div>
                 </div>
                 
