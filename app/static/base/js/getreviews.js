@@ -497,6 +497,89 @@ function get_unread_number(){
     })
 }
 
+// 确认是否要删除游记，函数需要传入被删除游记的id和标题
+function makesuredeleteTravel(travel_id){
+    $("#deltravel").css({
+        "display":"block",
+    });
+    var height = $("body").height();
+    $("body").css({
+        "height":height,
+        "overflow":"hidden"
+    });
+    $("[name='travel_id_delete']").val(travel_id);
+}
+// 取消删除
+function canceldeleteTravel(){
+    $("#deltravel").css({
+        "display":"none",
+    });
+    $("body").css({
+        "height":"auto",
+        "overflow":"auto"
+    });
+}
+// 确定删除游记
+function do_delete_travel(){
+    var travel_id = $("[name='travel_id_delete']").val();
+    $.ajax({
+        url:"/deletetravel",
+        data:"travel_id="+travel_id,
+        type:"post",
+        async:true,
+        success:function(data){
+            $("#deltravel-box h3").html(data);
+            $("#deltravel-box h3").css({
+                "color":"red"
+            })
+            setTimeout(function(){
+                window.location.reload();
+            },1000)
+        }
+    })
+}
+
+function showdeleteReview(review_id){
+    $("#deltravelreview").css({
+        "display":"block",
+    });
+    var height = $("body").height();
+    $("body").css({
+        "height":height,
+        "overflow":"hidden"
+    });
+    $("[name='review_id_delete']").val(review_id);
+}
+
+function canceldeleteReview(){
+    $("#deltravelreview").css({
+        "display":"none",
+    });
+    $("body").css({
+        "height":"auto",
+        "overflow":"auto"
+    });
+}
+
+function do_delete_review(){
+    var review_id = $("[name='review_id_delete']").val();
+    $.ajax({
+        url:"/userinfdeletereviews",
+        data:"review_id="+review_id,
+        type:"post",
+        async:true,
+        success:function(data){
+            $("#deltravelreview-box h3").html(data);
+            $("#deltravelreview-box h3").css({
+                "color":"red"
+            })
+            setTimeout(function(){
+                window.location.reload();
+            },1000)
+        }
+    })
+}
+
 
 
 
@@ -525,3 +608,8 @@ $(function(){
 });
 
 })
+
+
+
+// 请注意，由于上面这个函数中存在ck编辑器加载报错的问题，
+// 如果你要添加js代码，请在上面这个函数的上面进行书写。

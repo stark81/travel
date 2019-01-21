@@ -436,15 +436,15 @@ def cancelcollecttravel():
     db.session.commit()
     return "ok"
 
-@home.route("/deletetravels/<travel_id>",methods=["GET","POST"])
-def deletetravels(travel_id):
-    url = request.headers.get("Referer","/")
-    resp = redirect(url)
+@home.route("/deletetravel",methods=["POST"])
+def deletetravel():
+    travel_id = request.form["travel_id"]
+    print(travel_id)
     travel = Travels.query.filter_by(id=travel_id).first()
     travel.isactive = False
     db.session.add(travel)
     db.session.commit()
-    return resp
+    return "删除游记成功！"
 
 @home.route("/userinfo/review/<user_id>")
 def userinfo_review(user_id):
@@ -510,18 +510,14 @@ def alltravels():
     
     return render_template("base/alltravels.html",page_data=page_data,travels=travels)
 
-@home.route("/userinfdeletereviews/<review_id>")
-def userinfdeletereviews(review_id):
-    url = request.headers.get("Referer","/")
-    resp = redirect(url)
-    if "user_id" in session:
-        review = Review.query.filter_by(id=review_id).first()
-    else:
-        return "err"
+@home.route("/userinfdeletereviews",methods=["POST"])
+def userinfdeletereviews():
+    review_id = request.form["review_id"]
+    review = Review.query.filter_by(id=review_id).first()
     review.isactive = False
     db.session.add(review)
     db.session.commit()
-    return resp
+    return "删除评论成功！"
 
 @home.route("/aboutus",methods=["GET","POST"])
 def aboutus():
@@ -658,7 +654,6 @@ def getunreadcount():
         return str(message_count)
     else:
         return "0"
-
 
 
 

@@ -88,7 +88,7 @@
                                 <label style="margin:0 50px 0 50px">{{ travel.addtime }}</label>
                                 {% if travel.author_id == session["user_id"] %}
                                     <span style="margin:0 20px 0 0">
-                                        <a href="/deletetravels/{{travel.id}}" style="color:red">删除</a>
+                                        <label  onclick="makesuredeleteTravel({{travel.id}})" style="color:red;cursor:pointer;">删除</label>
                                     </span>
                                     <span><a href="/traveledit/{{travel.id}}">编辑</a></span>
                                 {% endif %}
@@ -100,8 +100,15 @@
 
                             <div class="clear"></div>
                         </li>
-                            
                         {% endfor %}
+                        <div id="deltravel">
+                            <div id="deltravel-box">
+                                <h3>确定删除游记?</h3>
+                                <input type="hidden" name="travel_id_delete">
+                                <button onclick="do_delete_travel()">删除</button>
+                                <button onclick="canceldeleteTravel()" class="canceldele">取消</button>
+                            </div>
+                        </div>
                     {% else %}
                         <!-- <h3 style="text-align:center">这个人很懒，连一篇游记都没有留下~</h3> -->
                         <div style="padding-top:20px">
