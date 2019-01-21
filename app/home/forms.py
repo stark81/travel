@@ -84,6 +84,7 @@ class LoginForm(FlaskForm):
             "class": "btn btn-primary",
         }
     )
+    
 class InfoEditForm(FlaskForm):
     username = StringField(
         label="用户名",

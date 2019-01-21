@@ -352,7 +352,13 @@
     margin-top: 10px;
     text-align: center;
 }
-.userinfoli>a>img{
+.userinfoli>a>div{
+    position: relative;
+    width: 55px;
+    margin: 0 auto;
+}
+
+.userinfoli>a>div>img{
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -376,8 +382,8 @@
     border-radius: 50%;
     background: red;
     color: white;
-    left: 15px;
-    top:-60px;
+    right: -8px;
+    top:0px;
 }
 #a_unread_count{
     position: absolute;

@@ -474,7 +474,7 @@ function check_unread_message_numbers(){
             if(data != "0"){
                 $("#checkunreadmessage").html(data);
                 $("#checkunreadmessage").css({
-                    "display":"block"
+                    "display":"inline-block"
                 })
             }
         }
@@ -490,7 +490,7 @@ function get_unread_number(){
             if(data != "0"){
                 $("#a_unread_count").html(data);
                 $("#a_unread_count").css({
-                    "display":"block"
+                    "display":"inline-block"
                 })
             }
         }
