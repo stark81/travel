@@ -44,6 +44,10 @@ def logout():
     resp = redirect(url)
     if "user_id" in session:
         del session["user_id"]
+    if "uemail" in request.cookies:
+        resp.delete_cookie("uemail")
+    if "uid" in request.cookies:
+        resp.delete_cookie("uid")
     return resp
 
 @home.route("/login/",methods=["GET","POST"])
@@ -56,7 +60,17 @@ def login():
         session["url"] = url
         if "user_id" in session:
             return redirect(session["url"])
-        
+        if "uemail" in request.cookies and "uid" in request.cookies:
+            user = User.query.filter_by(uemail=request.cookies.get("uemail")).first()
+            if user and str(user.id) == request.cookies.get("uid"):
+                session["user_id"] = user.id
+                userlog = Userlog(user.id,request.remote_addr) #验证通过之后,将用户登录的信息添加
+                db.session.add(userlog)                    #到userlog表中,并将网页首页返回给用户
+                db.session.commit()
+                resp = redirect(session["url"])
+                return resp
+
+      
     form = LoginForm()
     if form.validate_on_submit():   #当点击登录时,验证登录规则并查看该邮箱是否已经注册
         user = User.query.filter_by(uemail=form.data["uemail"]).first()
@@ -65,14 +79,19 @@ def login():
             return redirect(url_for("home.login"))
         if check_password_hash(user.upwd,form.data["upwd"]) is False:
             flash("密码不正确","err")
-            return redirect(url_for("home.login")) 
+            return redirect(url_for("home.login"))
+        
         session["user_id"] = user.id
         userlog = Userlog(user.id,request.remote_addr) #验证通过之后,将用户登录的信息添加
         db.session.add(userlog)                    #到userlog表中,并将网页首页返回给用户
         db.session.commit()
         url = session.get("url","/")
         resp = redirect(url)
-        return resp
+        if form.saveupwd.data:
+            resp.set_cookie("uemail",form.data["uemail"],60*60*24*7)
+            save_session = str(session["user_id"])
+            resp.set_cookie("uid",save_session,60*60*24*7)
+            return resp
     return render_template("base/login.html",form=form)
 
 
@@ -439,7 +458,6 @@ def cancelcollecttravel():
 @home.route("/deletetravel",methods=["POST"])
 def deletetravel():
     travel_id = request.form["travel_id"]
-    print(travel_id)
     travel = Travels.query.filter_by(id=travel_id).first()
     travel.isactive = False
     db.session.add(travel)

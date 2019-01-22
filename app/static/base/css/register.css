@@ -78,7 +78,7 @@ body{
     cursor: pointer;
 }
 
-.form-control input[name="issave"]{
+#saveupwd{
     float: left;
     margin: 9px 6px 0 14px ;
 }

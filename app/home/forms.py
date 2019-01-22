@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField, IntegerField
+from wtforms import StringField,BooleanField, PasswordField, SubmitField, FileField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Email, Regexp, EqualTo, ValidationError,Length
 from app.models import User
 
@@ -78,6 +78,11 @@ class LoginForm(FlaskForm):
             "placeholder":"请输入密码"
         }
     )
+
+    saveupwd = BooleanField(
+        label="记住密码",
+    )
+
     submit = SubmitField(
         label="登陆",
         render_kw={
