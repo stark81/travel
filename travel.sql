@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80013
 File Encoding         : 65001
 
-Date: 2019-01-21 15:18:08
+Date: 2019-01-22 18:21:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,7 +45,7 @@ CREATE TABLE `adminlog` (
   KEY `admin_id` (`admin_id`),
   KEY `ix_adminlog_addtime` (`addtime`),
   CONSTRAINT `adminlog_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `adminlist` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of adminlog
@@ -120,6 +120,10 @@ INSERT INTO `adminlog` VALUES ('67', '1', '127.0.0.1', '2019-01-17 10:32:21');
 INSERT INTO `adminlog` VALUES ('68', '1', '127.0.0.1', '2019-01-18 12:58:42');
 INSERT INTO `adminlog` VALUES ('69', '1', '127.0.0.1', '2019-01-19 09:18:23');
 INSERT INTO `adminlog` VALUES ('70', '1', '127.0.0.1', '2019-01-21 11:54:58');
+INSERT INTO `adminlog` VALUES ('71', '1', '127.0.0.1', '2019-01-21 16:02:39');
+INSERT INTO `adminlog` VALUES ('72', '1', '127.0.0.1', '2019-01-21 18:15:15');
+INSERT INTO `adminlog` VALUES ('73', '1', '127.0.0.1', '2019-01-21 18:45:06');
+INSERT INTO `adminlog` VALUES ('74', '1', '127.0.0.1', '2019-01-22 18:14:47');
 
 -- ----------------------------
 -- Table structure for `alembic_version`
@@ -178,7 +182,6 @@ CREATE TABLE `friends` (
 -- ----------------------------
 INSERT INTO `friends` VALUES ('4', '2', '1', '2019-01-19 17:04:52');
 INSERT INTO `friends` VALUES ('11', '6', '1', '2019-01-19 17:59:51');
-INSERT INTO `friends` VALUES ('14', '3', '2', '2019-01-20 13:02:47');
 INSERT INTO `friends` VALUES ('15', '1', '2', '2019-01-20 13:07:17');
 INSERT INTO `friends` VALUES ('23', '2', '5', '2019-01-20 14:33:27');
 INSERT INTO `friends` VALUES ('24', '2', '6', '2019-01-21 09:37:01');
@@ -197,7 +200,7 @@ CREATE TABLE `message` (
   `is_read` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_message_addtime` (`addtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of message
@@ -218,6 +221,14 @@ INSERT INTO `message` VALUES ('13', '2', '新疆--浙江--广东，你的旅程�
 INSERT INTO `message` VALUES ('14', '2', '还不错哟', '3', '0', '2019-01-21 11:40:19', '1');
 INSERT INTO `message` VALUES ('15', '2', '我的天哪', '3', '0', '2019-01-21 14:12:06', '1');
 INSERT INTO `message` VALUES ('16', '2', '再写一条留言试试。', '3', '0', '2019-01-21 14:12:26', '1');
+INSERT INTO `message` VALUES ('17', '3', '啦啦啦啦啦啦', '2', '1', '2019-01-21 17:16:33', '1');
+INSERT INTO `message` VALUES ('18', '2', '?????未读留言的提示图标在firefox上不显示了。。。难受', '3', '1', '2019-01-21 17:21:21', '1');
+INSERT INTO `message` VALUES ('19', '3', '再试一下吧，不知道是浏览器的问题，还是别的问题，可是这个bug chrome上并没有出现啊', '2', '1', '2019-01-21 17:22:46', '1');
+INSERT INTO `message` VALUES ('20', '2', '在chrome上面bug原因找到了，因为top的数值有问题，可是chrome上为什么不会有问题咧', '3', '1', '2019-01-21 17:28:20', '1');
+INSERT INTO `message` VALUES ('21', '3', '那在文档脱流之后的位置不同吗？', '2', '1', '2019-01-21 17:30:54', '1');
+INSERT INTO `message` VALUES ('22', '3', '试一下', '2', '1', '2019-01-21 17:51:45', '1');
+INSERT INTO `message` VALUES ('23', '2', 'firefox上修复了', '3', '1', '2019-01-21 17:53:41', '1');
+INSERT INTO `message` VALUES ('24', '3', '试一下哈', '2', '1', '2019-01-21 18:40:12', '0');
 
 -- ----------------------------
 -- Table structure for `operlog`
@@ -727,7 +738,7 @@ CREATE TABLE `userlog` (
   KEY `user_id` (`user_id`),
   KEY `ix_userlog_addtime` (`addtime`),
   CONSTRAINT `userlog_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of userlog
@@ -849,3 +860,43 @@ INSERT INTO `userlog` VALUES ('114', '2', '127.0.0.1', '2019-01-21 10:41:33');
 INSERT INTO `userlog` VALUES ('115', '2', '127.0.0.1', '2019-01-21 11:09:24');
 INSERT INTO `userlog` VALUES ('116', '3', '127.0.0.1', '2019-01-21 11:13:54');
 INSERT INTO `userlog` VALUES ('117', '1', '127.0.0.1', '2019-01-21 15:17:17');
+INSERT INTO `userlog` VALUES ('118', '2', '127.0.0.1', '2019-01-21 17:12:46');
+INSERT INTO `userlog` VALUES ('119', '3', '127.0.0.1', '2019-01-21 17:17:18');
+INSERT INTO `userlog` VALUES ('120', '3', '127.0.0.1', '2019-01-21 17:20:10');
+INSERT INTO `userlog` VALUES ('121', '3', '127.0.0.1', '2019-01-21 17:23:37');
+INSERT INTO `userlog` VALUES ('122', '3', '127.0.0.1', '2019-01-21 17:42:35');
+INSERT INTO `userlog` VALUES ('123', '3', '127.0.0.1', '2019-01-21 17:52:12');
+INSERT INTO `userlog` VALUES ('124', '3', '127.0.0.1', '2019-01-22 13:19:56');
+INSERT INTO `userlog` VALUES ('125', '3', '127.0.0.1', '2019-01-22 13:22:12');
+INSERT INTO `userlog` VALUES ('126', '3', '127.0.0.1', '2019-01-22 13:24:37');
+INSERT INTO `userlog` VALUES ('127', '3', '127.0.0.1', '2019-01-22 13:29:15');
+INSERT INTO `userlog` VALUES ('128', '3', '127.0.0.1', '2019-01-22 17:08:55');
+INSERT INTO `userlog` VALUES ('129', '3', '127.0.0.1', '2019-01-22 17:13:05');
+INSERT INTO `userlog` VALUES ('130', '3', '127.0.0.1', '2019-01-22 17:15:47');
+INSERT INTO `userlog` VALUES ('131', '3', '127.0.0.1', '2019-01-22 17:17:18');
+INSERT INTO `userlog` VALUES ('132', '3', '127.0.0.1', '2019-01-22 17:18:55');
+INSERT INTO `userlog` VALUES ('133', '3', '127.0.0.1', '2019-01-22 17:18:59');
+INSERT INTO `userlog` VALUES ('134', '3', '127.0.0.1', '2019-01-22 17:23:56');
+INSERT INTO `userlog` VALUES ('135', '3', '127.0.0.1', '2019-01-22 17:25:38');
+INSERT INTO `userlog` VALUES ('136', '3', '127.0.0.1', '2019-01-22 17:28:01');
+INSERT INTO `userlog` VALUES ('137', '3', '127.0.0.1', '2019-01-22 17:29:55');
+INSERT INTO `userlog` VALUES ('138', '3', '127.0.0.1', '2019-01-22 17:32:25');
+INSERT INTO `userlog` VALUES ('139', '3', '127.0.0.1', '2019-01-22 17:32:55');
+INSERT INTO `userlog` VALUES ('140', '3', '127.0.0.1', '2019-01-22 17:41:02');
+INSERT INTO `userlog` VALUES ('141', '3', '127.0.0.1', '2019-01-22 17:43:04');
+INSERT INTO `userlog` VALUES ('142', '3', '127.0.0.1', '2019-01-22 17:44:15');
+INSERT INTO `userlog` VALUES ('143', '3', '127.0.0.1', '2019-01-22 17:44:46');
+INSERT INTO `userlog` VALUES ('144', '3', '127.0.0.1', '2019-01-22 17:53:05');
+INSERT INTO `userlog` VALUES ('145', '3', '127.0.0.1', '2019-01-22 17:54:44');
+INSERT INTO `userlog` VALUES ('146', '3', '127.0.0.1', '2019-01-22 17:55:18');
+INSERT INTO `userlog` VALUES ('147', '3', '127.0.0.1', '2019-01-22 17:59:58');
+INSERT INTO `userlog` VALUES ('148', '3', '127.0.0.1', '2019-01-22 18:00:08');
+INSERT INTO `userlog` VALUES ('149', '3', '127.0.0.1', '2019-01-22 18:00:51');
+INSERT INTO `userlog` VALUES ('150', '3', '127.0.0.1', '2019-01-22 18:01:43');
+INSERT INTO `userlog` VALUES ('151', '3', '127.0.0.1', '2019-01-22 18:02:03');
+INSERT INTO `userlog` VALUES ('152', '3', '127.0.0.1', '2019-01-22 18:02:26');
+INSERT INTO `userlog` VALUES ('153', '3', '127.0.0.1', '2019-01-22 18:02:58');
+INSERT INTO `userlog` VALUES ('154', '3', '127.0.0.1', '2019-01-22 18:04:37');
+INSERT INTO `userlog` VALUES ('155', '3', '127.0.0.1', '2019-01-22 18:14:01');
+INSERT INTO `userlog` VALUES ('156', '3', '127.0.0.1', '2019-01-22 18:14:21');
+INSERT INTO `userlog` VALUES ('157', '3', '127.0.0.1', '2019-01-22 18:14:33');
