@@ -81,6 +81,9 @@ class LoginForm(FlaskForm):
 
     saveupwd = BooleanField(
         label="记住密码",
+        render_kw={
+            "checked":"checked"
+        }
     )
 
     submit = SubmitField(
