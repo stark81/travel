@@ -62,7 +62,7 @@ def login():
             return redirect(session["url"])
         if "uemail" in request.cookies and "uid" in request.cookies:
             user = User.query.filter_by(uemail=request.cookies.get("uemail")).first()
-            if user and str(user.id) == request.cookies.get("uid"):
+            if user and check_password_hash(request.cookies.get("uid"),str(user.id)):
                 session["user_id"] = user.id
                 userlog = Userlog(user.id,request.remote_addr) #验证通过之后,将用户登录的信息添加
                 db.session.add(userlog)                    #到userlog表中,并将网页首页返回给用户
@@ -90,7 +90,8 @@ def login():
         if form.saveupwd.data:
             resp.set_cookie("uemail",form.data["uemail"],60*60*24*7)
             save_session = str(session["user_id"])
-            resp.set_cookie("uid",save_session,60*60*24*7)
+            upwd_hash = generate_password_hash(save_session)
+            resp.set_cookie("uid",upwd_hash,60*60*24*7)
             return resp
     return render_template("base/login.html",form=form)
 
