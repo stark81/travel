@@ -7,6 +7,7 @@ from flask import render_template,flash,request,redirect,url_for,session
 from werkzeug.security import generate_password_hash,check_password_hash
 from werkzeug.utils import secure_filename
 import os,uuid,base64,json
+from flask import jsonify
 from app.admin.forms import AddTravelsForm
 from sqlalchemy import and_,or_
 
@@ -673,6 +674,19 @@ def getunreadcount():
         return str(message_count)
     else:
         return "0"
+
+@home.route("/getuser")
+def getuser():
+    username = request.args["username"]
+    if username:
+        users = User.query.filter(User.uname.like("%"+username+"%")).all()
+        nameList = []
+        for user in users:
+            dic = {user.id:user.uname}
+            nameList.append(dic)
+        return jsonify(nameList)
+    else:
+        return "err"
 
 
 

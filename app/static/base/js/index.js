@@ -37,4 +37,39 @@ $(document).ready(function(e){
         
     });
 
+$(function(){
+    $("[name='searchuser'").bind("input propertychange change",function(){
+        $("#searchuserres li").remove();
+        $("#searchuserres").css({
+            "border":0
+        })
+        var content = $("[name='searchuser']").val();
+        if(content.length>=1){
+            $.ajax({
+                url:"/getuser",
+                type:"get",
+                data:"username="+content,
+                async:true,
+                success:function(data){
+                    if(data=="err"){}
+                    else{
+                        $.each(data,function(i,item){
+                            for(var user_id in item){
+                                $("#searchuserres").css({
+                                    "border": "1px #ccc solid"
+                                })
+                                var li = '<li class="selectuser"><a href="/userinfo/travel/'+user_id+'">'+item[user_id]+'</a></li>';
+                                $("#searchuserres").append(li)
+                            }
+                        })
+                    }
+                },
+            })
+        }
+    })
+})
+
+    
+
+
 

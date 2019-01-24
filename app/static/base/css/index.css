@@ -29,7 +29,7 @@
     border: 1px solid #7d7d7d;
     font-size: 14px;
     padding-left: 12px;
-    border-radius: 10px;
+    border-radius: 4px;
     outline: none;
 }
 #header .leftNav{
@@ -547,4 +547,31 @@
     line-height: 18px;
     color: white;
     border-radius: 2px;
+}
+
+#searchusersssss{
+    position: relative;
+}
+
+#searchuserres{
+    position: absolute;
+    width: 262px;
+    background: white;
+    /* border: 1px #ccc solid; */
+    border-radius: 4px;
+    top: 68px;
+    padding-left: 12px;
+    padding-left: 0;
+}
+
+#header #searchuserres>.selectuser{
+    float: none;
+    line-height: 50px;
+    margin-left: 0;
+    border-bottom: 1px #ddd solid;
+    border-radius: 4px
+}
+
+#header #searchuserres>.selectuser>a{
+    display: block
 }

@@ -62,9 +62,6 @@ $(function(){
             async:true,
             success:function(data){
                 $("#showreviews").append(data);
-            },
-            error:function(){
-                console.log("err")
             }
         })
     };
@@ -83,9 +80,6 @@ $(function(){
             success:function(data){
                 $("#showreviews").html(data);
                 $("#reviewscontent").val("");
-            },
-            error:function(){
-                console.log("err")
             }
         })
     })
