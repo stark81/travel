@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80013
 File Encoding         : 65001
 
-Date: 2019-01-22 18:21:14
+Date: 2019-01-26 09:56:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `adminlist` (
   `upwd` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uname` (`uname`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of adminlist
@@ -45,7 +45,7 @@ CREATE TABLE `adminlog` (
   KEY `admin_id` (`admin_id`),
   KEY `ix_adminlog_addtime` (`addtime`),
   CONSTRAINT `adminlog_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `adminlist` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of adminlog
@@ -124,6 +124,11 @@ INSERT INTO `adminlog` VALUES ('71', '1', '127.0.0.1', '2019-01-21 16:02:39');
 INSERT INTO `adminlog` VALUES ('72', '1', '127.0.0.1', '2019-01-21 18:15:15');
 INSERT INTO `adminlog` VALUES ('73', '1', '127.0.0.1', '2019-01-21 18:45:06');
 INSERT INTO `adminlog` VALUES ('74', '1', '127.0.0.1', '2019-01-22 18:14:47');
+INSERT INTO `adminlog` VALUES ('75', '1', '127.0.0.1', '2019-01-24 09:01:15');
+INSERT INTO `adminlog` VALUES ('76', '1', '127.0.0.1', '2019-01-24 15:54:56');
+INSERT INTO `adminlog` VALUES ('77', '1', '127.0.0.1', '2019-01-24 16:53:20');
+INSERT INTO `adminlog` VALUES ('78', '1', '127.0.0.1', '2019-01-25 10:06:31');
+INSERT INTO `adminlog` VALUES ('79', '1', '127.0.0.1', '2019-01-25 16:44:34');
 
 -- ----------------------------
 -- Table structure for `alembic_version`
@@ -132,7 +137,7 @@ DROP TABLE IF EXISTS `alembic_version`;
 CREATE TABLE `alembic_version` (
   `version_num` varchar(32) NOT NULL,
   PRIMARY KEY (`version_num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of alembic_version
@@ -151,7 +156,7 @@ CREATE TABLE `area` (
   `addtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_area_addtime` (`addtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of area
@@ -175,16 +180,16 @@ CREATE TABLE `friends` (
   `addtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_friends_addtime` (`addtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of friends
 -- ----------------------------
 INSERT INTO `friends` VALUES ('4', '2', '1', '2019-01-19 17:04:52');
-INSERT INTO `friends` VALUES ('11', '6', '1', '2019-01-19 17:59:51');
 INSERT INTO `friends` VALUES ('15', '1', '2', '2019-01-20 13:07:17');
 INSERT INTO `friends` VALUES ('23', '2', '5', '2019-01-20 14:33:27');
 INSERT INTO `friends` VALUES ('24', '2', '6', '2019-01-21 09:37:01');
+INSERT INTO `friends` VALUES ('25', '12', '2', '2019-01-24 19:14:27');
 
 -- ----------------------------
 -- Table structure for `message`
@@ -200,7 +205,7 @@ CREATE TABLE `message` (
   `is_read` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_message_addtime` (`addtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of message
@@ -214,7 +219,7 @@ INSERT INTO `message` VALUES ('6', '2', '希望能出一个九寨沟的游记攻
 INSERT INTO `message` VALUES ('7', '2', '能出一篇九寨沟的游记攻略吗？先谢谢了！', '6', '1', '2019-01-21 09:37:38', '1');
 INSERT INTO `message` VALUES ('8', '1', '收到了你的留言，我这边暂时没有九寨沟的出游计划呢，抱歉哈。', '2', '1', '2019-01-21 10:21:42', '1');
 INSERT INTO `message` VALUES ('9', '2', '好的呢，麻烦了', '1', '0', '2019-01-21 10:24:50', '1');
-INSERT INTO `message` VALUES ('10', '1', '客气客气~', '2', '1', '2019-01-21 10:39:52', '1');
+INSERT INTO `message` VALUES ('10', '1', '客气客气~', '2', '0', '2019-01-21 10:39:52', '1');
 INSERT INTO `message` VALUES ('11', '2', '为什么没有成功呢？奇怪了', '1', '1', '2019-01-21 10:41:18', '1');
 INSERT INTO `message` VALUES ('12', '2', 'give it a try', '3', '0', '2019-01-21 11:14:38', '1');
 INSERT INTO `message` VALUES ('13', '2', '新疆--浙江--广东，你的旅程真是太丰富了，期待你的下一篇游记，带我们领略国内的大好河山！', '3', '1', '2019-01-21 11:32:14', '1');
@@ -222,13 +227,20 @@ INSERT INTO `message` VALUES ('14', '2', '还不错哟', '3', '0', '2019-01-21 1
 INSERT INTO `message` VALUES ('15', '2', '我的天哪', '3', '0', '2019-01-21 14:12:06', '1');
 INSERT INTO `message` VALUES ('16', '2', '再写一条留言试试。', '3', '0', '2019-01-21 14:12:26', '1');
 INSERT INTO `message` VALUES ('17', '3', '啦啦啦啦啦啦', '2', '1', '2019-01-21 17:16:33', '1');
-INSERT INTO `message` VALUES ('18', '2', '?????未读留言的提示图标在firefox上不显示了。。。难受', '3', '1', '2019-01-21 17:21:21', '1');
+INSERT INTO `message` VALUES ('18', '2', '?????未读留言的提示图标在firefox上不显示了。。。难受', '3', '0', '2019-01-21 17:21:21', '1');
 INSERT INTO `message` VALUES ('19', '3', '再试一下吧，不知道是浏览器的问题，还是别的问题，可是这个bug chrome上并没有出现啊', '2', '1', '2019-01-21 17:22:46', '1');
-INSERT INTO `message` VALUES ('20', '2', '在chrome上面bug原因找到了，因为top的数值有问题，可是chrome上为什么不会有问题咧', '3', '1', '2019-01-21 17:28:20', '1');
+INSERT INTO `message` VALUES ('20', '2', '在chrome上面bug原因找到了，因为top的数值有问题，可是chrome上为什么不会有问题咧', '3', '0', '2019-01-21 17:28:20', '1');
 INSERT INTO `message` VALUES ('21', '3', '那在文档脱流之后的位置不同吗？', '2', '1', '2019-01-21 17:30:54', '1');
 INSERT INTO `message` VALUES ('22', '3', '试一下', '2', '1', '2019-01-21 17:51:45', '1');
 INSERT INTO `message` VALUES ('23', '2', 'firefox上修复了', '3', '1', '2019-01-21 17:53:41', '1');
 INSERT INTO `message` VALUES ('24', '3', '试一下哈', '2', '1', '2019-01-21 18:40:12', '0');
+INSERT INTO `message` VALUES ('25', '1', '你的游记攻略真的是很棒哟', '2', '1', '2019-01-22 18:34:14', '1');
+INSERT INTO `message` VALUES ('26', '1', '你好吗?', '2', '1', '2019-01-24 08:53:09', '1');
+INSERT INTO `message` VALUES ('27', '5', '熊大,光头强又来砍树咧', '2', '0', '2019-01-24 19:27:53', '1');
+INSERT INTO `message` VALUES ('28', '5', '你家熊二呢???', '2', '1', '2019-01-24 19:28:51', '1');
+INSERT INTO `message` VALUES ('29', '5', '你好啊', '2', '1', '2019-01-24 20:55:41', '1');
+INSERT INTO `message` VALUES ('30', '5', '熊大,光头强又来砍树咧', '2', '1', '2019-01-24 20:56:23', '1');
+INSERT INTO `message` VALUES ('31', '2', '你话真多', '5', '1', '2019-01-24 20:57:42', '1');
 
 -- ----------------------------
 -- Table structure for `operlog`
@@ -244,7 +256,7 @@ CREATE TABLE `operlog` (
   KEY `admin_id` (`admin_id`),
   KEY `ix_operlog_addtime` (`addtime`),
   CONSTRAINT `operlog_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `adminlist` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of operlog
@@ -508,7 +520,7 @@ CREATE TABLE `review` (
   KEY `ix_review_addtime` (`addtime`),
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`travels_id`) REFERENCES `travels` (`id`),
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of review
@@ -539,6 +551,7 @@ INSERT INTO `review` VALUES ('23', '7', '3', '试一下这里写的评论,主页
 INSERT INTO `review` VALUES ('24', '4', '2', '你好', '2019-01-14 19:15:27', '0');
 INSERT INTO `review` VALUES ('25', '14', '3', '发表了这么久，都没人评论，挽个尊。。。', '2019-01-21 11:27:31', '1');
 INSERT INTO `review` VALUES ('26', '13', '3', '真是及时，假期准备带家人去长隆玩。', '2019-01-21 11:51:50', '1');
+INSERT INTO `review` VALUES ('27', '5', '2', '...', '2019-01-24 15:57:52', '0');
 
 -- ----------------------------
 -- Table structure for `scenic`
@@ -561,7 +574,7 @@ CREATE TABLE `scenic` (
   KEY `area_id` (`area_id`),
   KEY `ix_scenic_addtime` (`addtime`),
   CONSTRAINT `scenic_ibfk_1` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of scenic
@@ -594,7 +607,7 @@ CREATE TABLE `sceniccollect` (
   KEY `ix_sceniccollect_addtime` (`addtime`),
   CONSTRAINT `sceniccollect_ibfk_1` FOREIGN KEY (`scenic_id`) REFERENCES `scenic` (`id`),
   CONSTRAINT `sceniccollect_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of sceniccollect
@@ -612,7 +625,7 @@ CREATE TABLE `suggestion` (
   `addtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_suggestion_addtime` (`addtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of suggestion
@@ -622,6 +635,8 @@ INSERT INTO `suggestion` VALUES ('2', 'stark81', 'stark81@qq.com', '很喜欢你
 INSERT INTO `suggestion` VALUES ('3', '马尔代夫的海风', 'haha@163.com', '网站有点调单哟', '2019-01-18 13:00:58');
 INSERT INTO `suggestion` VALUES ('4', '郭靖', 'guojing@163.com', '很喜欢你们的网站，希望继续努力哟~', '2019-01-18 18:21:23');
 INSERT INTO `suggestion` VALUES ('5', '黄蓉', 'huangrong@qq.com', '希望能增加一个旅游目的地的天气，以方便决定去不去玩呢', '2019-01-20 12:44:47');
+INSERT INTO `suggestion` VALUES ('6', 'stark81', 'stark81@qq.com', '希望加入一个天气预报的功能', '2019-01-22 18:31:03');
+INSERT INTO `suggestion` VALUES ('7', '沃德天呐', 'wodetianna@qq.com', '你们网站的资源有点缺乏啊,才几个景区,希望可以添加一些啊!!!', '2019-01-24 09:00:55');
 
 -- ----------------------------
 -- Table structure for `travels`
@@ -646,14 +661,14 @@ CREATE TABLE `travels` (
   KEY `author_id` (`author_id`),
   CONSTRAINT `travels_ibfk_1` FOREIGN KEY (`scenic_id`) REFERENCES `scenic` (`id`),
   CONSTRAINT `travels_ibfk_2` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of travels
 -- ----------------------------
 INSERT INTO `travels` VALUES ('1', '北京不得不去的地方——故宫一日游', '1', '<p>故宫门票价格：成人旺季60元，淡季40元，学生票全年20元。珍宝馆和钟表馆另外收费10元/人，学生证半价，价格方面可以说是相当优惠了。<br />\r\n我们去的时候故宫还可以现场售票，回来以后就实行全网络售票参观了。<br />\r\n门票提前10天在网上预售，售完为止，一张身份证每个入院日限购一张门票。和其它博物馆一样，故宫博物院也是周一闭馆。<br />\r\n去之前建议关注一下故宫博物院的官网：http://gugong.228.com.cn/，尤其是跟我们一样自由行的游客，除了可以看到余票和购买门票，还能看到最新的一些消息公告，比如哪里闭馆哪里修缮（虽然有些宫殿临时维修不在官网通告，但有总好过无嘛），对规划路线有很大的帮助。<br />\r\n我们是在美团上提前买的大门票和珍宝馆的门票，刷身份证就可以入园。<br />\r\n【没什么用的讲解器】<br />\r\n过了安检就能看到讲解器服务处。<br />\r\n自助讲解器租赁价格：汉语、粤语、闽南语版20.00元/台，其他语种40.00元/台，免押金，参观完毕在出院前将讲解器归还即可。<br />\r\n我和泡泡一人租了一台，使用下来的感受是缺点多过优点，可以不租。<br />\r\n虽说它是自动感应的，走到哪里讲到哪里，讲解的内容也挺不错，有多个版本，我们听的是王刚老师讲的故事版，生动有趣。但是它的缺点也很明显。<br />\r\n1、因为是单耳佩戴，所以在环境嘈杂的地方，即使声音开的很大，也经常听不清楚说了什么。<br />\r\n2、走到一些建筑密集的地方，讲解器会错乱崩溃。比如我们在珍妃井附近转了很久，它始终就识别不到我们所在的位置。比如我们到了宁寿宫，它却讲的是皇极殿的内容。泡泡一度以为是不是讲解器坏了，还跑到服务处换了一个，工作人员倒是很耿直，说这个就是这样的，不是很灵，到了不放他们也没办法。因为是自动定位讲解，又不能选择自己想听的地方，所以就导致我们很多地方到最后也没能听到讲解。<br />\r\n3、所有内容只讲一次，如果你没听得清，或者中途不小心耳机掉下来，漏听了，也只能自认倒霉。<br />\r\n其实故宫只要不闭馆，根本不可能有人少的时候，一个又一个旅行团，你想不听导游的讲解都很难。当然，这只是我们的看法，讲解器本身不贵，想要的话也可以租一个备用，权当地图用也行。<br />\r\n我和泡泡在故宫走了一整天。从早上的人头攒动待到晚上的人去楼空。<br />\r\n很多人说故宫没意思，就是看看长的差不多的房子。我倒觉得这一趟来的超值。<br />\r\n我建议对历史，尤其是明清史感兴趣的亲们，可以多预留一些时间给这座紫禁城，它会还你无限惊喜。</p>\r\n\r\n<p><img alt=\"\" src=\"/static/uploads/ckeditor/201901182015162980d00ca14f4aaa9d222bbf7a239acc.jpg\" style=\"height:350px; margin:10px; width:600px\" /></p>\r\n', '2019-01-03 15:36:55', '20190118201538a0105c6e825f43e08f14b5b81fc9100b.jpg', '1', '1', null, null);
 INSERT INTO `travels` VALUES ('3', '邂逅龙脊梯田', '2', '<p>到了桂林仅仅看过山水，显然是不够的，一定要到龙胜看看梯田。龙胜梯田在广西龙胜各族自治县和平乡平安村龙脊山，所以也称龙脊梯田，但那是狭义的称呼，因为再往山里走，还有一处梯田叫做金坑，所以龙胜梯田其实应该包括这两处。龙脊梯田景区内居住着壮族、瑶族两种民族，以壮族为主，但是这里除了部分木质建筑，平时已经看不出鲜明的民族特色了；就梯田本身而言，最壮观的是大寨的金坑梯田，这里居住以红瑶为主也称红瑶梯田，央视12台的片头以及大家经常看见的龙脊梯田宣传图片和影视作品绝大部分都是出自金坑梯田。从流水湍急的河谷，到白云缭绕的山巅，从万木葱茏的林边到石壁崖前，凡有泥土的地方，都开辟了梯田。垂直高度五六里，横向伸延五六里。每个看见这一景色游客的心灵都会被深深地震撼，这是一种难以言表的，一种被大自然的雄奇以及人的伟力所引起的震撼。</p>\r\n\r\n<p><img alt=\"\" src=\"/static/uploads/ckeditor/201901051152485c4a97607c6b42b5877cbd9cccc0eeef.jpeg\" style=\"height:306px; width:460px\" /></p>\r\n\r\n<p>鉴于景区开发先后以及程度的不同，如果时间紧迫或者其他原因只能选看其中之一，那么都是去平安寨。游客无论乘车还是自驾，最好早上就从桂林出发，中午就可以到山寨吃午饭了。从桂林去龙脊梯田距离约100公里，出城后沿着321国道向南走，山路虽然崎岖但路况甚好，用时近两个小时，在距离龙胜县城还差约10公里时会有路牌指向龙脊梯田景区，桂林到这里的公共巴士也很多，到景区口后换乘即可。景区门票每人80元，然后一路开始沿着盘山路行进，过了红瑶长发村不久会有平安寨和金坑的岔路，左转过桥就是去平安寨，金坑则一直往上走。梯田分布在海拔300米至1100米之间，半个小时后，从阴暗的山沟里一直爬到海拔600米的山顶就是平安寨的大门，但是这里仅仅是停车场，过了大门还需要走500米的坡路才能到风雨桥，也就是壮族人迎客的地方。来这里最好先联系好客栈，通知主人出来到桥头接应一下，如果行礼多还可让主人下到停车场接。因为寨子是沿着山路修建的随意狭长，自然嘛为了景观肯定得选择高处，即使过了风雨桥，至少还要沿着千回百转的青石板路爬1公里山路，对于体力是个考验，我放弃去金坑就是因为在这里得知那里的山路比这里还要高得多。</p>\r\n', '2019-01-03 19:59:40', '20190105115529afbcf3cd99ed47418980b43fadace57f', '0', '1', null, null);
-INSERT INTO `travels` VALUES ('4', '喀纳斯之旅,带你领略不一样的新疆', '4', '<p>有人发现了喀纳斯湖里有水怪，有人拍到了喀纳斯湖里的水怪，每年都会有这样的新闻出现。官方之前也做出了解释，其实那不是水怪，是一头史无前例的巨型哲罗鲑，然后经过人们的口口相传和一些带有夸张色彩的新闻报道，喀纳斯就带上了一些神秘的色彩。大多数人来到喀纳斯都是为了喀纳斯湖里的水怪，其实喀纳斯不单单只有传闻中的喀纳斯湖水怪，它还有其他非常美丽的景点和景色。</p>\r\n\r\n<h3><strong>绿色的大海：那仁草原</strong></h3>\r\n\r\n<p>喀纳斯的边缘处就是那仁草原，它是当地哈萨克人的夏季牧场，只有在夏天的时候，他们才会骑着马把一些牛和羊从室内赶到那仁草原，如果想要来看一眼碧绿的那仁草原一定要夏季来，青草的芳香加上牛羊的叫声，那副景色就像是世外桃源一般，让人心旷神怡。</p>\r\n\r\n<p><img alt=\"\" src=\"/static/uploads/ckeditor/20190105132425310ab002d4fc4f0bb6ab81d3df69702f.jpg\" style=\"height:296px; width:640px\" /></p>\r\n\r\n<p>既然走到了这里，也不得不看一下这里有名的金莲花。这是喀纳斯的特色之花，他它不仅仅是空有颜值，它其实还是一种药材。当地的哈萨克人如果有个感冒发烧，他们就会用它来泡水喝，就相当于我们的菊花，具有清热的功效。其实喀纳斯这里的许多花花草草都有重要的功效。</p>\r\n\r\n<p>每年的五月份，这里的金莲花就会盛开，开遍漫山遍野。时间长达一个月之久才会凋谢。就像是金黄色的海洋。但是今年的金莲花的盛开晚了一个月之久。</p>\r\n\r\n<h3><strong>神秘的湖水：喀纳斯湖</strong></h3>\r\n\r\n<p>虽然喀纳斯湖传出来的故事，都带着非常神秘的色彩，但是它的景色真是让人流连忘返，你可以在这里爬山和溯溪，感受大自然。喀纳斯周围都是跌宕起伏的山，景色非常的美，每一处看到的每一帧都可以定格为一幅美丽的画。</p>\r\n\r\n<p><img alt=\"\" src=\"/static/uploads/ckeditor/201901051327053112c110a39a4d779cb7ccaa219cf9ad.jpg\" style=\"height:340px; width:500px\" /></p>\r\n\r\n<p>这里景色最好的观看点就是钓鱼台，登上去，整个景色都落入眼中。安静的湖水静卧在碧绿的青山之中，偶尔有几声鸟叫划破安静的长空。不用传说中的水怪，它自己散发的美丽就足够吸引每一个旅人。</p>\r\n\r\n<h3><strong>桃源仙境：吐别克</strong></h3>\r\n\r\n<p>吐别克很少有人知道这个地方，只有坐船才能到达这里，领略过这里风景的人们都说到了这里就像是到了新西兰。这里的景色只能由自己徒步才能领略，如果你们要去的话要记得提前订好当地的哈萨克家庭，徒步是一件非常消耗体力的事情，要提前预定好家庭，他们好拿出准备好的牛羊肉，让你们自己亲手烤着吃。</p>\r\n\r\n<p>下次来到喀纳斯不要只去寻找喀纳斯湖水怪哦，还可以去这几个地方转转。</p>\r\n', '2019-01-05 13:31:40', '20190118203627d2ee6bd295c44a8db4338d4dd2b0481c', '0', '1', '2', null);
+INSERT INTO `travels` VALUES ('4', '喀纳斯之旅,带你领略不一样的新疆', '4', '<p>有人发现了喀纳斯湖里有水怪，有人拍到了喀纳斯湖里的水怪，每年都会有这样的新闻出现。官方之前也做出了解释，其实那不是水怪，是一头史无前例的巨型哲罗鲑，然后经过人们的口口相传和一些带有夸张色彩的新闻报道，喀纳斯就带上了一些神秘的色彩。大多数人来到喀纳斯都是为了喀纳斯湖里的水怪，其实喀纳斯不单单只有传闻中的喀纳斯湖水怪，它还有其他非常美丽的景点和景色。</p>\r\n\r\n<h3><strong>绿色的大海：那仁草原</strong></h3>\r\n\r\n<p>喀纳斯的边缘处就是那仁草原，它是当地哈萨克人的夏季牧场，只有在夏天的时候，他们才会骑着马把一些牛和羊从室内赶到那仁草原，如果想要来看一眼碧绿的那仁草原一定要夏季来，青草的芳香加上牛羊的叫声，那副景色就像是世外桃源一般，让人心旷神怡。</p>\r\n\r\n<p><img alt=\"\" src=\"/static/uploads/ckeditor/20190105132425310ab002d4fc4f0bb6ab81d3df69702f.jpg\" style=\"height:296px; width:640px\" /></p>\r\n\r\n<p>既然走到了这里，也不得不看一下这里有名的金莲花。这是喀纳斯的特色之花，他它不仅仅是空有颜值，它其实还是一种药材。当地的哈萨克人如果有个感冒发烧，他们就会用它来泡水喝，就相当于我们的菊花，具有清热的功效。其实喀纳斯这里的许多花花草草都有重要的功效。</p>\r\n\r\n<p>每年的五月份，这里的金莲花就会盛开，开遍漫山遍野。时间长达一个月之久才会凋谢。就像是金黄色的海洋。但是今年的金莲花的盛开晚了一个月之久。</p>\r\n\r\n<h3><strong>神秘的湖水：喀纳斯湖</strong></h3>\r\n\r\n<p>虽然喀纳斯湖传出来的故事，都带着非常神秘的色彩，但是它的景色真是让人流连忘返，你可以在这里爬山和溯溪，感受大自然。喀纳斯周围都是跌宕起伏的山，景色非常的美，每一处看到的每一帧都可以定格为一幅美丽的画。</p>\r\n\r\n<p><img alt=\"\" src=\"/static/uploads/ckeditor/201901051327053112c110a39a4d779cb7ccaa219cf9ad.jpg\" style=\"height:340px; width:500px\" /></p>\r\n\r\n<p>这里景色最好的观看点就是钓鱼台，登上去，整个景色都落入眼中。安静的湖水静卧在碧绿的青山之中，偶尔有几声鸟叫划破安静的长空。不用传说中的水怪，它自己散发的美丽就足够吸引每一个旅人。</p>\r\n\r\n<h3><strong>桃源仙境：吐别克</strong></h3>\r\n\r\n<p>吐别克很少有人知道这个地方，只有坐船才能到达这里，领略过这里风景的人们都说到了这里就像是到了新西兰。这里的景色只能由自己徒步才能领略，如果你们要去的话要记得提前订好当地的哈萨克家庭，徒步是一件非常消耗体力的事情，要提前预定好家庭，他们好拿出准备好的牛羊肉，让你们自己亲手烤着吃。</p>\r\n\r\n<p>下次来到喀纳斯不要只去寻找喀纳斯湖水怪哦，还可以去这几个地方转转，也许还能获得超乎想象的收获哟！</p>\r\n', '2019-01-05 13:31:40', '20190118203627d2ee6bd295c44a8db4338d4dd2b0481c', '0', '1', '2', null);
 INSERT INTO `travels` VALUES ('5', '九寨沟游记', '5', '<p>十一月,九寨沟开始连绵不绝的下雨,今年的旅行本来是要去远足的,但是各种原因未能成行,加上同行的朋友只能适合低烈度的游玩,所以选择了九寨沟 ,前后共五天,来回两天,川主寺一天,九寨沟内两天,遇上了一些人,经历了一些事,谨发此文纪念这段美好的时光.走之前在这里查询了大量的攻略,所以回来后整理一下跟大家共享。</p>\r\n\r\n<p>这是在去&nbsp;九寨沟&nbsp;的班车上，大概是过&nbsp;汶川&nbsp;时候吧，当时下雨，车上睡不着，其实在车上可以拍到一些好风景，前几年去&nbsp;亚丁&nbsp;的路上就是在车上拍到折多山的云海，很漂亮。</p>\r\n\r\n<p><img alt=\"\" src=\"/static/uploads/ckeditor/201901181829269cdca8f625954a4488a6b4b964dbe889.jpeg\" style=\"height:300px; margin:10px; width:500px\" /></p>\r\n\r\n<p>这是在&nbsp;九寨沟&nbsp;景区入口的外面，沟内水和沟外水的汇集，就是在这里碰到&nbsp;东北&nbsp;的大哥。说起这件事，我一直都很庆幸当时运气，因为到&nbsp;九寨沟&nbsp;的第二天是下雨，所以想去其他地方逛上一天，等第二天多云了才进沟，刚好遇到一个大哥，他是一路从&nbsp;东北&nbsp;自驾 过来的，也是打算第二天进沟，所以一合计，就打算去川主寺逛逛。<img alt=\"\" src=\"/static/uploads/ckeditor/20190118183342696745d0ac4540809ee7d032a7368caf.jpeg\" style=\"height:246px; margin:10px; width:500px\" /></p>\r\n\r\n<p>这是半路上的一处停车点，古城哪里，那里有很多当地的藏民在带着马求合影，当然是要骑马费用的，还有好多推销工艺品之类的，景色相当不错。</p>\r\n\r\n<p>&nbsp;</p>\r\n', '2019-01-07 09:00:05', '20190118203153d2b2ec2573a44e988aab03977b390b14.jpg', '0', '1', '1', null);
 INSERT INTO `travels` VALUES ('6', '故宫一日游', '1', '<p>dadad</p>\r\n', '2019-01-09 10:53:06', '201901091053065733284819d8484bba6835522bd43af0.jpg', '0', '0', '1', null);
 INSERT INTO `travels` VALUES ('7', '冬游西湖之人在断桥残雪处', '6', '<p>断桥残雪是西湖上著名的景色，以冬雪时远观桥面若隐若现于湖面而称著。属于西湖十景之一。断桥残雪是欣赏西湖雪景之佳地，中国著名的民间传说《白蛇传》，为断桥景物增添了浪漫的色彩。</p>\r\n\r\n<p>每当瑞雪初霁，站在宝石山上向南眺望，西湖银装素裹，白堤横亘雪柳霜桃。断桥的石桥拱面无遮无拦，在阳光下冰雪消融，露出了斑驳的桥栏，而桥的两端还在皑皑白雪的覆盖下。依稀可辨的石桥身似隐似现，而涵洞中的白雪奕奕生光，桥面灰褐形成反差，远望去似断非断，故称断桥。伫立桥头，放眼四望，远山近水，尽收眼底，给人以生机勃勃的强烈属深刻的印象。</p>\r\n\r\n<h3>宝石山高祥云纷</h3>\r\n\r\n<p>白堤横亘湖上，把西湖划分为外湖和里湖，并将孤山和北山连接在一起。白堤在唐代原名白沙堤，宋代又叫孤山路。明代堤上广植桃柳，又称十锦塘。堤上内层是垂柳，外层是碧桃。</p>\r\n\r\n<p><img alt=\"\" src=\"/static/uploads/ckeditor/201901101144102a140727d72144788f20e090327a5d34.jpg\" style=\"height:408px; width:600px\" /></p>\r\n\r\n<h3>断桥两点娥眉纹</h3>\r\n\r\n<p>断桥是西湖中最出名的一座桥。杭州西湖，有四大爱情桥&ldquo;西泠桥&rdquo;、&ldquo;长桥&rdquo;、&ldquo;断桥&rdquo;、&ldquo;跨虹桥&rdquo;，盛名经久不衰。泠桥、长桥、断桥是古代的爱情桥，跨虹桥是现代爱情桥，是众多情侣约会相游的地方，而最符盛名的却是断桥，它的名字与中国民间故事《白蛇传》中缠绵悲怆的爱情故事联系在一起。在断桥上，流传的那许仙和白娘子动人的爱情故事，让断桥成为西湖上众多桥中最著名的桥。传说，白娘子原本是山野中修炼的一条小白蛇，有一天，小白蛇被一个捕蛇老人抓住了，差一点遭遇杀身之祸，幸亏被一个小牧童所救。经过一千七百年的修炼，白娘子终于化做人形，经观音大士指点，来到杭州西湖寻找前世救命恩人小牧童。</p>\r\n\r\n<p>清明佳节，烟雨蒙蒙，观音菩萨说过&ldquo;有缘千里来相会，须往西湖高处寻&rdquo;。而在西湖的断桥的桥面上，由伞传情，白娘子终于找到了前世的救命恩人许仙，以身相许，结为夫妻。在经历水漫金山之后，又是在断桥邂逅重逢，再续前缘。</p>\r\n', '2019-01-09 10:55:24', '2019011820263791b6714b4d08468f841e199aa0580fc0.jpg', '0', '1', '2', null);
@@ -681,12 +696,14 @@ CREATE TABLE `travelscollect` (
   KEY `ix_travelscollect_addtime` (`addtime`),
   CONSTRAINT `travelscollect_ibfk_1` FOREIGN KEY (`travels_id`) REFERENCES `travels` (`id`),
   CONSTRAINT `travelscollect_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of travelscollect
 -- ----------------------------
 INSERT INTO `travelscollect` VALUES ('21', '1', '4', '2019-01-17 12:49:54');
+INSERT INTO `travelscollect` VALUES ('32', '2', '5', '2019-01-22 18:33:42');
+INSERT INTO `travelscollect` VALUES ('33', '2', '11', '2019-01-24 09:03:04');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -707,16 +724,16 @@ CREATE TABLE `user` (
   UNIQUE KEY `uname` (`uname`),
   UNIQUE KEY `uphone` (`uphone`),
   KEY `ix_user_addtime` (`addtime`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'stark81', 'pbkdf2:sha256:50000$O8dBu2P6$410093ba13b14a213ceb481775e81cfaf5f4b4382919a6b22a9f8e6404649d74', 'stark81@qq.com', '18698765432', '2019-01-03 08:58:24', '1', '20190111092515dd238a7a8fcd4ab6af842725a764cad9.jpeg', '不要随便找个参照物就堕落得心安理得');
-INSERT INTO `user` VALUES ('2', '马尔代夫的海风', 'pbkdf2:sha256:50000$AxnhagfO$dcb0f6e7a6ea790a33a1c3d580f0513d471a3c3a220ac151fd0368201aa64186', 'laibaochu@qq.com', '18612345678', '2019-01-03 10:43:43', '1', '201901110905590b4f426602904b7fad8300780e293191.jpeg', '不见桐花万里路,故园外,拂去怀中一缕芳');
+INSERT INTO `user` VALUES ('2', '马尔代夫的海风', 'pbkdf2:sha256:50000$AxnhagfO$dcb0f6e7a6ea790a33a1c3d580f0513d471a3c3a220ac151fd0368201aa64186', 'laibaochu@qq.com', '18612345678', '2019-01-03 10:43:43', '1', '20190124192005dea21e40add6404a92fde987bc6075dc.jpeg', '不见桐花万里路,故园外,拂去怀中一缕芳');
 INSERT INTO `user` VALUES ('3', '面朝大海', 'pbkdf2:sha256:50000$exOOrVo6$19f746234152732de3de162f8deb12217701c76f9c3c0559653ad7fabee414cb', 'lisi@qq.com', '12345678910', '2019-01-04 13:02:39', '1', '20190113135430af8eba2d49214d01b282f9480ec7c4cc.jpeg', '从明天起做一个幸福的人');
 INSERT INTO `user` VALUES ('4', '王五', 'pbkdf2:sha256:50000$YAnmufOI$06ccc5b8e8787e4a600f5147145ea69a87745ec9438f5b54359a25f2cf7a3b43', 'wangwu@qq.com', null, '2019-01-04 13:20:01', '1', 'default.png', null);
-INSERT INTO `user` VALUES ('5', '熊大', 'pbkdf2:sha256:50000$Eool9kbb$12d7dd95c7fa282adc9e1798db8b4f73efe896a2646c1c33f79226aaa57b3b5b', 'xiongda@qq.com', null, '2019-01-04 15:40:44', '1', 'default.png', null);
+INSERT INTO `user` VALUES ('5', '熊大', 'pbkdf2:sha256:50000$Eool9kbb$12d7dd95c7fa282adc9e1798db8b4f73efe896a2646c1c33f79226aaa57b3b5b', 'xiongda@qq.com', '18614785236', '2019-01-04 15:40:44', '1', 'default.png', '光头强,有我和熊二在,你休想来砍树.');
 INSERT INTO `user` VALUES ('6', '熊二', 'pbkdf2:sha256:50000$ds9vxeyC$b6d4a5e9aa979b559dc0fce95b3568713de8a00bbf039aa6f1c88326504a8908', 'xionger@qq.com', null, '2019-01-04 15:41:43', '1', 'default.png', null);
 INSERT INTO `user` VALUES ('7', 'aaaa', 'pbkdf2:sha256:50000$ZFzLtU9r$e4cd6ab547af251cd337dd5a75a5eda1e6649d2f45ed6a881c44804315376cd1', 'aaaaa@163.com', null, '2019-01-09 20:09:01', '1', 'default.png', null);
 INSERT INTO `user` VALUES ('8', 'bbb', 'pbkdf2:sha256:50000$4B2uyUmL$70511e6f369f24e30e3b1c7caebf2655bc5c321940df964e9a1d553f9e240291', 'bbb@163.com', null, '2019-01-09 20:16:44', '1', 'default.png', null);
@@ -738,7 +755,7 @@ CREATE TABLE `userlog` (
   KEY `user_id` (`user_id`),
   KEY `ix_userlog_addtime` (`addtime`),
   CONSTRAINT `userlog_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ----------------------------
 -- Records of userlog
@@ -900,3 +917,22 @@ INSERT INTO `userlog` VALUES ('154', '3', '127.0.0.1', '2019-01-22 18:04:37');
 INSERT INTO `userlog` VALUES ('155', '3', '127.0.0.1', '2019-01-22 18:14:01');
 INSERT INTO `userlog` VALUES ('156', '3', '127.0.0.1', '2019-01-22 18:14:21');
 INSERT INTO `userlog` VALUES ('157', '3', '127.0.0.1', '2019-01-22 18:14:33');
+INSERT INTO `userlog` VALUES ('158', '3', '127.0.0.1', '2019-01-22 18:24:18');
+INSERT INTO `userlog` VALUES ('159', '2', '127.0.0.1', '2019-01-22 18:29:11');
+INSERT INTO `userlog` VALUES ('160', '2', '127.0.0.1', '2019-01-22 18:29:51');
+INSERT INTO `userlog` VALUES ('161', '1', '127.0.0.1', '2019-01-22 18:34:47');
+INSERT INTO `userlog` VALUES ('162', '1', '127.0.0.1', '2019-01-22 18:41:54');
+INSERT INTO `userlog` VALUES ('163', '2', '127.0.0.1', '2019-01-22 18:50:23');
+INSERT INTO `userlog` VALUES ('164', '2', '127.0.0.1', '2019-01-22 20:23:17');
+INSERT INTO `userlog` VALUES ('165', '2', '127.0.0.1', '2019-01-23 08:57:18');
+INSERT INTO `userlog` VALUES ('166', '2', '127.0.0.1', '2019-01-24 08:51:45');
+INSERT INTO `userlog` VALUES ('167', '1', '127.0.0.1', '2019-01-24 08:53:36');
+INSERT INTO `userlog` VALUES ('168', '2', '127.0.0.1', '2019-01-24 15:54:05');
+INSERT INTO `userlog` VALUES ('169', '2', '127.0.0.1', '2019-01-24 16:14:34');
+INSERT INTO `userlog` VALUES ('170', '2', '127.0.0.1', '2019-01-24 16:15:34');
+INSERT INTO `userlog` VALUES ('171', '2', '127.0.0.1', '2019-01-24 16:20:21');
+INSERT INTO `userlog` VALUES ('172', '2', '127.0.0.1', '2019-01-24 16:42:13');
+INSERT INTO `userlog` VALUES ('173', '2', '127.0.0.1', '2019-01-24 16:46:16');
+INSERT INTO `userlog` VALUES ('174', '5', '127.0.0.1', '2019-01-24 19:28:27');
+INSERT INTO `userlog` VALUES ('175', '2', '127.0.0.1', '2019-01-24 20:54:07');
+INSERT INTO `userlog` VALUES ('176', '2', '127.0.0.1', '2019-01-26 09:15:17');
