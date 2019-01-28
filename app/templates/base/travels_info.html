@@ -78,7 +78,11 @@
                         <a href="/userinfo/travel/{{travel.travelauthor.id}}">
                             <h3>{{ travel.travelauthor.uname }}</h3>
                         </a>
-                        <p>{{ travel.travelauthor.introduce|truncate(24) }}</p>
+                        {% if travel.travelauthor.introduce %}
+                            <p>{{ travel.travelauthor.introduce|truncate(24) }}</p>
+                        {% else %}
+                            <p>这个人很懒,什么都没有留下</p>
+                        {% endif %}
                     </div>
                     <div>
 

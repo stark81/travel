@@ -422,7 +422,7 @@ def travels_edit(travels_id):
         db.session.commit()
 
         flash("修改游记成功","ok")
-        return render_template("admin/addtravels.html",form = form) 
+        return render_template("admin/travelsedit.html",form = form) 
     return render_template("admin/travelsedit.html",form=form)
 
 @admin.route("/travels/reviews")
