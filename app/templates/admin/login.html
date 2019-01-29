@@ -18,7 +18,9 @@
                 {{ form.uname }}
                 <br>
                 {% for err in form.uname.errors %}
-                    {{ err }}
+                    <label style="font-size:14px;color:red;padding-left:12px">
+                        {{ err }}
+                    </label>
                 {% endfor %}
             </div>
             
@@ -26,7 +28,9 @@
                 {{ form.upwd }}
                 <br>
                 {% for err in form.upwd.errors %}
-                    {{ err }}
+                    <label style="font-size:14px;color:red;padding-left:12px">
+                        {{ err }}
+                    </label>
                 {% endfor %}
             </div>
             
