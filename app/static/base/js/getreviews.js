@@ -6,7 +6,6 @@ function getuemailpage(){
 };
 
 
-
 function getunamepage(){
     var uid = $("[name=infoid]").val();
     $.get("/getunamepage",{uid:uid},function(data){
@@ -88,7 +87,7 @@ $(function(){
 
 
 $(document).on("click",".delreview1",function delreview(){
-    var review_id = $(this).prev().val()
+    var review_id = $(this).prev().val();
     var travel_id = $("[name='gettravelreviews']").val();
     $.ajax({
         url:"/delreviews",

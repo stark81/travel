@@ -28,11 +28,6 @@ def logout():
 
 @admin.route("/login",methods=["GET","POST"])
 def login():
-    if request.method == "GET":
-        url = request.headers.get("Referer","/admin")
-        session["url"] = url
-        if "admin" in session:
-            return redirect(url)
     form = LoginForm()
     if form.validate_on_submit():
         # adminlist = AdminList()
@@ -237,6 +232,7 @@ def addscenic():
     return render_template("admin/addscenic.html",form=form)
 
 @admin.route("/scenic/sceniclist/edit/<scenic_id>",methods=["GET","POST"])
+@admin_login
 def scenicedit(scenic_id=None):
     form = AddScenicForm()
     form.submit.label.text = "修改"
@@ -295,6 +291,7 @@ def scenicedit(scenic_id=None):
 
 
 @admin.route("/travels/travelslist")
+@admin_login
 def travelslist():
     adminName = session["adminname"]
     page = request.args.get('page', 1, type=int)
@@ -304,6 +301,7 @@ def travelslist():
     return render_template("admin/travelslist.html",page_data=page_data,adminName=adminName)
 
 @admin.route("/travels/dele/<travels_id>")
+@admin_login
 def travels_dele(travels_id):
     travels = Travels.query.filter_by(id=travels_id).first()
     travels.isactive = 0
@@ -319,6 +317,7 @@ def travels_dele(travels_id):
     return redirect(url_for("admin.travelslist"))
 
 @admin.route("/travels/recover/<travels_id>")
+@admin_login
 def travels_recover(travels_id):
     travels = Travels.query.filter_by(id=travels_id).first()
     travels.isactive = 1
@@ -334,6 +333,7 @@ def travels_recover(travels_id):
     return redirect(url_for("admin.travelslist"))
 
 @admin.route("/travels/addtravels",methods=["GET","POST"])
+@admin_login
 def addtravels():
     form = AddTravelsForm()
     form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
@@ -375,6 +375,7 @@ def addtravels():
     return render_template("admin/addtravels.html",form = form)
 
 @admin.route("/travels/travelslist/edit/<travels_id>",methods=["GET","POST"])
+@admin_login
 def travels_edit(travels_id):
     form = AddTravelsForm()
     form.submit.label.text = "修改"
@@ -426,6 +427,7 @@ def travels_edit(travels_id):
     return render_template("admin/travelsedit.html",form=form)
 
 @admin.route("/travels/reviews")
+@admin_login
 def reviews():
     page = request.args.get('page', 1, type=int)
     page_data = Review.query.order_by(
@@ -434,6 +436,7 @@ def reviews():
     return render_template("admin/review.html",page_data=page_data)
 
 @admin.route("/travels/review/dele/<review_id>")
+@admin_login
 def review_dele(review_id):
     review = Review.query.filter_by(id=review_id).first()
     review.isactive = 0
@@ -449,6 +452,7 @@ def review_dele(review_id):
     return redirect(url_for("admin.reviews"))
 
 @admin.route("/travels/review/recover/<review_id>")
+@admin_login
 def review_recover(review_id):
     review = Review.query.filter_by(id=review_id).first()
     review.isactive = 1
