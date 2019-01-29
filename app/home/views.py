@@ -71,7 +71,6 @@ def login():
                 resp = redirect(session["url"])
                 return resp
 
-      
     form = LoginForm()
     if form.validate_on_submit():   #当点击登录时,验证登录规则并查看该邮箱是否已经注册
         user = User.query.filter_by(uemail=form.data["uemail"]).first()
@@ -93,6 +92,8 @@ def login():
             save_session = str(session["user_id"])
             upwd_hash = generate_password_hash(save_session)
             resp.set_cookie("uid",upwd_hash,60*60*24*7)
+            return resp
+        else:
             return resp
     return render_template("base/login.html",form=form)
 

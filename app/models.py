@@ -4,6 +4,8 @@ from datetime import datetime,date
 from . import db
 import json
 
+
+# 用户表
 class User(db.Model):
     __tablename__ = "user"
     __table_args__ = {"useexisting": True}
@@ -16,11 +18,11 @@ class User(db.Model):
     uphone = db.Column(db.String(11),unique=True)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
     isActive = db.Column(db.Boolean,default=True)
-    userlogs = db.relationship('Userlog', backref='user')
-    reviews = db.relationship("Review",backref="reviewers")
-    sceniccollects = db.relationship("ScenicCollect",backref="user")
-    travelscollects = db.relationship("TravelsCollect",backref="user")
-    travelarticle = db.relationship("Travels",backref="travelauthor")
+    userlogs = db.relationship('Userlog', backref='user',lazy="dynamic")
+    reviews = db.relationship("Review",backref="reviewers",lazy="dynamic")
+    sceniccollects = db.relationship("ScenicCollect",backref="user",lazy="dynamic")
+    travelscollects = db.relationship("TravelsCollect",backref="user",lazy="dynamic")
+    travelarticle = db.relationship("Travels",backref="travelauthor",lazy="dynamic")
 
     def __init__(self,uname,uemail,upwd):
         '''uname,uemail,upwd'''
@@ -29,7 +31,9 @@ class User(db.Model):
         self.upwd = upwd
     def __repr__(self):
         return "<User %r>" % self.uname
-    
+
+
+# 用户登陆日志表
 class Userlog(db.Model):
     __tablename__ = "userlog"
     __table_args__ = {"useexisting": True}
@@ -42,6 +46,8 @@ class Userlog(db.Model):
         self.user_id = user_id
         self.ip = ip
 
+
+# 地区表
 class Area(db.Model):
     __tablename__ = "area"
     __table_args__ = {"useexisting": True}
@@ -50,7 +56,7 @@ class Area(db.Model):
     is_recommend = db.Column(db.Boolean,default=None)
     introduce = db.Column(db.Text)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
-    scenics = db.relationship("Scenic",backref="area")
+    scenics = db.relationship("Scenic",backref="area",lazy="dynamic")
     def to_dic(self):
         dic = {
             "id":self.id,
@@ -59,6 +65,8 @@ class Area(db.Model):
         return dic
         
 
+
+# 意见建议表
 class Suggest(db.Model):
     __tablename__ = "suggestion"
     __table_args__ = {"useexisting": True}
@@ -67,16 +75,20 @@ class Suggest(db.Model):
     uemail = db.Column(db.String(100))
     content = db.Column(db.Text)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
-    
+
+
+# 管理员表
 class AdminList(db.Model):
     __tablename__ = "adminlist"
     __table_args__ = {"useexisting":True}
     id = db.Column(db.Integer,primary_key=True)
     uname = db.Column(db.String(100),unique=True)
     upwd = db.Column(db.String(100))
-    adminlog = db.relationship("Adminlog",backref="adminlist")
-    operlog = db.relationship("Operlog",backref="adminlist") 
+    adminlog = db.relationship("Adminlog",backref="adminlist",lazy="dynamic")
+    operlog = db.relationship("Operlog",backref="adminlist",lazy="dynamic") 
 
+
+# 管理员登陆日志表
 class Adminlog(db.Model):
     __tablename__ = "adminlog"
     __table_args__ = {"useexisting":True}
@@ -85,6 +97,8 @@ class Adminlog(db.Model):
     ip = db.Column(db.String(100))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+
+# 管理员操作日志表
 class Operlog(db.Model):
     __tablename__ = "operlog"
     __table_args__ = {"useexisting":True}
@@ -94,6 +108,8 @@ class Operlog(db.Model):
     reason = db.Column(db.String(600))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+
+# 景区表
 class Scenic(db.Model):
     __tablename__="scenic"
     __table_args__={"useexisting":True}
@@ -107,8 +123,8 @@ class Scenic(db.Model):
     address = db.Column(db.Text)
     is_recommend = db.Column(db.Boolean,default=False)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
-    sceniccollects = db.relationship("ScenicCollect",backref="scenic")
-    travels = db.relationship("Travels",backref="scenic")
+    sceniccollects = db.relationship("ScenicCollect",backref="scenic",lazy="dynamic")
+    travels = db.relationship("Travels",backref="scenic",lazy="dynamic")
     def to_dic(self):
         dic = {
             "id":self.id,
@@ -116,6 +132,8 @@ class Scenic(db.Model):
         }
         return dic
 
+
+# 游记表
 class Travels(db.Model):
     __tablename__ = "travels"
     __table_args__ = {"useexisting":True}
@@ -128,9 +146,9 @@ class Travels(db.Model):
     is_recommend = db.Column(db.Boolean,default=False)
     isactive = db.Column(db.Boolean,default=True)
     isdrafts = db.Column(db.Boolean,default=False)
-    reviews = db.relationship("Review",backref="travels")
+    reviews = db.relationship("Review",backref="travels",lazy="dynamic")
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
-    travelscollects = db.relationship("TravelsCollect",backref="travels")
+    travelscollects = db.relationship("TravelsCollect",backref="travels",lazy="dynamic")
     reviewers = db.relationship(
         "User",
         secondary = "review",
@@ -138,6 +156,7 @@ class Travels(db.Model):
         backref=db.backref("travels",lazy="dynamic")
     )
 
+# 评论表
 class Review(db.Model):
     __tablename__ = "review"
     __table_args__ = {"useexisting":True}
@@ -158,7 +177,7 @@ class Review(db.Model):
         }
         return dic
 
-
+# 景区收藏表
 class ScenicCollect(db.Model):
     __tablename__ = "sceniccollect"
     __table_args__ = {"useexisting":True}
@@ -167,6 +186,8 @@ class ScenicCollect(db.Model):
     scenic_id = db.Column(db.Integer,db.ForeignKey("scenic.id"))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+
+# 游记收藏表
 class TravelsCollect(db.Model):
     __tablename__ = "travelscollect"
     __table_args__ = {"useexisting":True}
@@ -175,6 +196,8 @@ class TravelsCollect(db.Model):
     travels_id = db.Column(db.Integer,db.ForeignKey("travels.id"))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+
+# 关注表
 class Friends(db.Model):
     __tablename__ = "friends"
     __table_args__ = {"useexisting":True}
@@ -183,6 +206,8 @@ class Friends(db.Model):
     focuser_id = db.Column(db.Integer)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+
+# 留言表
 class Message(db.Model):
     __tablename__ = "message"
     __table_args__ = {"useexisting":True}
