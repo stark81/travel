@@ -8,7 +8,7 @@
 
 1. 创建并进入虚拟环境(在项目目录下)，以避免环境冲突问题；
 
-```
+```python
 pip3 install virtualenv;
 virtualenv travelenv;
 source travelenv/bin/activate
@@ -18,7 +18,7 @@ source travelenv/bin/activate
 
 2. requirements.txt文件是本项目的依赖包，在虚拟环境里使用以下命令进行安装：
 
-```
+```python
 pip3 install -r requirements.txt
 ```
 
@@ -26,7 +26,7 @@ pip3 install -r requirements.txt
 
 4. 进行数据库迁移(创建数据表)：
 
-```
+```python
 python3 manage.py db init
 python3 manage.py db migrate
 python3 manage.py db upgrade
