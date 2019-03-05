@@ -24,3 +24,9 @@ python 3.6 + Flask
 1. 搭建虚拟环境venv，并自行安装依赖，所有依赖在项目根目录的 requeirement.txt 中；
 2. 创建mysql数据库，命名为travel，字符集为utf8，然后进行数据库迁移。如有需要，可以使用本项目提供的测试数据库数据travel.sql;
 3. 使用 python3 manage.py runserver 命令启动项目；
+
+#### 运行截图
+![网站首页](https://images.gitee.com/uploads/images/2019/0305/203845_62b56b47_2325526.png "微信截图_20190305203636.png")
+
+![个人中心](https://images.gitee.com/uploads/images/2019/0305/203947_8976d24c_2325526.png "微信截图_20190305203805.png")
+
