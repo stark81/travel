@@ -21,12 +21,39 @@ python 3.6 + Flask
 
 #### 使用说明
 
-1. 搭建虚拟环境venv，并自行安装依赖，所有依赖在项目根目录的 requeirement.txt 中；
+1. 搭建虚拟环境venv，并自行安装依赖，所有依赖在项目根目录的 requirement.txt 中；
+
+```python
+pip3 install virtualenv
+virtualenv venv
+source venv/Script/activate
+pip3 install -r requiremt.txt
+```
+
 2. 创建mysql数据库，命名为travel，字符集为utf8，然后进行数据库迁移。如有需要，可以使用本项目提供的测试数据库数据travel.sql;
-3. 使用 python3 manage.py runserver 命令启动项目；
 
-#### 运行截图
-![网站首页](https://images.gitee.com/uploads/images/2019/0305/203845_62b56b47_2325526.png "微信截图_20190305203636.png")
+```python
+python3 manage.py db init
+python3 manage.py migrate
+python3 manage.py upgrade
+```
 
-![个人中心](https://images.gitee.com/uploads/images/2019/0305/203947_8976d24c_2325526.png "微信截图_20190305203805.png")
+3. 启动项目；
+
+```python
+python3 manage.py runserver
+```
+
+
+#### 部分代码
+
+![验证邮箱存在性](https://images.gitee.com/uploads/images/2019/0306/093329_48e8b4b7_2325526.png "travel1.png")
+
+![用户修改头像](https://images.gitee.com/uploads/images/2019/0306/093406_e8e687f1_2325526.png "travel2.png")
+
+#### 项目运行部分截图
+
+![首页](https://images.gitee.com/uploads/images/2019/0306/093929_3b5fdeb7_2325526.png "运行2.png.png")
+
+![个人中心](https://images.gitee.com/uploads/images/2019/0306/093950_aca82063_2325526.png "运行1.png.png")
 
