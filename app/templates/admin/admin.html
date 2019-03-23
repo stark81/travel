@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>悦游-后台管理系统</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='admin/image/admin_03.png')}}">
+    <link rel="stylesheet" href="/static/admin/css/admin.css">
+    <link rel="stylesheet" href="/static/admin/css/common.css">
+    <link rel="stylesheet" href="/static/admin/css/index.css">
+    <link rel="stylesheet" href="/static/admin/css/list.css">
+    <link rel="stylesheet" href="/static/admin/css/userloginlog.css">
+    <link rel="stylesheet" href="/static/admin/css/addarea.css">
+    <link rel="stylesheet" href="/static/admin/css/admin_page.css">
+    <script src="/static/admin/js/jquery-1.11.1.min.js"></script>
+    <script src="/static/admin/js/kxbdSuperMarquee.js"></script>
+    <script src="/static/admin/js/admin.js"></script>
+
+</head>
+<body>
+    <div id="right">
+        <!-- 左侧栏 -->
+        <div id="left">
+            <div class="logo">
+                <img src="/static/admin/image/admin_03.png">
+                <p>后台管理系统</p>
+            </div>
+            <p>菜单管理</p>
+            <!-- 左侧导航开始 -->
+            {% include "admin/nav.html" %}
+        </div>
+        <!-- 右侧头部 -->
+        <div class="top">
+            <div class="headshot">
+                <p>[ {{ session["adminname"] }} ]&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a style="color:white" href="/admin/logout">退出</a></p>
+            </div>
+        </div>
+        <!-- 右侧内容 -->
+        <div class="content">
+            <div class="contentTitle">
+                <h1>悦游后台管理系统</h1>
+                <div class="breadcrumb"></div>
+            </div>
+            <div class="main">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        <!-- 右侧底部 -->
+        <div class="bottom">
+            <p>版权归<a href=""> 悦游 </a>所有</p>
+        </div>
+    </div>
+    {% block js %}
+    {% endblock %}
+</body>
+</html>

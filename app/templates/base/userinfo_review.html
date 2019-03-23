@@ -1,0 +1,43 @@
+{% extends "base/userinfo.html" %}
+
+{% block aboutmain %}
+<div class="userreviewsmain">
+    {% if reviews %}
+        {% for review in reviews %}
+        <div class="userinforeviewLi">
+            <p>回复内容 : {{ review.content|truncate(30) }}</p>
+            <a href="/travels/info/{{review.travels.id}}">
+                <div class="travelorginal">
+                    <h4 style="margin-bottom:6px;">原文 : <b>{{ review.travels.title }}</b></h4>
+                    {{ review.travels.content|safe|truncate(50) }}
+                </div>
+            </a>    
+            <label style="font-size:13px;color:#999;line-height:20px">
+                {{ review.addtime }}
+            </label>
+            {% if user.id == session["user_id"] %}
+                <div onclick="showdeleteReview({{review.id}})" class="userinfodeletereview">删除</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div id="deltravelreview">
+            <div id="deltravelreview-box">
+                <h3>确定删除评论?</h3>
+                <input type="hidden" name="review_id_delete">
+                <button onclick="do_delete_review()">删除</button>
+                <button onclick="canceldeleteReview()" class="canceldele">取消</button>
+            </div>
+        </div>
+
+    {% else %}
+    <div style="padding-top:20px">
+        <h2 style="text-align:center;line-height:60px;">
+            <div style="margin: 0 auto;">
+                <img style="width:600px" src="{{url_for('static',filename='base/image/nothing.png')}}">
+            </div>
+            这个人很懒，连一句评论都没有留下~
+        </h2>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

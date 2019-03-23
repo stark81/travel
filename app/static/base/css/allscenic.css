@@ -1,0 +1,149 @@
+.AllScenicMain{
+    width: 1200px;
+    margin: 0 auto;
+}
+#content{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+
+.col-sm-4{
+    float: left;
+    width: 390px;
+    margin-right: 15px;
+}
+.col-sm-12 figure{
+    height: 240px;
+    overflow: hidden;
+}
+
+.col-md-2{
+    width: 16.67%;
+}
+
+.col-sm-4:nth-child(3){
+    margin-right: 0;
+}
+
+.col-sm-12{
+    width: 1200px;
+}
+
+.form1{
+    padding:30px;
+    background: #fafafa;
+    border-bottom: 3px #00a6c9 solid;
+}
+.caption{
+    background: #fafafa;
+}
+
+.col-sm-4{
+    margin-top: 5px;
+}
+
+.caption{
+    padding: 16px 12px;
+}
+
+.txt1{
+    font-size: 19px;
+    font-weight: 500;
+    color: #636363;
+    padding-bottom: 10px;
+}
+.left_side{
+    float: left;
+}
+
+.right_side{
+    float: right;
+}
+
+.nums{
+    font-size: 13px;
+    color: #636363;
+}
+
+.btn-default{
+    padding: 4px 18px;
+    background: #00a6c9;
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.btn-default:hover{
+    background: #e27b27;
+}
+
+.btn-form1-submit{
+    border: none;
+    height: 30px;
+    cursor: pointer;
+    margin-top: 27px;
+}
+
+.thumb4{
+    border-bottom: 3px transparent solid;
+}
+
+.thumb4:hover{
+    border-bottom: 3px #00a6c9 solid;
+}
+.pagination{
+    display: inline-block;
+    margin-top: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.pagination>li{
+    display: inline;
+}
+
+.pagination>li>a{
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #888;
+    font-size: 14px;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination a:hover{
+    background: #efefef;
+}
+
+.pagination>li:first-child>a{
+    border-radius: 4px 0 0 4px;
+}
+.pagination>li:last-child>a{
+    border-radius: 0 4px 4px 0;
+}
+.pagination>.active>a{
+    background: #00a6c9;
+    color: white;
+}
+.pagination>.disabled>a{
+    color: #999;
+    cursor: not-allowed;
+}
+.pagination>.disabled>a:hover{
+    background: white;
+}
+
+.select1_inner>input{
+    margin: 6px 0;
+    height: 25px;
+    outline: none;
+    padding-left: 12px;
+}
+
+.travels_for_search{
+    margin: 50px 0;
+}

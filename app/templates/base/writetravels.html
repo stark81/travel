@@ -1,0 +1,104 @@
+{% extends "base/home.html" %}
+
+{% block writetravels %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+
+{% block content %}
+<div id="writetravelsmain">
+    {% if session["user_id"] %}
+    <div class="addArea">
+        <h2>
+            {% block title %}
+                添加游记
+            {% endblock %}
+        </h2>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                    </button>
+                    <h4>操作成功</h4>
+                    {{ msg }}
+                </div>
+            {% endfor %}
+            {% for msg in get_flashed_messages(category_filter=["err"]) %}
+                <div class="alert alert-false alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                    </button>
+                    <h4>操作失败</h4>
+                    {{ msg }}
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <p>{{form.title.label}}</p>{{form.title}}
+                {% for err in form.title.errors%}
+                    <div class="err">{{ err }}</div>
+                {% endfor %}
+            </div>
+            <!-- 获取地区关联的景区 -->
+            <div class="form-group" id="scenicname1">
+                <p>{{form.scenic_id.label}}</p>{{form.scenic_id}}
+            </div>
+             
+
+            <div class="form-group">
+                <p>{{form.cover.label}}</p>{{form.cover}}
+                {% block img %}
+                {% endblock %}
+                {% for err in form.cover.errors%}
+                    <div class="err">{{ err }}</div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group">
+                <p>{{form.content.label}}</p>{{form.content}}
+                {% for err in form.content.errors%}
+                    <div class="err">{{ err }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.csrf_token }}
+                {% block button %}
+                    {{form.submit}}
+                {% endblock %}
+            </div>
+        {% block js %}
+        <script src="{{ url_for('static',filename='ckeditor/ckeditor.js') }}"></script>
+        <script>
+            $(document).ready(function(){
+                $("#g-4").addClass("active");
+                $("#g-4-1").addClass("active");
+            });
+            // 使用CKeditor编辑器
+            CKEDITOR.replace('content', {
+                filebrowserUploadUrl: '/admin/ckupload/',  // 设置文件上传路径
+            });
+            </script>
+        {% endblock %}
+            
+        </form>
+    </div>
+    
+    <script>
+        checktravleempty()
+    </script>
+    {% else %}
+        <div style="background:white">
+            <h2 style="text-align:center;line-height:60px;">
+                您还没有登陆哟,请
+                <a style="color:#e27b27" href="/login">登陆</a>
+                后再使用
+                <div style="margin: 0 auto;">
+                    <img  src="{{url_for('static',filename='base/image/err.png')}}">
+                </div>
+            </h2>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

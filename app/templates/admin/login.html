@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/admin/css/login.css">
+</head>
+<body>
+    <form action="login" method="POST" class="loginbox">
+        <h1>悦游后台管理系统</h1>
+        <div class="login">
+            {% for msg in get_flashed_messages(category_filter=["err"]) %}
+                <div class="err">{{ msg }}</div>
+            {% endfor %}
+            <div class="msg">
+                {{ form.uname }}
+                <br>
+                {% for err in form.uname.errors %}
+                    <label style="font-size:14px;color:red;padding-left:12px">
+                        {{ err }}
+                    </label>
+                {% endfor %}
+            </div>
+            
+            <div class="msg">
+                {{ form.upwd }}
+                <br>
+                {% for err in form.upwd.errors %}
+                    <label style="font-size:14px;color:red;padding-left:12px">
+                        {{ err }}
+                    </label>
+                {% endfor %}
+            </div>
+            
+            <div>
+                {{ form.csrf_token }}
+                {{ form.submit }}
+            </div>
+        </form>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+#travelmain{
+    background: #efefef;
+}
+
+.clear{
+    clear: both;
+}
+
+.travel_content{
+    width: 850px;
+    float: left;
+    /* padding:30px 20px; */
+    /* background: white; */
+    margin-right: 20px;
+}
+.otherinfo{
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: #888;
+}
+.travel_content h2{
+    margin-bottom: 10px;
+    text-align: center;
+}
+.travel_content p{
+    margin: 10px 0 ;
+    line-height: 30px;
+    text-indent: 2em;
+}
+
+.travel_author{
+    width: 290px;
+    float: left;
+    padding: 16px 20px;
+    background: white;
+    margin-bottom: 20px;
+}
+.travel_scenicinfo{
+    background: white;
+    width: 288px;
+    padding:16px 20px;
+    float: left;
+}
+
+.article222{
+    padding:30px 20px 10px 20px;
+    background: white;
+}
+
+.userCover{
+    height: 40px;
+}
+
+.travelreview{
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+}
+
+.writereviews>textarea{
+    width: 648px;
+    min-height: 100px;
+    padding: 12px; 
+    margin: 0 10px;
+    resize: none;
+    float: left;
+    outline: none;
+    line-height: 25px;
+    font-size: 16px;
+}
+
+.writereviews>input[type="submit"]{
+    height: 34px;
+    padding: 0 20px;
+    border-radius: 4px;
+    background: #00a6c9;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.writereviews{
+    padding-bottom: 20px;
+    border-bottom: 1px #ccc solid;
+}
+
+.authorimg{
+    width: 80px;
+    margin: 10px 10px 0 0;
+    float: left;
+}
+.authorimg>a>img{
+    width: 100%;
+}
+.authorcover>a>h3{
+    line-height: 50px;
+}
+
+.collectTravel,.dotravelcollected{
+    display: inline-block;
+    padding: 6px 8px;
+    color: white;
+    font-size: 13px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.collectTravel{
+    border: 1px red solid;
+    background: red
+}
+.dotravelcollected{
+    border: 1px #00a6c9 solid;
+    color: #00a6c9;
+}

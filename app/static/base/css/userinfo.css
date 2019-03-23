@@ -1,0 +1,355 @@
+#usermain{
+    background: #efefef;
+    padding-top: 10px;
+}
+
+#usermain .inner{
+    background: #f8f9fa;
+}
+
+.userbanner{
+    width: 100%;
+    height: 200px;
+    color: white;
+    border-radius: 6px 6px 0 0;
+    background: url("../image/homepagebg.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.userinfo{
+    padding: 14px 14px 14px 220px;
+    height: 100px;
+    position: relative;
+}
+.userimg{
+    float: left;
+    width: 160px;
+    height: 160px;
+    background: white;
+    border: 5px white solid;
+    border-radius: 6px;
+    position: absolute;
+    left: 14px;
+    top: -60px;
+    overflow: hidden;
+}
+
+.username{
+    float: left;
+    height: 90px;
+}
+
+.username>h2{
+    line-height:50px;
+}
+
+.edit{
+    height: 90px;
+    float: right;
+}
+
+.edit>div,.change{
+    float: left;
+    height: 30px;
+    width: 80px;
+    margin-right: 40px;
+    margin-top: 40px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 4px;
+    background: #00a6c9
+}
+.change, .change>a{
+    color: white;
+}
+
+#aboutUser{
+    padding: 14px;
+}
+#aboutul{
+    padding: 0 100px;
+    margin: 0 auto;
+    margin-bottom: 24px;
+}
+#aboutul th{
+    font-size: 18px;
+    padding: 0 20px;
+}
+
+#aboutul th a{
+    padding: 10px;
+}
+
+.aboutmain{
+    /* border:1px red solid; */
+    padding-bottom:20px; 
+}
+
+.usertravelli{
+    padding: 10px 0;
+    border-bottom: 1px #ccc solid;
+}
+
+.usertravelimg{
+    height: 200px;
+    width: 313px;
+    float: left;
+    margin-right: 30px;
+    overflow: hidden;
+    
+}
+.usertravelimg img{
+    transition: all 0.6s;
+}
+.usertravelimg:hover>img{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.usertravelinfo{
+    height: 160px;
+    /* width: 100%; */
+    /* border: 1px red solid; */
+    float: left;
+}
+
+.usertravelinfo>h3{
+    line-height: 40px;
+}
+
+.usertravelinfo>p{
+    width: 800px;
+    line-height: 25px;
+    text-indent: 2em;
+}
+
+.usertravereviews{
+    width:800px;
+    line-height: 40px;
+}
+
+#travelinfoanddel{
+    width: 1150px;
+}
+
+.suretankuang{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: rgba(0, 0, 0,0.16);
+    display: none;
+}
+
+.suredelete{
+    background: white;
+    width: 300px;
+    height: 100px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 1px #aaa solid;
+    border-radius: 6px;
+    padding: 20px 20px;
+    text-align: center;
+}
+
+.userSelected{
+    border-bottom: 2px #00a6c9 solid;
+    color: #00a6c9;
+}
+
+.usertravereviews{
+    background: white;
+}
+
+#focused,#cancel_focus{
+    background: #e27b27;
+    width: auto;
+    padding: 0 16px;
+}
+
+.focus_change{
+    background: #e27b27
+}
+
+.change:hover{
+    cursor: pointer;
+}
+
+
+.infotext{
+    position: fixed;
+    background: white;
+    border: 1px #ccc solid;
+    border-radius: 6px;
+    height: 120px;
+    width: 240px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    line-height: 120px;
+    display: none;
+}
+
+.be_focus_cover{
+    float: left;
+    height: 80px;
+    width: 80px;
+    margin-right: 40px;
+}
+
+.friendsLi{
+    padding: 20px 0;
+    width: 700px;
+    margin: 0 auto;
+    border-bottom: 1px #ccc solid;
+}
+
+.be_focus_info>p{
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.be_focus_info>.getnums,.getnums>a{
+    font-size: 14px;
+    color: #888;
+    line-height: 15px;
+    margin-top: 10px;
+}
+
+.be_focus_info{
+    float: left;
+    width: 400px;
+}
+
+#message-box{
+    position: fixed;
+    background: rgba(0.26, 0.26, 0.26, 0.6);
+    height: 100%;
+    width: 100%;
+    top: -40px;
+    left: 0;
+    border-radius:0;
+    display: none;
+}
+
+#message-content{
+    width: 440px;
+    height: 380px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 6px;
+    background: white;
+}
+
+#message-content>h3{
+    line-height: 80px;
+}
+#message-content>textarea{
+    width: 300px;
+    height: 180px;
+    resize: none;
+    border-radius: 4px;
+    padding: 10px;
+    outline: none;
+}
+
+#sendmessageok{
+    color: red;
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+#message-content>button{
+    height: 34px;
+    padding: 0 24px;
+    background: #00a6c9;
+    border-radius: 4px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.messageLi{
+    display: inline-block;
+    width: 560px
+}
+
+.change1{
+    height: 34px;
+    padding: 0 24px;
+    background: #e27b27;
+    border-radius: 4px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* .change1:nth-child(1){
+    margin-bottom: 10px;
+    background: #00a6c9
+} */
+
+.button{
+    float: right;
+    width: 140px
+}
+
+#deltravel,#deltravelreview{
+    display: none;
+    position: fixed;
+    z-index: 12222;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0.26, 0.26, 0.26, 0.65);
+}
+
+#deltravel-box,#deltravelreview-box{
+    width: 360px;
+    height: 180px;
+    background: white;
+    border-radius: 6px;
+    border: 1px #ccc solid;
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+}
+#deltravel-box>h3,#deltravelreview-box>h3{
+    margin-top: 40px;
+    line-height: 40px;
+    margin-bottom: 30px;
+}
+#deltravel-box>button,#deltravelreview-box>button{
+    height: 34px;
+    padding:0 20px;
+    color: white;
+    background: #e27b27;
+    border-radius: 4px;
+    border: none;
+    margin-right: 20px;
+    cursor: pointer;
+}
+#deltravel-box .canceldele,#deltravelreview-box .canceldele{
+    margin-right: 0;
+    background: #00a6c9;
+}

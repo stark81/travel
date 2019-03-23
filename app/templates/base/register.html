@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>悦游</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/common.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/register.css')}}">
+</head>
+<body>
+    <div id="main">
+        <p></p>
+        <form action="" method="POST">
+            <h1>悦游,让旅游更愉悦!</h1> 
+            {% for msg in get_flashed_messages(category_filter=["err"]) %}
+                <p class="login-box-msg" style="color: red">{{ msg }}</p>
+            {% endfor %}
+            {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+                <p class="login-box-msg">{{ msg }},请去<a href="\login\">登录！</a></p>
+            {% endfor %}
+            {% for err in form.username.errors %}
+                <ul class="errors">
+                    <li>{{ err }}</li>
+                </ul>
+            {% endfor %}
+            <div class="form-control">
+                <p>{{ form.username.label }}</p>{{ form.username }}
+            </div>
+            <div style="height:20px"></div>
+            {% for err in form.uemail.errors %}
+                <ul class="errors">
+                    <li>{{ err }}</li>
+                </ul>
+            {% endfor %}
+            <div class="form-control">
+                <p>{{ form.uemail.label }}</p>{{ form.uemail }}
+            </div>
+            <div style="height:20px"></div>
+            {% for err in form.upwd.errors %}                
+                <ul class="errors">
+                    <li>{{ err }}</li>
+                </ul>               
+            {% endfor %}
+            <div class="form-control">
+                <p>{{ form.upwd.label }}</p>{{ form.upwd }}
+            </div>
+            <div style="height:20px"></div>
+            {% for err in form.repwd.errors %}
+                <ul class="errors">
+                    <li>{{ err }}</li>
+                </ul>                
+            {% endfor %}
+            <div class="form-control">
+                <p>{{ form.repwd.label }}</p>{{ form.repwd }}
+            </div>
+            <div style="height:20px"></div>
+            {% for msg in get_flashed_messages(category_filter=["err"]) %}
+                <ul class="errors">
+                    <li>{{ msg }}</li>
+                </ul>
+            {% endfor %}
+            <div class="form-control">
+                {{ form.csrf_token }}
+                {{ form.submit }}
+            </div>  
+        </form>
+    </div>
+    <script type="text/javascript">
+        var main = document.getElementById("main");
+        main.style.height = screen.height * 0.82 + "px";
+        main.style.width = screen.width * 0.8 + "px";
+    </script>
+</body>
+</html>

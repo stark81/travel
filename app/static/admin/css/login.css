@@ -1,0 +1,49 @@
+body{
+    background: url("../image/bg.jpg")
+}
+
+.loginbox{
+    margin: 150px auto;
+}
+.loginbox h1{
+    font-size: 32px;
+    color:white;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.login{
+    width: 340px;
+    margin: 0 auto;
+    background: white;
+    padding:20px 0;
+    padding-left: 20px;
+}
+.login .err{
+    color: red;
+    line-height: 30px;
+}
+.login .msg{
+    margin-bottom: 16px;
+}
+.login input{
+    width: 300px;
+    height: 30px;
+    box-sizing: border-box;
+    border: 1px #ccc solid;
+    border-radius: 6px;
+    outline: none;
+    padding-left: 12px;
+}
+
+
+
+.login input[name="submit"]{
+    height: 40px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    background: #00a6c9;
+}
+.login input[name="submit"]:hover{
+    cursor: pointer;
+}

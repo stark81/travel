@@ -1,0 +1,31 @@
+{% import "base/home_page.html" as pg %}
+
+{% if reviews %}
+    {% for review in reviews %}
+        <li class="reviewLi">
+            <div class="usercover">
+                <a href="/userinfo/{{review.reviewers.id}}">
+                    <img style="width:100%" src="/static/uploads/user/{{review.reviewers.cover}}" >
+                </a>
+            </div>
+            <div>
+                <p>
+                    <a href="/userinfo/{{review.reviewers.id}}">{{ review.reviewers.uname }}</a>
+                    : {{review.content}}
+                </p>
+                <p class="time">
+                    {{ review.addtime }}
+                </p>
+            </div>
+            {% if review.reviewers.id == session["user_id"] %}
+                <input type="hidden" name="delreviewid" value="{{review.id}}">
+                <input type="submit" class="delreview1" name="delreview" value="删除">
+            {% endif %}
+            <div class="clear"></div>
+            <div style="width:810px;border-bottom:1px #ccc solid"></div>
+        </li>
+        <div class="clear"></div>
+    {% endfor %}
+{% else %}
+    <h3 style="text-align:center;margin-top:20px">暂时还没有人评论,赶紧来抢沙发吧</h3>
+{% endif %}

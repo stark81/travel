@@ -1,0 +1,238 @@
+.userinfoform{
+    padding: 20px 0;
+}
+
+.lestmain .userinfo{
+    height: auto;
+}
+
+.uname{
+    width: 700px;
+    float: left;
+    padding-bottom: 30px;
+    border-bottom: 2px #ddd solid;
+}
+
+.backmypage{
+    padding: 0 10px;
+    float: right;
+}
+
+.uname1>h2>b{
+    margin-right: 30px;
+}
+.uname1>h2>label{
+    font-size: 16px;
+    font-weight: normal;
+    display: none;
+}
+.uname1:hover label{
+    display: inline-block;
+    cursor: pointer;
+}
+.uemail{
+    float: left;
+    padding: 40px 0;
+    width: 700px;
+    border-bottom: 2px #ddd solid;
+}
+.uemail1 span{
+    width: 100px;
+    font-weight: bold;
+    text-align: justify;
+    display:inline-block;
+}
+
+.uemail1 label .hidden{
+    margin-left: 30px;
+    font-weight: normal;
+    display: none;
+}
+
+.uemail1:hover .hidden{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.uphone{
+    float: left;
+    padding: 40px 0;
+    width: 700px;
+    border-bottom: 2px #ddd solid;
+}
+.uphone1 span{
+    width: 100px;
+    font-weight: bold;
+    text-align: justify;
+    display:inline-block;
+}
+
+.uphone1 label .hidden{
+    margin-left: 30px;
+    font-weight: normal;
+    display: none;
+}
+
+.uphone1:hover .hidden{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.uintroduce{
+    float: left;
+    padding: 40px 0;
+    width: 700px;
+    border-bottom: 2px #ddd solid;
+}
+.infointr1 span{
+    width: 100px;
+    font-weight: bold;
+    text-align: justify;
+    display:inline-block;
+}
+
+.infointr1 label .hidden{
+    margin-left: 30px;
+    font-weight: normal;
+    display: none;
+}
+
+.infointr1:hover .hidden{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.userinfoform>div>div>div>label{
+    display:inline-block;
+    width: 100px;
+    font-weight: bold;
+}
+
+#username,#uemail,#uphone,#uintroduce{
+    height: 30px;
+    width: 400px;
+    border-radius: 2px;
+    outline: none;
+    padding: 0 12px ;
+    border: 1px #aaa solid;
+}
+
+#uintroduce {
+    height: 90px;
+    resize: none;
+    vertical-align: top;
+}
+
+.userinfoform input[type="submit"]{
+    margin-top: 20px;
+    height: 32px;
+    padding: 0 16px;
+    border-radius: 3px;
+    background: white;
+    border: 1px #aaa solid;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.6s;
+}
+
+.userinfoform input[name="unamesave"],
+.userinfoform input[name="emailsave"],
+.userinfoform input[name="introducesave"],
+.userinfoform input[name="phonesave"]
+{
+    margin:0 20px 0 105px;
+    background: #00a6c9;
+    color: white;
+    border:none;
+}
+
+.userinfoform>div>div>div input[name="cancel"]:hover{
+    background: #eee;
+}
+
+.userinfoform>div>div>div>span{
+    font-size: 14px;
+    color: red;
+}
+
+.addphone{
+    cursor: pointer;
+}
+
+.userimgbotton{
+    width: 160px;
+    height: 160px;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.userimgbotton .changeimg{
+    width: 40px;
+    margin: 46px auto 10px;
+}
+
+.coverfile{
+    display: block;
+    height: 160px;
+    width: 300px;
+    padding-left: 170px;
+    position: absolute;
+    top: 0px;
+    cursor: pointer;
+}
+
+#tankuang {
+	margin: 40px auto;
+	width: 400px;
+	height: 523px;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    padding-top: 20px;
+}
+
+#tankuang>h2{
+    margin-bottom: 20px;
+}
+#clipArea {
+	/* margin: 20px; */
+	width:360px;
+	height: 200px;
+	margin: 0 auto;
+}
+#file,
+.clipBtn {
+    margin: 20px;
+}
+.clipBtn{
+    height: 34px;
+    width: 300px;
+    border: none;
+    background: #00a6c9;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+#clipBtn1{
+    margin-top: 0;
+}
+#view {
+	margin: 0 auto;
+	width: 200px;
+	height: 200px;
+}
+
+#tankuangHidden{
+    display: none;
+    height: 100%;
+    width: 100%;
+    background: rgba(26, 26, 26, 0.65);
+    position: fixed;
+    top: 0;
+    z-index: 100000;
+    scroll-behavior: unset;
+}

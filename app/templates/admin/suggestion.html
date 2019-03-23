@@ -1,0 +1,29 @@
+{% extends "admin/admin.html" %}
+{% import "admin/admin_page.html" as pg %}
+
+{% block content %}
+    <div class="userList">
+        <h1>会员列表</h1>
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>用户名</th>
+                <th>邮箱</th>
+                <th>建议</th>
+                <th>时间</th>
+            </tr>
+            {% for suggest in page_data.items %}
+            <tr>
+                <td>{{suggest["id"]}}</td>
+                <td>{{suggest["uname"]}}</td>
+                <td>{{suggest["uemail"]}}</td>
+                <td>{{suggest["content"]}}</td>
+                <td>{{suggest["addtime"]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="box-footer clearfix">
+            {{ pg.page(page_data,'admin.suggest') }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "admin/admin.html" %}
+{% import "admin/admin_page.html" as pg %}
+
+{% block content %}
+    <div class="userList">
+        <h1>景区列表</h1>
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>景点名称</th>
+                <th>封面</th>
+                <th>星级</th>
+                <th>所属地区</th>
+                <th>是否推荐</th>
+                <th>操作事项</th>
+            </tr>
+            {% for scenic in page_data.items %}
+            <tr>
+                <td>{{scenic["id"]}}</td>
+                <td>{{scenic["scenicname"]}}</td>
+                <td>
+                    <img style="width:70px;height:70px;margin-top: 6px"
+                    src="{{ url_for('static', filename='uploads/'+ scenic.cover) }}"
+                    class="img-responsive center-block" alt="">
+                </td>
+                <td>{{scenic["star"]}}</td>
+                <td>{{scenic.area.areaName}}</td>
+                {% if scenic["is_recommend"] %}
+                    <td class="on">是</td>
+                {% else %}
+                    <td class="off">否</td>
+                {% endif %}
+                <td>
+                    <a class="edit" href="sceniclist/edit/{{scenic['id']}}">编辑</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="box-footer clearfix">
+            {{ pg.page(page_data,'admin.sceniclist') }}
+        </div>
+    </div>
+{% endblock %}

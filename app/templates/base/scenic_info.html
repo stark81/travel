@@ -1,0 +1,58 @@
+{% extends 'base/home.html' %}
+
+{% block content %}
+    <div id="scenicMain">
+        <div class="inner">
+            <!-- 左侧景区信息主体内容 -->
+            <div class="travel_content">
+                <!-- 景区介绍 -->
+                <div class="article222">
+                    <h2>{{scenic.area.areaName}}--{{scenic.scenicname}}</h2>
+                    <!-- <h3 style="font-size:24px;">景区历史</h3> -->
+                    <p>{{scenic.introduce}}</p>
+                    <!-- <h3 style="font-size:24px;">景区内容</h3> -->
+                    {{ scenic.content|safe }}
+                </div>
+            </div>
+
+            <!-- 相关的游记推荐 -->
+            {% if travels %}
+            <div class="travel_scenicinfo" style="margin-bottom:20px">
+                <b>游记推荐</b>
+                {% for travel in travels %}
+                    <p class="travelrecommend">
+                        <a style="line-height:36px" href="/travels/info/{{travel.id}}">
+                            <label class="linktravel">></label>{{travel.title}}
+                        </a>
+                    </p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- 关于景区 -->
+            <div class="travel_scenicinfo" >
+                <b>关于景区</b><br>
+                <div style="width:100%;margin-top: 10px">
+                    <img style="width:100%" src="/static/uploads/{{scenic.cover}}">
+                </div>
+                <p style="line-height: 30px"><label>景区名称 :</label> <b>{{ scenic.scenicname }}</b></p>
+                <p style="line-height: 20px"><label>景区星级 :</label>
+                    {% for i in range(5) %}
+                        {% if i < scenic.star %}
+                            <img style="height:130%" src="{{url_for('static',filename='base/image/star1.png')}}">
+                        {% else %}
+                            <img src="{{url_for('static',filename='base/image/star2.png')}}">
+                        {% endif %}
+                    {% endfor %}
+                </p>
+                <p style="line-height: 30px"><label>所属地区 : </label><b>{{ scenic.area.areaName }}</b></p>
+                <p><label>景区地址 : </label><b>{{ scenic.address }}</b></p>
+            </div>
+            
+
+            <!-- 清除浮动 -->
+            <div class="clear"></div>
+        </div>
+    </div>
+
+{% endblock %}

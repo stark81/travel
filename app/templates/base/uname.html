@@ -1,0 +1,11 @@
+<h2> <b>{{ user.uname }}</b> <label onclick="getnamechange()">修改</label></h2> 
+
+<script>
+    function getnamechange(){
+        var uid = $("[name=infoid]").val();
+        console.log(uid);
+        $.get("/getunamechangepage",{uid:uid},function(data){
+            $(".uname1").html(data);
+        });
+    }
+</script>

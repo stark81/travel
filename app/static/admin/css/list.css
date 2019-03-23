@@ -1,0 +1,48 @@
+.userList .edit{
+    background: #00a6c9;
+    padding: 0.04rem 0.06rem;
+    border-radius: 0.02rem;
+    font-size: 0.12rem;
+    color:white;
+    cursor: pointer;
+}
+
+.userList .disable{
+    background: #5b686b;
+    padding: 0.04rem 0.06rem;
+    border-radius: 0.02rem;
+    font-size: 0.12rem;
+    color:white;
+    cursor: default;
+}
+
+.userList .dele{
+    border: none
+}
+
+.userList .table>li>div .del{
+    background: #e27b27;
+}
+
+.userList>table{
+    border: 1px #ddd solid;
+    border-left: none;
+    border-right: none;
+    border-collapse:collapse;
+}
+.userList>table tr{
+    height: 0.44rem;
+    border-bottom: 1px #ddd solid;
+    
+}
+.userList>table td{
+    text-align: center;
+}
+.userList th,td{
+    min-width: 0.42rem;
+    padding: 0 0.1rem;
+}
+
+.userList>table .off{
+    color: red;
+}

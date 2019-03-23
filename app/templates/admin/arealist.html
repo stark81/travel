@@ -1,0 +1,36 @@
+{% extends "admin/admin.html" %}
+{% import "admin/admin_page.html" as pg %}
+
+{% block content %}
+    <div class="userList">
+        <h1>地区列表</h1>
+        <table width=100%>
+            <tr>
+                <th>编号</th>
+                <th>地区名</th>
+                <th>是否推荐</th>
+                <th>添加时间</th>
+                <th>操作事项</th>
+            </tr>
+            {% for area in page_data.items %}
+            <tr>
+                <td>{{area["id"]}}</td>
+                <td>{{area["areaName"]}}</td>
+                {% if area["is_recommend"] %}
+                    <td>是</td>
+                {% else %}
+                    <td>否</td>
+                {% endif %}
+
+                <td>{{area["addtime"]}}</td>
+                <td>
+                    <a class="edit" href="arealist/edit/{{area['id']}}">编辑</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="box-footer clearfix">
+            {{ pg.page(page_data,'admin.arealist') }}
+        </div>
+    </div>
+{% endblock %}

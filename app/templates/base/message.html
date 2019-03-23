@@ -1,0 +1,72 @@
+{% extends "base/userinfo.html" %}
+
+{% block aboutmain %}
+<div class="messagemain">
+    {% if user.id == session["user_id"] %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="friendsLi">
+                        <div class="messageLi">
+                            {% for sender in senders %}
+                                {% if sender.id == message.send_id %}
+                                <a href="/userinfo/travel/{{sender.id}}">
+                                    <div class="be_focus_cover"><img style="width:100%" src="{{ url_for('static',filename='uploads/user/')+sender.cover }}"></div>
+                                </a>
+                                <h4 style="margin-bottom: 10px;display: inline-block">
+                                    <a href="/userinfo/travel/{{sender.id}}">    
+                                        {{ sender.uname }}
+                                    </a>
+                                </h4>
+                                {% endif %}
+                            {% endfor %}
+                            <label style="font-size:13px;font-weight:normal;margin-left:30px">
+                                {{ message.addtime }}
+                            </label>
+                            
+                            {% if message.is_read == 0 %}
+                                <input name="unreadmessageid" type="hidden" value="{{ message.id }}">
+                                <label class="unread" style="margin-left:30px;color:red">未读</label>
+                            {% endif %}
+                            <script>
+                                window.onbeforeunload = mark_read()
+                            </script>
+                            
+                            <div class="be_focus_info">
+                                {{ message.content }}
+                            </div>
+                        </div>
+                        <div class="button">
+                            <button class="change1" onclick="delmessage({{message.id}})">删除</button>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                {% endfor %}
+                <div class="infotext">
+                    <h3>操作成功！</h3>
+                </div>
+            </ul>
+        {% else %}
+        <div style="padding-top:20px">
+            <h2 style="text-align:center;line-height:60px;">
+                <div style="margin: 0 auto;">
+                    <img style="width:600px" src="{{url_for('static',filename='base/image/nothing.png')}}">
+                </div>
+                您还没有收到任何留言呢
+            </h2>
+        </div> 
+        {% endif %}
+    {% else %}
+    <div style="background:white">
+        <h2 style="text-align:center;line-height:60px;">
+            抱歉，暂时不允许查看其他用户收到的留言，点击
+            <a style="color:#e27b27" href="/">返回</a>
+            首页
+            <div style="margin: 0 auto;">
+                <img  src="{{url_for('static',filename='base/image/err.png')}}">
+            </div>
+        </h2>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

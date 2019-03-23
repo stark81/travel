@@ -1,0 +1,98 @@
+#writetravelsmain{
+    width: 800px;
+    margin: 0 auto;
+    padding: 30px 0 10px 0;
+}
+
+.addArea .form-group{
+    padding-bottom: 10px;
+}
+
+.addArea .form-group>p{
+    font-weight: bold;
+}
+
+.addArea .form-group>input[type="text"],select{
+    width: 100%;
+    box-sizing: border-box;
+    margin: 6px 0;
+    height: 30px;
+    border: 1px #bbb solid;
+    padding-left: 12px;
+    font-size: 14px;
+    color: #666;
+    outline: none;
+}
+.addArea .form-group>input[type="radio"]{
+    margin: 8px 10px 8px 0;
+}
+
+.addArea .form-group>textarea{
+    width: 100%;
+    min-height: 120px;
+    box-sizing: border-box;
+    margin: 6px 0 0 0;
+    outline: none;
+    font-size: 16px;
+    border-radius: 6px;
+    line-height: 20px;
+    padding: 8px 12px;
+    resize: none;
+}
+
+.addArea .form-group>input[type="submit"]{
+    height: 36px;
+    width: 80px;
+    border-radius: 6px;
+    background: #00a6c9;
+    color: white;
+    border:none;
+    font-size: 15px;
+    outline: none;
+}
+.addArea .form-group>input[type="submit"]:hover{
+    cursor: pointer;
+}
+
+.addArea .form-group .err{
+    color: red;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+
+.addArea>h2{
+    margin-bottom: 20px
+}
+
+#cover,#cke_content{
+    margin-top:6px;
+}
+
+.alert{
+    width: 100%;
+    height: 74px;
+    box-sizing: border-box;
+    padding:0 10px;
+    border-radius: 6px;
+    color: white;
+}
+.alert-false{
+    background: #e27b27;
+}
+.alert-success{
+    background: #00a6c9;
+}
+.alert>h4{
+    font-size: 18px;
+    line-height: 40px;
+}
+
+.close{
+    border: 0;
+    margin-top: 6px;
+    background: transparent;
+    float: right;
+    font-size: 20px;
+    color: white;
+}

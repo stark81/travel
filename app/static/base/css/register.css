@@ -1,0 +1,84 @@
+
+body{
+    background-image: url("../image/login.png");
+    background-size: 100%;
+    
+    overflow: hidden;
+}
+#main{
+    /* background: red; */
+    margin: 0 auto;
+    background-image: url("../image/login1.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position-x: center;
+    background-position-y: center;
+}
+#main form{
+    float: right;
+    width: 360px;
+    margin: 50px 50px 0 0;
+}
+#main form h1{
+    color: #00b2ec;
+    line-height: 140px;
+}
+.form-control{
+    line-height: 30px;
+    height: 30px;
+}
+#main .errors{
+    margin:0;
+    padding:0;
+
+}
+.form-control>p{
+    float: left;
+    width: 80px;
+    height: 30px;
+    text-align: justify;
+}
+.form-control>p:after {
+    content: " ";
+    display: inline-block;
+    width: 100%;
+}
+.form-control input[type="text"],input[type="password"]{
+    width: 240px;
+    height: 30px;
+    float: left;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px #999 solid;
+    outline: none;
+    padding-left: 10px;
+    margin-left: 14px;
+}
+.errors li{
+    padding-left: 100px;
+    color: red;
+}
+.login-box-msg{
+    text-align: center;
+}
+.login-box-msg a{
+    color: #00b2ec;
+}
+.form-control .btn{
+    padding: 0px;
+    height: 40px;
+    width:335px;
+    color:white;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    background: #00b2ec;
+}
+.btn:hover{
+    cursor: pointer;
+}
+
+#saveupwd{
+    float: left;
+    margin: 9px 6px 0 14px ;
+}

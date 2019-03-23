@@ -1,0 +1,14 @@
+.indexLeft{
+    width: 44%;
+    float: left; 
+}
+.indexLeft>p{
+    font-size: 0.15rem;
+}
+.indexRight{
+    float: right;
+    width: 50%;
+}
+.indexRight>p{
+    font-size: 0.15rem;
+}

@@ -1,0 +1,137 @@
+{% extends "base/home.html" %}
+
+{% block content %}
+    <div id="travelmain">
+        <div class="inner">
+            {% if travel %}
+                <div class="travel_content">
+                    <div class="article222">
+                        <h2>{{ travel.title }}</h2>
+                        <div class="otherinfo">
+                            <label>作者 : 
+                                {% if travel.travelauthor.uname %}
+                                    <a href="/userinfo/travel/{{ travel.travelauthor.id }}"> {{travel.travelauthor.uname }}</a>
+                                {% else %}
+                                    悦游管理员
+                                {% endif %}
+                            </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>所属景区 : <a href="/showscenic/{{ travel.scenic.id }}">{{ travel.scenic.scenicname }}</a> </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>发表时间 : {{ travel.addtime }}</label>
+                            {% if session["user_id"] %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="hidden" name="collecttravelid" value="{{ travel.id }}">
+                                {% if is_collected %}
+                                    <label class="collectTravel">取消收藏</label>
+                                {% else %}
+                                    <label class="dotravelcollected">收藏游记</label>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {{ travel.content|safe }}
+                    </div>
+                    
+                    <div class="travelreview">
+                        {% if session["user_id"] %}
+                            <div class="writereviews" style="text-align:left">
+                                <input type="hidden" name="getimg" value="{{session['user_id']}}">
+                                <input type="hidden" name="postreviewsss" value="{{ travel.id }}">
+                                <img style="float:left" class="userCover" style="vertical-align:top">
+                                <textarea id="reviewscontent" placeholder="请输入评论"></textarea>
+                                <input type="submit" name="addreviews" style="float:left" value="发表">
+                                <div class="clear"></div>
+                            </div>
+                            <script>
+                                getusercover()
+                            </script>
+                        {% endif %}
+                        <ul id="showreviews">
+                            <input type="hidden" name="gettravelreviews" value="{{travel.id}}">
+                            {% if session["user_id"] %}
+                            {% else %}
+                                <h3 style="border-bottom:1px #ccc solid;padding-bottom:20px;text-align: center">
+                                    点击 <a href="/login">登陆</a> 参与评论吧~
+                                </h3>
+                            {% endif %}
+                        </ul>
+                        <!-- <script>
+                            getreviews();
+                        </script> -->
+                        
+                    </div>
+                    <div class="infotext">
+                        <h3>操作成功！</h3>
+                    </div>
+                </div>
+                
+                {% if travel.travelauthor.id %}
+                <!-- 关于作者 -->
+                <div class="travel_author">
+                    <b>关于作者</b><br>
+                    <div class="authorcover">
+                        <div class="authorimg">
+                            <a href="/userinfo/travel/{{travel.travelauthor.id}}">
+                                <img src="/static/uploads/user/{{travel.travelauthor.cover}}">
+                            </a>
+                        </div>
+                        <a href="/userinfo/travel/{{travel.travelauthor.id}}">
+                            <h3>{{ travel.travelauthor.uname }}</h3>
+                        </a>
+                        {% if travel.travelauthor.introduce %}
+                            <p>{{ travel.travelauthor.introduce|truncate(24) }}</p>
+                        {% else %}
+                            <p>这个人很懒,什么都没有留下</p>
+                        {% endif %}
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 关于景区 -->
+                <div class="travel_scenicinfo">
+                    <b>关于景区</b><br>
+                    <div style="width:100%;margin-top: 10px">
+                        <a href="/showscenic/{{ travel.scenic.id }}">
+                            <img style="width:100%" src="/static/uploads/{{travel.scenic.cover}}">
+                        </a>
+                    </div>
+                    <p style="line-height: 30px">
+                        <label>景区名称 :</label>
+                        <a href="/showscenic/{{ travel.scenic.id }}"><b>{{ travel.scenic.scenicname }}</b></a>
+                    </p>
+                    <p style="line-height: 20px"><label>景区星级 :</label>
+                        {% for i in range(5) %}
+                            {% if i < travel.scenic.star %}
+                                <img style="height:130%" src="{{url_for('static',filename='base/image/star1.png')}}">
+                            {% else %}
+                                <img src="{{url_for('static',filename='base/image/star2.png')}}">
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p style="line-height: 30px"><label>所属地区 : </label><b>{{ travel.scenic.area.areaName }}</b></p>
+                    <p><label>景区地址 : </label><b>{{ travel.scenic.address }}</b></p>
+                </div>
+                <!-- 清除浮动 -->
+                <div class="clear"></div>
+            {% else %}
+                <div style="background:white">
+                    <h2 style="text-align:center;line-height:60px;">
+                        游记不存在,点击
+                        <a style="color:#e27b27" href="/">返回</a>
+                        首页
+                        <div style="margin: 0 auto;">
+                            <img  src="{{url_for('static',filename='base/image/err.png')}}">
+                        </div>
+                    </h2>
+                </div>
+                
+            {% endif %}
+        </div>
+    </div>
+    
+        
+    
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base/home.html" %}
+{% block content %}
+    <div class="lestmain">
+        <div class="inner">
+            {% if user.id==session["user_id"] %}
+            <div class="userbanner">
+            </div>
+            <div class="userinfo">
+                <div class="userimg">
+                    <img style="width:100%" src="{{ url_for('static',filename='uploads/user/') + user.cover }}">
+                    <div class="userimgbotton" onclick="showAlert()">
+                        <div class="changeimg"><img style="width:100%" src="{{ url_for('static',filename='base/image/camera.png') }}"><br></div>
+                        修改头像
+                    </div>
+                    <script>
+                        function showAlert(){
+                            $("#tankuangHidden").css({
+                                "display":"block"
+                            });
+                            var clickheight = $(window).height();
+                            $("body").css({
+                                "height":clickheight,
+                                "overflow":"hidden"
+                            })
+                        }
+                    </script>
+                </div>
+                <div class="userinfoform">
+                    <div class="uname">
+                        <input type="hidden" name="infoid" value="{{ user.id }}">
+                        <div class="uname1"></div>
+                    </div>
+                    <div class="backmypage"><a href="/userinfo/travel/{{user.id}}">返回我的主页 ></a></div>
+                    <div class="uemail">
+                        <input type="hidden" name="infoemail" value="{{ user.id }}">
+                        <div class="uemail1"></div>
+                    </div>
+                    <div class="uphone">
+                        <input type="hidden" name="infophone" value="{{ user.id }}">
+                        <div class="uphone1"></div>
+                    </div>
+                    <div class="uintroduce">
+                        <input type="hidden" name="infointro" value="{{ user.id }}">
+                        <div class="infointr1"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <script>
+                    getunamepage();
+                    getuemailpage();
+                    getuphonepage();
+                    getintroducepage();
+                </script>
+            </div>
+            <div class="clear"></div>
+            {% else %}
+                <h2 style="text-align:center;line-height:60px;">
+                    您进行了不正确的操作,点击
+                    <a style="color:#e27b27" href="/">返回</a>
+                    首页
+                    <div style="margin: 0 auto;">
+                        <img  src="{{url_for('static',filename='base/image/err.png')}}">
+                    </div>
+                </h2>
+            {% endif %}
+        </div>
+    </div>
+    <div id="tankuangHidden">
+        <div id="tankuang" ontouchstart="">
+            <h2>编辑头像</h2>
+            <div id="clipArea"></div>
+            <input type="file" id="file"><input style="visibility:hidden" disabled="disabled" type="submit" value="取消"><br>
+            <p>双击鼠标旋转图片,滑动滚轮对图片进行放缩</p>
+            <p id="covernull" style="color:red"></p>
+            <form enctype="multipart/form-data">
+                <img id="coverimgs">
+            </form>
+            <button id="clipBtn" class="clipBtn">保存</button><br>
+            <input type="reset" id="clipBtn1" class="clipBtn" onclick="closeAlert()" value="取消">
+        
+            <!-- <script src="http://www.jq22.com/jquery/2.1.1/jquery.min.js"></script> -->
+            <script src="{{url_for('static',filename='base/js/iscroll-zoom.js')}}"></script>
+            <script src="{{url_for('static',filename='base/js/hammer.js')}}"></script>
+            <script src="{{url_for('static',filename='base/js/lrz.all.bundle.js')}}"></script>
+            <script src="{{url_for('static',filename='base/js/jquery.photoClip.js')}}"></script>
+            
+            <script>
+                function closeAlert(){
+                    $("#tankuangHidden").css({
+                        "display":"none"
+                    });
+                    $("body").css({
+                        "height":"auto",
+                        "overflow":"auto"
+                    })
+                    $("#covernull").html("")
+                };
+            //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+            var clipArea = new bjj.PhotoClip("#clipArea", {     // 图片剪辑插件
+                size: [160, 160],           //设置剪辑框大小
+                outputSize: [640, 640],
+                file: "#file",
+                view: "#view",
+                ok: "#clipBtn",
+                clipFinish: function(dataURL) { //剪辑成功，返回dataURL，dataURL就是图像十六进制文件
+                    var uid = {{ user.id }};
+                    // console.log(uid)
+                    ucover = dataURL;
+                    ucover1 = ucover.split(",")[1]; //对十六进制文件进行分割，得到图片内容的十六进制信息
+                    ucover_type = ucover.split(",")[0].split("/")[1].split(";")[0]; //获取图片后缀
+                    $.post("/postcover",{
+                        uid:uid,
+                        ucover:ucover1,
+                        ucover_type:ucover_type
+                    },
+                    function(data){
+                        closeAlert();
+                        window.location.reload();
+                    });
+                }
+            });
+            //clipArea.destroy();
+            </script>
+        
+        </div>
+    </div>
+
+    
+{% endblock %}

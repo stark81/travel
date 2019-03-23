@@ -1,0 +1,58 @@
+<div>
+    {{ form.uemail.label }}
+    {{ form.uemail }}
+    <span id="emailmsg"></span>
+    <br>
+    <input type="submit" name="emailsave" onclick="postemail()" value="保存">
+    <input type="submit" name="emailcancel" onclick="getemail()" value="取消">
+</div>
+<script>
+    function getemail(){
+        var uid = $("[name=infoemail]").val();
+        $.get("/getuemailpage",{uid:uid},function(data){
+            $(".uemail1").html(data);
+        });
+    }
+
+    function postemail(){
+        var uid = $("[name=infoemail]").val();
+        var uemail = $("[name='uemail']").val()
+        $.post("/postemailpage",{
+            uid:uid,
+            uemail:uemail
+        },
+        function(data){
+            $(".uemail1").html(data);
+        })
+    }
+
+    $("input[name='uemail']").bind('input propertychange',function(){
+        $("#emailmsg").html('');
+        var val = $(this).val(); 
+        lastone = (val.length-1);
+        if(val.indexOf('@')>0&&val.indexOf('@')!=lastone){
+            $("#emailmsg").load("/checkemail","user_email="+val,
+            function(data){
+                if(data=="1"){
+                    $("#emailmsg").html('邮箱已存在');
+                    $("[name='emailsave']").attr("disabled",true);
+                    $("[name='emailsave']").css({
+                        "cursor":"default"
+                    })
+                }else{
+                    $("#emailmsg").html('ok');
+                    $("[name='emailsave']").attr("disabled",false);
+                    $("[name='emailsave']").css({
+                        "cursor":"pointer"
+                    })
+                }
+            })
+        }else{
+            $("#emailmsg").html('邮箱格式不正确');
+            $("[name='emailsave']").attr("disabled",true);
+            $("[name='emailsave']").css({
+                "cursor":"default"
+            })
+        }
+     })
+</script>

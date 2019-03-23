@@ -1,0 +1,31 @@
+<div>
+    {{ form.uintroduce.label }}
+    {{ form.uintroduce }}
+    <span id="introducemsg"></span>
+    <br>
+    <input type="submit" onclick="postintroduce()" name="introducesave" value="保存">
+    <input type="submit" onclick="getintroduce()" name="introducecancel" value="取消">
+</div>
+
+<script>
+    function getintroduce(){
+        var uid = $("[name=infointro").val();
+        $.get("/getintroducepage",{uid:uid},function(data){
+            $(".infointr1").html(data);
+        });
+    }
+
+    function postintroduce(){
+        var uid = $("[name=infointro").val();
+        var introduce = $("[name='uintroduce']").val()
+        console.log(introduce);
+        $.post("/postintroducepage",{
+            uid:uid,
+            introduce:introduce
+        },
+        function(data){
+            $(".infointr1").html(data);
+        })
+    }
+</script>
+    

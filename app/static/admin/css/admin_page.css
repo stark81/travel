@@ -1,0 +1,33 @@
+.box-footer{
+    height: 0.42rem;
+}
+
+.pagination{
+    float: right;
+    margin-right: 1rem;
+}
+.pagination>li{
+    float: left;
+    height: 0.26rem;
+    margin-top: 0.14rem;
+    border: 1px #cccccc solid;
+    border-right: 0;
+    padding: 0 0.08rem;
+    text-align: center;
+    line-height: 0.26rem;
+    background: #fafdff;
+}
+.pagination>li>a{
+    font-size: 0.14rem;
+    color: #666;
+}
+.pagination .active{
+    background: #00a6c9;
+    
+}
+.pagination .active>a{
+    color: white;
+}
+.pagination .pageLast{
+    border-right: 1px #cccccc solid;
+}

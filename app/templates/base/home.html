@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>悦游</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='admin/image/admin_03.png')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/index.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/common.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/footer.css')}}">
+    <script src="{{url_for('static',filename='base/js/jquery-1.11.1.min.js')}}"></script>
+    <script src="{{url_for('static',filename='base/js/kxbdSuperMarquee.js')}}"></script>
+    <script src="{{url_for('static',filename='base/js/index.js')}}"></script>
+    <script src="{{url_for('static',filename='base/js/ajax.js')}}"></script>
+    <script src="{{url_for('static',filename='base/js/getreviews.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/travels_info.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/userinfo.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/info_edit.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/reviews.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/scenic_info.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/addarea.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/userinfo_review.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='base/css/allscenic.css')}}">
+</head>
+<body>
+    <div id="header">
+        <div class="inner">
+            <div class="logo">
+                <a href="/">
+                    <img src="{{url_for('static',filename='base/image/logo.png')}}" style="height:60px;margin-top: 10px;">
+                </a>
+            </div>
+            <!-- 导航栏 -->
+            <ul class="leftNav">
+                <li id="firstnav"><a href="/tourism_sircle">旅游圈</a></li>
+                <li><a href="/allscenics/">全部景点</a></li>
+                <li><a href="/alltravels/">全部游记</a></li>
+                <li><a href="/aboutus">关于我们</a></li>
+                <!-- 搜索框 -->
+                <form id='searchusersssss'>
+                    <input onkeydown="if(event.keyCode==13){event.keyCode=0;event.returnValue=false;}"
+                        type="text" name="searchuser" autocomplete="off" placeholder="搜索用户">
+                    <ul id="searchuserres"></ul>
+                </form>
+            </ul>  
+            <ul class="rightNav">
+                {% if session["user_id"] %}
+                    <li class="userinfoli">
+                        <input type="hidden" name="homeuser" value="{{ session['user_id'] }}">
+                        <input type="hidden" name="getimg" value="{{ session['user_id'] }}">
+                        <a class="userimgsss1" href="/userinfo/travel/{{session['user_id']}}">
+                            <div>
+                                <img class="userCover">
+                                <div id="checkunreadmessage"></div>
+                            </div>
+                        </a>
+                        <a id="firstusername" href="/userinfo/travel/{{session['user_id']}}"></a>
+                        <script>
+                            check_unread_message_numbers();
+                        </script>
+                    </li>
+                    <script>
+                        getusercover();
+                        var uid = $("[name=homeuser]").val();
+                        $.get("/getusername",{uid:uid},function(data){
+                            $("#firstusername").html(data);
+                        });
+                    </script>
+                    <li><a href="/logout/">退出</a></li>
+                {% else %}
+                    <li>
+                        <a href="/login/">登录</a>
+                        |
+                        <a href="/register/">注册</a>
+                    </li>
+                {% endif %}
+            </ul>   
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+    
+    <!-- 返回顶部按钮 -->
+    {% block writetravels %}
+        <div id="writeTravels">
+            <a href="/writetravels">写游记</a>
+            <div class="go-top">
+                <p>返回顶部</p>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'base/footer.html' %}
+    {% endblock %}
+</body>
+</html>

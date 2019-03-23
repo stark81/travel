@@ -1,0 +1,18 @@
+.userloginlog>table{
+    border: 1px #ddd solid;
+    border-left: none;
+    border-right: none;
+    border-collapse:collapse;
+}
+.userloginlog>table tr{
+    height: 0.44rem;
+    border-bottom: 1px #ddd solid;
+    
+}
+.userloginlog>table td{
+    text-align: center;
+}
+.userloginlog th,td{
+    min-width: 0.42rem;
+    padding: 0 0.1rem;
+}

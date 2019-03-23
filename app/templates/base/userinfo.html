@@ -1,0 +1,142 @@
+{% extends "base/home.html" %}
+
+{% block content %}
+    <div id="usermain">
+        <div class="inner">
+            {% if user %}
+            <div class="userbanner">
+            </div>
+            <div class="userinfo">
+                <div class="userimg">
+                    <img style="width:100%" src="{{ url_for('static',filename='uploads/user/')+user.cover }}">
+                </div>
+                <div class="username">
+                    <h2>{{ user.uname }}</h2>
+                    <p>
+                        {% if user.introduce %}
+                            {{ user.introduce }}
+                        {% else %}
+                            这个人很懒,什么也没留下
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="edit" id="focus_edit">
+                    {% if session["user_id"] == user.id %}
+                        <div class="change"><a href='/info_edit'>编辑</a></div>
+                    {% else %}
+                        {% if session["user_id"] %}
+                            <input type="hidden" name="focus_id" value="{{user.id}}">
+                            {% if is_friend %}
+                                <div class="change" id = "focused">取消关注</div>
+                            {% else %}
+                                <div class="change" id="focus">关注</div>
+                            {% endif %}
+                            <div class="change" id="message">留言</div>
+                            <div id="message-box">
+                                <div id="message-content">
+                                    <h3>{{user.uname}}</h3>
+                                    <textarea class="message" placeholder="请输入您的留言内容"></textarea>
+                                    <p id="sendmessageok"></p>
+                                    <button id="cancelmessage" style="margin-right:30px">取消</button>
+                                    <button onclick="domessage({{ user.id }})">留言</button>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="infotext">
+                    <h3>操作成功！</h3>
+                </div>
+            </div>
+            <div id="aboutUser">
+                <table id="aboutul">
+                    <th><a href="/userinfo/travel/{{user.id}}">游记</a></th>
+                    <th><a href="/userinfo/review/{{user.id}}">评论</a></th>
+                    <!-- <th><a href="/userinfo/sceniccollect/{{user.id}}">景区收藏</a></th> -->
+                    <th><a href="/userinfo/travelscollect/{{user.id}}">游记收藏</a></th>
+                    <th><a href="/userinfo/focus/{{user.id}}">关注</a></th>
+                    {% if user.id == session["user_id"] %}
+                        <th id="unreadmessagecount">
+                            <a href="/userinfo/message/{{user.id}}">留言</a>
+                            <div id="a_unread_count"></div>
+                            <script>
+                                get_unread_number()
+                            </script>
+                        </th>
+                    {% endif %}
+                    <div class="clear"></div>
+                </table>
+                {% block aboutmain %}
+                <div class="aboutmain">
+                    {% if travels %}
+                        {% for travel in travels %}
+                        <li class="usertravelli">
+                            <div class="usertravelimg">
+                                <img style="height:100%;width: 100%" src=
+                                "{{url_for('static',filename='uploads/'+travel.cover)}}">
+                            </div>
+                            <a href="/travels/info/{{ travel.id }}">    
+                                <div class="usertravelinfo">
+                                    <h3>{{ travel.title }}</h3>
+                                    {{ travel.content|safe|truncate(180) }}
+                                </div>
+                            </a>
+                            <div class="usertravereviews" id="travelinfoanddel">
+                                <span class="getreviews">
+                                    <input type="hidden" name="travel_id" value="{{ travel.id }}">
+                                </span>条评论
+                                <label style="margin:0 50px 0 50px">{{ travel.addtime }}</label>
+                                {% if travel.author_id == session["user_id"] %}
+                                    <span style="margin:0 20px 0 0">
+                                        <label  onclick="makesuredeleteTravel({{travel.id}})" style="color:red;cursor:pointer;">删除</label>
+                                    </span>
+                                    <span><a href="/traveledit/{{travel.id}}">编辑</a></span>
+                                {% endif %}
+                                
+                            </div>
+                            <script>
+                                getreviewsCount()
+                            </script>
+
+                            <div class="clear"></div>
+                        </li>
+                        {% endfor %}
+                        <div id="deltravel">
+                            <div id="deltravel-box">
+                                <h3>确定删除游记?</h3>
+                                <input type="hidden" name="travel_id_delete">
+                                <button onclick="do_delete_travel()">删除</button>
+                                <button onclick="canceldeleteTravel()" class="canceldele">取消</button>
+                            </div>
+                        </div>
+                    {% else %}
+                        <!-- <h3 style="text-align:center">这个人很懒，连一篇游记都没有留下~</h3> -->
+                        <div style="padding-top:20px">
+                            <h2 style="text-align:center;line-height:60px;">
+                                <div style="margin: 0 auto;">
+                                    <img style="width:600px" src="{{url_for('static',filename='base/image/nothing.png')}}">
+                                </div>
+                                这个人很懒，连一篇游记都没有留下~
+                            </h2>
+                        </div>
+                    {% endif %}
+                </div>
+                {% endblock %}
+            </div>
+            
+            <div class="clear"></div>
+            {% else %}
+            <div style="background:white">
+                <h2 style="text-align:center;line-height:60px;">
+                    用户不存在,点击
+                    <a style="color:#e27b27" href="/">返回</a>
+                    首页
+                    <div style="margin: 0 auto;">
+                        <img  src="{{url_for('static',filename='base/image/err.png')}}">
+                    </div>
+                </h2>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

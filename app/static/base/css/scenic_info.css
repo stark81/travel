@@ -1,0 +1,23 @@
+#scenicMain{
+    background: #efefef;
+}
+
+.linktravel{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #888;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    color: #888;
+    margin-bottom: 4px;
+    margin-right: 4px;
+}
+.travelrecommend:hover a{
+    color:#00a6c9 ;
+}
+.travelrecommend:hover .linktravel{
+    color: #00a6c9;
+    background: #00a6c9;
+}
