@@ -4,12 +4,9 @@ from wtforms.validators import DataRequired, Email, Regexp, EqualTo, ValidationE
 from app.models import User
 
 class RegisterForm(FlaskForm):
-<<<<<<< HEAD
     """
         定义'注册'表单，并定义表单字段的验证规则
     """
-=======
->>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     username = StringField(
         label="用户名",
         validators=[
@@ -64,12 +61,9 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-<<<<<<< HEAD
     """
         定义'登陆'表单，并定义表单字段的验证规则
     """
-=======
->>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     uemail = StringField(
         label="邮箱",
         validators=[
@@ -106,12 +100,9 @@ class LoginForm(FlaskForm):
     )
     
 class InfoEditForm(FlaskForm):
-<<<<<<< HEAD
     """
         定义'修改用户信息'表单，并定义表单字段的验证规则
     """
-=======
->>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     username = StringField(
         label="用户名",
         validators=[
@@ -139,12 +130,9 @@ class InfoEditForm(FlaskForm):
     )
 
 class SuggestForm(FlaskForm):
-<<<<<<< HEAD
     """
         定义'意见建议'表单，并定义表单字段的验证规则
     """
-=======
->>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     uname = StringField(
         label="姓名：",
         validators=[
