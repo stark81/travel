@@ -32,6 +32,10 @@ class User(db.Model):
     def __repr__(self):
         return "<User %r>" % self.uname
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 # 用户登陆日志表
 class Userlog(db.Model):
     __tablename__ = "userlog"
@@ -45,6 +49,10 @@ class Userlog(db.Model):
         self.user_id = user_id
         self.ip = ip
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 # 地区表
 class Area(db.Model):
     __tablename__ = "area"
@@ -63,6 +71,10 @@ class Area(db.Model):
         return dic
         
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 # 意见建议表
 class Suggest(db.Model):
     __tablename__ = "suggestion"
@@ -183,6 +195,10 @@ class ScenicCollect(db.Model):
     scenic_id = db.Column(db.Integer,db.ForeignKey("scenic.id"))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 # 游记收藏表
 class TravelsCollect(db.Model):
     __tablename__ = "travelscollect"
@@ -192,6 +208,10 @@ class TravelsCollect(db.Model):
     travels_id = db.Column(db.Integer,db.ForeignKey("travels.id"))
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 # 关注表
 class Friends(db.Model):
     __tablename__ = "friends"
@@ -201,6 +221,10 @@ class Friends(db.Model):
     focuser_id = db.Column(db.Integer)
     addtime = db.Column(db.DateTime,index=True,default=datetime.now)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 # 留言表
 class Message(db.Model):
     __tablename__ = "message"

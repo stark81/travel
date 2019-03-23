@@ -20,15 +20,21 @@ def admin_login(f):
         return f(*args, **kwargs)
     return decorated_function
 
+<<<<<<< HEAD
 ## =============后台登出功能=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/logout")
 def logout():
     del session["admin"]
     del session["adminname"]
     return redirect(url_for("admin.login"))
 
+<<<<<<< HEAD
 
 ## =============管理员后台登陆=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/login",methods=["GET","POST"])
 def login():
     form = LoginForm()
@@ -46,21 +52,30 @@ def login():
         if check_password_hash(adminlist.upwd,form.data["upwd"]) is False:
             flash("密码错误","err")
             return redirect(url_for("admin.login"))
+<<<<<<< HEAD
 
         # 账号密码验证通过，设置会话
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         adminlog = Adminlog()
         adminlog.admin_id = adminlist.id
         adminlog.ip = request.remote_addr
         db.session.add(adminlog)
         db.session.commit()
+<<<<<<< HEAD
 
         # 将登陆行为写入管理员登陆日志表
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         session["adminname"] = adminlist.uname
         session["admin"] = adminlist.id
         return redirect(url_for("admin.admin_index"))
     return render_template("admin/login.html",form=form)
 
+<<<<<<< HEAD
 ## =============后台首页=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/")
 @admin_login
 def index():
@@ -71,6 +86,7 @@ def index():
 def admin_index():
     return render_template("admin/index.html")
 
+<<<<<<< HEAD
 ## =============查看用户列表=============== ##
 @admin.route("/user/userlist")
 @admin_login
@@ -82,6 +98,17 @@ def user_list():
     return render_template("admin/list.html", page_data=page_data)
 
 ## =============查看用户日志=============== ##
+=======
+@admin.route("/user/userlist")
+@admin_login
+def user_list():
+    page = request.args.get('page', 1, type=int)
+    page_data = User.query.order_by(
+            User.addtime.desc()
+        ).paginate(page=page, per_page=6)
+    return render_template("admin/list.html", page_data=page_data)
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/log/userlog")
 @admin_login
 def userLog():
@@ -91,6 +118,7 @@ def userLog():
         ).paginate(page=page, per_page=6)
     return render_template("admin/userloginlog.html", page_data=page_data)
 
+<<<<<<< HEAD
 ## =============添加地区功能=============== ##
 @admin.route("/area/addarea",methods=["GET","POST"])
 @admin_login
@@ -104,11 +132,29 @@ def addarea():
             return redirect(url_for("admin.addarea"))
         else:                       
             area = Area()           # 如果地区不存在，则添加地区
+=======
+@admin.route("/area/addarea",methods=["GET","POST"])
+@admin_login
+def addarea():
+    form = AddAreaForm()
+    if form.validate_on_submit():
+        data = form.data
+        area = db.session.query(Area).filter(Area.areaName==data["sname"]).count()
+        if area:
+            flash("地区已存在","err")
+            return redirect(url_for("admin.addarea"))
+        else:
+            area = Area()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
             area.areaName = data["sname"]
             area.is_recommend = data["is_recommend"]
             area.introduce = data["introduce"]
 
+<<<<<<< HEAD
             operlog = Operlog()     # 同时把管理员添加地区这一行为写入到操作日志表中
+=======
+            operlog = Operlog()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
             operlog.admin_id = session["admin"]
             operlog.ip = request.remote_addr
             operlog.reason = "添加地区"+area.areaName
@@ -119,7 +165,10 @@ def addarea():
             flash("添加成功","ok")
     return render_template("admin/addarea.html",form=form)
 
+<<<<<<< HEAD
 ## =============查看地区列表=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/area/arealist",methods=["GET","POST"])
 @admin_login
 def arealist():
@@ -129,11 +178,15 @@ def arealist():
         ).paginate(page=page, per_page=6)
     return render_template("admin/arealist.html",page_data=page_data)
 
+<<<<<<< HEAD
 ## =============编辑地区信息=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/area/arealist/edit/<area_id>",methods=["GET","POST"])
 @admin_login
 def areaEdit(area_id=None):
     form = AddAreaForm()
+<<<<<<< HEAD
     area = Area.query.get_or_404(area_id)   # 根据地区id获取地区
     areaNameOld = area.areaName             # 记录旧的地区名
     if request.method == "GET":     # 如果请求方式为get，则把地区信息填写到表单中
@@ -147,16 +200,33 @@ def areaEdit(area_id=None):
         area_count = db.session.query(Area).filter(Area.areaName==data["sname"]).count()
 
         # 如果地区名称发生改变，并且改变之后的地区名已经存在，返回错误提示
+=======
+    area = Area.query.get_or_404(area_id)
+    areaNameOld = area.areaName
+    if request.method == "GET":
+        form.sname.data = area.areaName
+        form.is_recommend.data = area.is_recommend
+        form.introduce.data = area.introduce
+    if form.validate_on_submit():
+        data = form.data
+        area_count = db.session.query(Area).filter(Area.areaName==data["sname"]).count()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         if area.areaName != data["sname"] and area_count == 1:
             flash("地区已存在","err")
             return redirect(url_for("admin.areaEdit",area_id=area.id))
 
+<<<<<<< HEAD
         # 地区信息修改符合要求，写入数据库之中
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         area.areaName = data["sname"]
         area.is_recommend = data["is_recommend"]
         area.introduce = data["introduce"]
 
+<<<<<<< HEAD
         # 将修改地区操作写入管理员操作日志
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         operlog = Operlog()
         operlog.admin_id = session["admin"]
         operlog.ip = request.remote_addr
@@ -172,7 +242,10 @@ def areaEdit(area_id=None):
         return redirect(url_for("admin.areaEdit",area_id=area.id))
     return render_template("admin/areachange.html",form=form)
 
+<<<<<<< HEAD
 ## =============查看意见建议功能=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/user/suggest")
 @admin_login
 def suggest():
@@ -182,7 +255,10 @@ def suggest():
         ).paginate(page=page, per_page=6)
     return render_template("admin/suggestion.html",page_data=page_data)
 
+<<<<<<< HEAD
 ## =============查看景区列表功能=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/scenic/sceniclist")
 @admin_login
 def sceniclist():
@@ -192,7 +268,10 @@ def sceniclist():
         ).paginate(page=page, per_page=6)
     return render_template("admin/sceniclist.html",page_data=page_data)
 
+<<<<<<< HEAD
 ## =============查看管理员登陆日志=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/log/adminlog")
 @admin_login
 def adminlog():
@@ -202,7 +281,10 @@ def adminlog():
         ).paginate(page=page, per_page=6)
     return render_template("admin/adminlog.html",page_data=page_data)
 
+<<<<<<< HEAD
 ## =============查看管理员操作日志=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/log/operlog")
 @admin_login
 def operlog():
@@ -212,11 +294,15 @@ def operlog():
         ).paginate(page=page, per_page=6)
     return render_template("admin/operlog.html",page_data=page_data)
 
+<<<<<<< HEAD
 ## =============增加景区功能=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/scenic/addscenic",methods=["GET","POST"])
 @admin_login
 def addscenic():
     form = AddScenicForm()
+<<<<<<< HEAD
 
     # 获取地区id和地区名，用于景区与地区绑定
     form.area_id.choices = [(v.id, v.areaName) for v in Area.query.all()]
@@ -224,10 +310,16 @@ def addscenic():
         data = form.data    
 
         # 查看景区是否已存在于数据库之中
+=======
+    form.area_id.choices = [(v.id, v.areaName) for v in Area.query.all()]
+    if form.validate_on_submit():
+        data = form.data
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         scenic_count = db.session.query(Scenic).filter(Scenic.scenicname==data["scenicname"]).count()
         if scenic_count == 1:
             flash("景区已存在","err")
             return redirect(url_for("admin.addscenic"))
+<<<<<<< HEAD
         
         file_cover = secure_filename(form.cover.data.filename)  
         if not os.path.exists(UP_DIR):      # UP_DIR为封面图片保存地址，如果地址不存在则创建
@@ -237,6 +329,16 @@ def addscenic():
         form.cover.data.save(UP_DIR + cover)    # 保存图片
         
         # 将景区数据写入数据库
+=======
+
+        file_cover = secure_filename(form.cover.data.filename)
+        if not os.path.exists(UP_DIR):
+            os.makedirs(UP_DIR)           
+            os.chmod(UP_DIR,664)
+        cover = change_filename(file_cover) 
+        form.cover.data.save(UP_DIR + cover)
+        
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         scenic = Scenic()
         scenic.scenicname = data["scenicname"]
         scenic.cover = cover
@@ -247,7 +349,10 @@ def addscenic():
         scenic.is_recommend = data["is_recommend"]
         scenic.star = data["star"]
 
+<<<<<<< HEAD
         # 将添加景区写入管理员操作日志表
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         operlog = Operlog()
         operlog.admin_id = session["admin"]
         operlog.ip = request.remote_addr
@@ -261,6 +366,7 @@ def addscenic():
         return redirect(url_for("admin.addscenic"))
     return render_template("admin/addscenic.html",form=form)
 
+<<<<<<< HEAD
 ## =============修改景区信息=============== ##
 @admin.route("/scenic/sceniclist/edit/<scenic_id>",methods=["GET","POST"])
 @admin_login
@@ -273,6 +379,19 @@ def scenicedit(scenic_id=None):
     scenicNameOld = scenic.scenicname
 
     if request.method == "GET":         # 如果请求方式为空，把景区信息写入表单之中
+=======
+@admin.route("/scenic/sceniclist/edit/<scenic_id>",methods=["GET","POST"])
+@admin_login
+def scenicedit(scenic_id=None):
+    form = AddScenicForm()
+    form.submit.label.text = "修改"
+    form.area_id.choices = [(v.id, v.areaName) for v in Area.query.all()] 
+    form.cover.validators = []
+    scenic = Scenic.query.get_or_404(scenic_id)
+    scenicNameOld = scenic.scenicname
+
+    if request.method == "GET":
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         form.scenicname.data = scenic.scenicname
         form.star.data =scenic.star
         form.is_recommend.data = scenic.is_recommend
@@ -282,10 +401,15 @@ def scenicedit(scenic_id=None):
         form.address.data = scenic.address
         form.cover.data = scenic.cover
 
+<<<<<<< HEAD
     if form.validate_on_submit():       # 一旦进行修改，并提交之后
         data = form.data                # 获取修改后的表单数据
 
         # 查看修改后的景区是否已经存在
+=======
+    if form.validate_on_submit():
+        data = form.data
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         scenic_count = db.session.query(Scenic).filter(Scenic.scenicname==form.data["scenicname"]).count()
         if scenic.scenicname != form.data["scenicname"] and scenic_count == 1:
             flash("景区已存在","err")
@@ -293,14 +417,20 @@ def scenicedit(scenic_id=None):
         if not os.path.exists(UP_DIR):
             os.makedirs(UP_DIR)           
             os.chmod(UP_DIR,664)
+<<<<<<< HEAD
 
         # 如果封面图片数据不为空，说明修改了景区的封面图片，将其写入数据库
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         if form.cover.data != "":
             file_cover = secure_filename(form.cover.data.filename)     
             scenic.cover = change_filename(file_cover)                       
             form.cover.data.save(UP_DIR + scenic.cover)
         
+<<<<<<< HEAD
         # 将修改后的信息提交到数据库中
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         scenic.scenicname = data["scenicname"]
         scenic.star = data["star"]
         scenic.is_recommend = data["is_recommend"]
@@ -309,7 +439,10 @@ def scenicedit(scenic_id=None):
         scenic.introduce = data["introduce"]
         scenic.content = data["content"]
 
+<<<<<<< HEAD
         # 将修改景区写入管理员操作日志
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         operlog = Operlog()
         operlog.admin_id = session["admin"]
         operlog.ip = request.remote_addr
@@ -326,7 +459,11 @@ def scenicedit(scenic_id=None):
         return redirect(url_for("admin.scenicedit",scenic_id=scenic.id))
     return render_template("admin/scenicchange.html",form=form)
 
+<<<<<<< HEAD
 ## =============查看所有游记=============== ##
+=======
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/travels/travelslist")
 @admin_login
 def travelslist():
@@ -337,6 +474,7 @@ def travelslist():
         ).paginate(page=page, per_page=6)
     return render_template("admin/travelslist.html",page_data=page_data,adminName=adminName)
 
+<<<<<<< HEAD
 ## =============删除游记=============== ##
 @admin.route("/travels/dele/<travels_id>")
 @admin_login
@@ -346,6 +484,15 @@ def travels_dele(travels_id):
     travels.isactive = 0
 
     operlog = Operlog()     # 将删除日志写入管理员操作日志中
+=======
+@admin.route("/travels/dele/<travels_id>")
+@admin_login
+def travels_dele(travels_id):
+    travels = Travels.query.filter_by(id=travels_id).first()
+    travels.isactive = 0
+
+    operlog = Operlog()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     operlog.admin_id = session["admin"]
     operlog.ip = request.remote_addr
     operlog.reason = '删除游记"' + travels.title + '"'
@@ -355,8 +502,11 @@ def travels_dele(travels_id):
     db.session.commit()
     return redirect(url_for("admin.travelslist"))
 
+<<<<<<< HEAD
 
 ## =============恢复游记=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/travels/recover/<travels_id>")
 @admin_login
 def travels_recover(travels_id):
@@ -373,15 +523,24 @@ def travels_recover(travels_id):
     db.session.commit()
     return redirect(url_for("admin.travelslist"))
 
+<<<<<<< HEAD
 ## =============添加游记功能=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/travels/addtravels",methods=["GET","POST"])
 @admin_login
 def addtravels():
     form = AddTravelsForm()
+<<<<<<< HEAD
 
     # 获取景区id和景区名，用于游记和景区的绑定
     form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
 
+=======
+    form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+    admins = AdminList.query.filter_by(id=session["admin"]).first()
+    authors = admins.uname
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     if form.validate_on_submit():
         data = form.data
         operlog = Operlog()
@@ -391,7 +550,10 @@ def addtravels():
             flash("已存在同名游记,请使用别的标题","err")
             return render_template("admin/addtravels.html",form = form)
 
+<<<<<<< HEAD
         # 获取游记封面并保存
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         file_cover = secure_filename(form.cover.data.filename)
         if not os.path.exists(UP_DIR):
             os.makedirs(UP_DIR)           
@@ -399,14 +561,22 @@ def addtravels():
         cover = change_filename(file_cover) 
         form.cover.data.save(UP_DIR + cover)   
 
+<<<<<<< HEAD
         # 保存游记到数据库
         travels.title = data["title"]
+=======
+        travels.title = data["title"]
+        # travels.author_id = session["admin"]
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         travels.scenic_id = data["scenic_id"]
         travels.is_recommend = data["is_recommend"]
         travels.cover = cover
         travels.content = data["content"]
 
+<<<<<<< HEAD
         # 将添加游记写入管理员操作日志
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         operlog.admin_id = session["admin"]
         operlog.ip = request.remote_addr
         operlog.reason = '添加游记"'+ travels.title +'"'
@@ -419,6 +589,7 @@ def addtravels():
         return render_template("admin/addtravels.html",form = form) 
     return render_template("admin/addtravels.html",form = form)
 
+<<<<<<< HEAD
 
 ## =============修改游记功能=============== ##
 @admin.route("/travels/travelslist/edit/<travels_id>",methods=["GET","POST"])
@@ -432,12 +603,26 @@ def travels_edit(travels_id):
     travels_old = travels.title
 
     if request.method == "GET":     # 如果请求方式为空，将游记信息填入表单中
+=======
+@admin.route("/travels/travelslist/edit/<travels_id>",methods=["GET","POST"])
+@admin_login
+def travels_edit(travels_id):
+    form = AddTravelsForm()
+    form.submit.label.text = "修改"
+    form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+    form.cover.validators = []
+    travels = Travels.query.get_or_404(travels_id)
+    travels_old = travels.title
+
+    if request.method == "GET":
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         form.title.data = travels.title
         form.is_recommend.data = travels.is_recommend
         form.scenic_id.data = travels.scenic_id
         form.cover.data = travels.cover
         form.content.data = travels.content
 
+<<<<<<< HEAD
     if form.validate_on_submit():   # 表单通过验证，并提交到后台
         data = form.data            # 获取表单信息
         travels_count = Travels.query.filter_by(title=data["title"]).count()
@@ -452,18 +637,35 @@ def travels_edit(travels_id):
             os.chmod(UP_DIR,664)
 
         # 如果游记封面图片不为空，修改图片名称并保存
+=======
+    if form.validate_on_submit():
+        data = form.data
+        travels_count = Travels.query.filter_by(title=data["title"]).count()
+        if travels.title != data["title"] and travels_count == 1:
+            flash("游记已经存在","err")
+            return render_template("admin/travelsedit.html",form=form)
+        if not os.path.exists(UP_DIR):
+            os.makedirs(UP_DIR)           
+            os.chmod(UP_DIR,664)
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         if form.cover.data != "":
             file_cover = secure_filename(form.cover.data.filename)     
             travels.cover = change_filename(file_cover)                       
             form.cover.data.save(UP_DIR + travels.cover)
 
+<<<<<<< HEAD
         # 将修改后的游记信息写入数据库
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         travels.title = data["title"]
         travels.is_recommend = data["is_recommend"]
         travels.scenic_id = data["scenic_id"]
         travels.content = data["content"]
 
+<<<<<<< HEAD
         # 将修改游记写入管理员操作日志
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         operlog = Operlog()
         operlog.admin_id = session["admin"]
         operlog.ip = request.remote_addr
@@ -480,7 +682,10 @@ def travels_edit(travels_id):
         return render_template("admin/travelsedit.html",form = form) 
     return render_template("admin/travelsedit.html",form=form)
 
+<<<<<<< HEAD
 ## =============查看游记评论功能=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @admin.route("/travels/reviews")
 @admin_login
 def reviews():
@@ -490,6 +695,7 @@ def reviews():
         ).paginate(page=page, per_page=6)
     return render_template("admin/review.html",page_data=page_data)
 
+<<<<<<< HEAD
 ## =============删除评论功能=============== ##
 @admin.route("/travels/review/dele/<review_id>")
 @admin_login
@@ -499,6 +705,14 @@ def review_dele(review_id):
     review.isactive = 0
 
     # 将删除评论写入到管理员操作日志中
+=======
+@admin.route("/travels/review/dele/<review_id>")
+@admin_login
+def review_dele(review_id):
+    review = Review.query.filter_by(id=review_id).first()
+    review.isactive = 0
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     operlog = Operlog()
     operlog.admin_id = session["admin"]
     operlog.ip = request.remote_addr
@@ -509,6 +723,7 @@ def review_dele(review_id):
     db.session.commit()
     return redirect(url_for("admin.reviews"))
 
+<<<<<<< HEAD
 ## =============恢复评论功能=============== ##
 @admin.route("/travels/review/recover/<review_id>")
 @admin_login
@@ -518,6 +733,14 @@ def review_recover(review_id):
     review.isactive = 1
 
     # 将恢复评论写入到管理员操作日志中
+=======
+@admin.route("/travels/review/recover/<review_id>")
+@admin_login
+def review_recover(review_id):
+    review = Review.query.filter_by(id=review_id).first()
+    review.isactive = 1
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     operlog = Operlog()
     operlog.admin_id = session["admin"]
     operlog.ip = request.remote_addr

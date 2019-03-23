@@ -96,18 +96,32 @@
                     $("#covernull").html("")
                 };
             //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+<<<<<<< HEAD
             var clipArea = new bjj.PhotoClip("#clipArea", {     // 图片剪辑插件
                 size: [160, 160],           //设置剪辑框大小
+=======
+            var clipArea = new bjj.PhotoClip("#clipArea", {
+                size: [160, 160],
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
                 outputSize: [640, 640],
                 file: "#file",
                 view: "#view",
                 ok: "#clipBtn",
+<<<<<<< HEAD
                 clipFinish: function(dataURL) { //剪辑成功，返回dataURL，dataURL就是图像十六进制文件
                     var uid = {{ user.id }};
                     // console.log(uid)
                     ucover = dataURL;
                     ucover1 = ucover.split(",")[1]; //对十六进制文件进行分割，得到图片内容的十六进制信息
                     ucover_type = ucover.split(",")[0].split("/")[1].split(";")[0]; //获取图片后缀
+=======
+                clipFinish: function(dataURL) { 
+                    var uid = {{ user.id }};
+                    console.log(uid)
+                    ucover = dataURL;
+                    ucover1 = ucover.split(",")[1];
+                    ucover_type = ucover.split(",")[0].split("/")[1].split(";")[0];
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
                     $.post("/postcover",{
                         uid:uid,
                         ucover:ucover1,

@@ -4,9 +4,12 @@ from wtforms import StringField,RadioField,TextAreaField,SubmitField,PasswordFie
 from wtforms.validators import DataRequired
 
 class AddAreaForm(FlaskForm):
+<<<<<<< HEAD
     """
         定义'添加地区'表单，并定义表单字段的验证规则
     """
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     sname = StringField(
         label="名称",
         validators=[
@@ -37,9 +40,12 @@ class AddAreaForm(FlaskForm):
     )
 
 class LoginForm(FlaskForm):
+<<<<<<< HEAD
     """
         定义'登陆'表单，并定义表单字段的验证规则
     """
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     uname = StringField(
         label="账号",
         validators=[
@@ -63,9 +69,12 @@ class LoginForm(FlaskForm):
     )
 
 class AddScenicForm(FlaskForm):
+<<<<<<< HEAD
     """
         定义'添加景区'表单，并定义表单字段的验证规则
     """
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     scenicname = StringField(
         label="景区名",
         validators=[
@@ -146,9 +155,12 @@ class AddScenicForm(FlaskForm):
 
 
 class AddTravelsForm(FlaskForm):
+<<<<<<< HEAD
     """
         定义'添加游记'表单，并定义表单字段的验证规则
     """
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     title = StringField(
         label="标题",
         validators=[

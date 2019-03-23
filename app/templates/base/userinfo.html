@@ -22,7 +22,11 @@
                 </div>
                 <div class="edit" id="focus_edit">
                     {% if session["user_id"] == user.id %}
+<<<<<<< HEAD
                         <div class="change"><a href='/info_edit'>编辑</a></div>
+=======
+                        <div class="change"><a href='/info_edit/{{ session["user_id"]}}'>编辑</a></div>
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
                     {% else %}
                         {% if session["user_id"] %}
                             <input type="hidden" name="focus_id" value="{{user.id}}">

@@ -22,11 +22,15 @@ def user_login(f):
         return f(*args, **kwargs)
     return decorated_function
 
+<<<<<<< HEAD
 ## ===============首页=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/")
 def index(): 
     return redirect(url_for("home.tourism_sircle"))
 
+<<<<<<< HEAD
 ## ===============旅游圈=============== ##
 @home.route("/tourism_sircle")
 def tourism_sircle():
@@ -35,10 +39,16 @@ def tourism_sircle():
         .order_by(Travels.addtime.desc()).limit(6).all()
     
     # 获取所有推荐景区
+=======
+@home.route("/tourism_sircle")
+def tourism_sircle():
+    travels = db.session.query(Travels).filter_by(isactive=1).order_by(Travels.addtime.desc()).limit(6).all()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     scenics = db.session.query(Scenic).filter_by(is_recommend=1).all()
     return render_template("base/index.html",travels=travels,
     scenics=scenics)
 
+<<<<<<< HEAD
 ## ===============获取评论数量=============== ##
 @home.route("/getreviews")
 def getreviews():
@@ -52,6 +62,16 @@ def getreviews():
 @home.route("/logout/")
 def logout():
     # 获取登出前的url地址，如果没有返回‘/’，以便做‘从哪来回哪去’
+=======
+@home.route("/getreviews")
+def getreviews():
+    travel_id = request.args["travel_id"]
+    review_count = Review.query.filter(Review.travels_id==travel_id,Review.isactive==1).count()
+    return str(review_count)
+
+@home.route("/logout/")
+def logout():
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     url = request.headers.get("Referer","/")
     resp = redirect(url)
     if "user_id" in session:
@@ -62,7 +82,10 @@ def logout():
         resp.delete_cookie("uid")
     return resp
 
+<<<<<<< HEAD
 ## ===============登陆功能=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/login/",methods=["GET","POST"])
 def login():
     if request.method == "GET":
@@ -71,12 +94,17 @@ def login():
         if last == "login":
             url = "/"
         session["url"] = url
+<<<<<<< HEAD
 
         # 如果用户已经登陆，直接返回原来地址
         if "user_id" in session:
             return redirect(session["url"])
         
         # 如果传递过来的cookie中存在邮箱和uid，则直接进行验证
+=======
+        if "user_id" in session:
+            return redirect(session["url"])
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         if "uemail" in request.cookies and "uid" in request.cookies:
             user = User.query.filter_by(uemail=request.cookies.get("uemail")).first()
             if user and check_password_hash(request.cookies.get("uid"),str(user.id)):
@@ -103,8 +131,11 @@ def login():
         db.session.commit()
         url = session.get("url","/")
         resp = redirect(url)
+<<<<<<< HEAD
 
         # 如果用户设置了保存密码，则将用户邮箱和用户id进行哈西加密后保存到cookie中
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         if form.saveupwd.data:
             resp.set_cookie("uemail",form.data["uemail"],60*60*24*7)
             save_session = str(session["user_id"])
@@ -115,10 +146,16 @@ def login():
             return resp
     return render_template("base/login.html",form=form)
 
+<<<<<<< HEAD
 ## ===============注册功能=============== ##
 @home.route("/register/",methods=["GET","POST"])
 def register():
     # 获取url来源，并做好从哪来回哪去的准备
+=======
+
+@home.route("/register/",methods=["GET","POST"])
+def register():
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     if request.method == "GET":
         url = request.headers.get("Referer","/")
         session["url"] = url
@@ -128,7 +165,11 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         data = form.data
+<<<<<<< HEAD
         if data["username"] == "admin":     # 用户名不能为admin，如果是则返回错误提示
+=======
+        if data["username"] == "admin":
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
             flash("用户已存在","err")
             return redirect(url_for("home.register"))
         user = User(
@@ -138,6 +179,7 @@ def register():
             )
         user.cover = "default.png"
         db.session.add(user)
+<<<<<<< HEAD
         db.session.commit()     # 将新注册用户写入数据库
 
         # 将新用户存入session中，并直接登陆
@@ -145,12 +187,20 @@ def register():
         session["user_id"] = user.id
         userlog = Userlog(user.id,request.remote_addr)
         db.session.add(userlog)
+=======
+        db.session.commit()
+        user = User.query.filter_by(uname=data["username"]).first()
+        session["user_id"] = user.id
+        userlog = Userlog(user.id,request.remote_addr)
+        db.session.add(userlog)                    #到userlog表中,并将网页首页返回给用户
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         db.session.commit()
         url = session.get("url","/")
         resp = redirect(url)
         return resp
     return render_template("base/register.html",form = form)
 
+<<<<<<< HEAD
 ## ===============游记详情=============== ##
 @home.route("/travels/info/<travel_id>")
 def travels_info(travel_id):
@@ -199,44 +249,110 @@ def getunamepage():
 def postunamepage():
     uname = request.form["uname"]
     user = User.query.filter_by(id=session["user_id"]).first()
+=======
+
+@home.route("/travels/info/<travel_id>")
+def travels_info(travel_id):
+    if "user_id" in session:
+        is_collected = TravelsCollect.query.filter(TravelsCollect.travels_id==travel_id,TravelsCollect.user_id==session["user_id"]).count()
+    else:
+        is_collected = 0
+    travel = Travels.query.filter(Travels.id==travel_id,Travels.isactive==1).first()
+    return render_template("base/travels_info.html",travel=travel,is_collected=is_collected)
+
+@home.route("/userinfo/travel/<user_id>")
+def userinfo(user_id):
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
+    user = User.query.filter_by(id=user_id).first()
+    travels = Travels.query.filter(Travels.isactive==1,Travels.author_id==user_id).all()
+    return render_template("base/userinfo.html",user=user,travels=travels,is_friend=is_friend)
+
+
+@home.route("/info_edit/<user_id>",methods=["GET","POST"])
+@user_login
+def info_edit(user_id):
+    form = InfoEditForm()
+    user = User.query.filter_by(id=user_id).first()
+    return render_template("base/info_edit.html",user=user,form=form)
+
+@home.route("/getunamepage")
+def getunamepage():
+    uid = request.args["uid"]
+    user = User.query.filter_by(id=uid).first()
+    return render_template("base/uname.html",user=user)
+
+@home.route("/postunamepage",methods=["POST"])
+def postunamepage():
+    uid = request.form["uid"]
+    uname = request.form["uname"]
+    user = User.query.filter_by(id=uid).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     user.uname = uname
     db.session.add(user)
     db.session.commit()
     return render_template("base/uname.html",user=user)
 
+<<<<<<< HEAD
 ## ===============修改资料/修改用户邮箱=============== ##
 @home.route("/postemailpage",methods=["POST"])
 @user_login
 def postemailpage():
     uemail = request.form["uemail"]
     user = User.query.filter_by(id=session["user_id"]).first()
+=======
+@home.route("/postemailpage",methods=["POST"])
+def postemailpage():
+    uid = request.form["uid"]
+    uemail = request.form["uemail"]
+    user = User.query.filter_by(id=uid).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     user.uemail = uemail
     db.session.add(user)
     db.session.commit()
     return render_template("base/uemail.html",user=user)
 
+<<<<<<< HEAD
 ## ===============修改资料/修改用户电话=============== ##
 @home.route("/postphonepage",methods=["POST"])
 @user_login
 def postphonepage():
     uphone = request.form["uphone"]
     user = User.query.filter_by(id=session["user_id"]).first()
+=======
+@home.route("/postphonepage",methods=["POST"])
+def postphonepage():
+    uid = request.form["uid"]
+    uphone = request.form["uphone"]
+    user = User.query.filter_by(id=uid).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     user.uphone = uphone
     db.session.add(user)
     db.session.commit()
     return render_template("base/uphone.html",user=user)
 
+<<<<<<< HEAD
 ## ===============修改资料/修改用户简介=============== ##
 @home.route("/postintroducepage",methods=["POST"])
 @user_login
 def postintroducepage():
     introduce = request.form["introduce"]
     user = User.query.filter_by(id=session["user_id"]).first()
+=======
+@home.route("/postintroducepage",methods=["POST"])
+def postintroducepage():
+    uid = request.form["uid"]
+    introduce = request.form["introduce"]
+    user = User.query.filter_by(id=uid).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     user.introduce = introduce
     db.session.add(user)
     db.session.commit()
     return render_template("base/uintroduce.html",user=user)
 
+<<<<<<< HEAD
 ## ===============修改资料/邮箱页面=============== ##
 @home.route("/getuemailpage")
 @user_login
@@ -291,6 +407,55 @@ def getphonechangepage():
 def getintroducechangepage():
     form = InfoEditForm()
     user = User.query.filter_by(id=session["user_id"]).first()
+=======
+@home.route("/getuemailpage")
+def getuemailpage():
+    uid = request.args["uid"]
+    user = User.query.filter_by(id=uid).first()
+    return render_template("base/uemail.html",user=user)
+
+@home.route("/getuphonepage")
+def getuphonepage():
+    uid = request.args["uid"]
+    user = User.query.filter_by(id=uid).first()
+    return render_template("base/uphone.html",user=user)
+
+@home.route("/getintroducepage")
+def getintroducepage():
+    uid = request.args["uid"]
+    user = User.query.filter_by(id=uid).first()
+    return render_template("base/uintroduce.html",user=user)
+
+@home.route("/getunamechangepage")
+def getunamechangepage():
+    form = InfoEditForm()
+    uid = request.args["uid"]
+    user = User.query.filter_by(id=uid).first()
+    form.username.data = user.uname
+    return render_template("base/unamechange.html",user=user,form=form)
+
+@home.route("/getemailchangepage")
+def getemailchangepage():
+    form = InfoEditForm()
+    uid = request.args["uid"]
+    user = User.query.filter_by(id=uid).first()
+    form.uemail.data = user.uemail
+    return render_template("base/emailchange.html",user=user,form=form)
+
+@home.route("/getphonechangepage")
+def getphonechangepage():
+    form = InfoEditForm()
+    uid = request.args["uid"]
+    user = User.query.filter_by(id=uid).first()
+    form.uphone.data = user.uphone
+    return render_template("base/phonechange.html",user=user,form=form)
+
+@home.route("/getintroducechangepage")
+def getintroducechangepage():
+    form = InfoEditForm()
+    uid = request.args["uid"]
+    user = User.query.filter_by(id=uid).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     form.uintroduce.data = user.introduce
     return render_template("base/introducechange.html",user=user,form=form)
 
@@ -301,20 +466,27 @@ def getusername():
     user_name = user.uname
     return user_name
 
+<<<<<<< HEAD
 # =====================查看用户名是否已经存在========================
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/checkname")
 def checkname():
     uname = request.args["user_name"]
     user_count = User.query.filter_by(uname=uname).count()
     return str(user_count)
 
+<<<<<<< HEAD
 # =====================查看邮箱是否已经存在========================
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/checkemail")
 def checkemail():
     user_email = request.args["user_email"]
     user_count = User.query.filter_by(uemail=user_email).count()
     return str(user_count)
 
+<<<<<<< HEAD
 # =====================用户修改头像========================
 @home.route("/postcover",methods=["POST"])
 @user_login
@@ -334,6 +506,25 @@ def postcover():
         with open(fileDIR,"wb") as f:
             f.write(cover)          # 将二进制信息写入图片中
         user = User.query.filter_by(id=session["user_id"]).first()
+=======
+@home.route("/postcover",methods=["POST"])
+def postcover():
+    uid = request.form["uid"]
+    ucover = request.form["ucover"]
+    ucover_type = request.form["ucover_type"]
+    cover = base64.b64decode(ucover)
+    file_cover = secure_filename(ucover)
+    if not os.path.exists(FC_DIR):
+        os.makedirs(FC_DIR)           
+        os.chmod(FC_DIR,664)
+    covername = change_filename(file_cover) + "."+ucover_type
+    fileDIR = FC_DIR + covername
+    try:
+        file = open(fileDIR,"wb")
+        file.write(cover)
+        file.close()
+        user = User.query.filter_by(id=uid).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         user.cover = covername
         db.session.add(user)
         db.session.commit()
@@ -341,7 +532,10 @@ def postcover():
         return "err"
     return "ok"
 
+<<<<<<< HEAD
 ## ===============获取用户头像=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/getusercover")
 def getusercover():
     authorid = request.args["uid"]
@@ -349,6 +543,7 @@ def getusercover():
     cover = user.cover
     return cover
 
+<<<<<<< HEAD
 ## ===============获取游记评论=============== ##
 @home.route("/gettravelreviews")
 def gettravelreviews():
@@ -361,18 +556,38 @@ def gettravelreviews():
 @home.route("/userpostreviews",methods=["POST"])
 @user_login
 def userpostreviews():
+=======
+@home.route("/gettravelreviews")
+def gettravelreviews():
+    travel_id = request.args["uid"]
+    page = request.args.get('page', 1, type=int)
+    # page_data = Scenic.query.paginate(page=page, per_page=3)
+    reviews = Review.query.filter(Review.travels_id==travel_id,Review.isactive==1).order_by(Review.addtime.desc()).all()
+    return render_template("base/reviews.html",reviews=reviews)
+
+@home.route("/userpostreviews",methods=["POST"])
+def userpostreviews():
+    uid = request.form["uid"]
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     travel_id = request.form["travel_id"]
     review_content = request.form["review_content"]
     review = Review()
     review.travels_id = travel_id
     review.content = review_content
+<<<<<<< HEAD
     review.user_id = session["user_id"]
+=======
+    review.user_id = uid
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     db.session.add(review)
     db.session.commit()
     reviews = Review.query.filter(Review.travels_id==travel_id,Review.isactive==1).order_by(Review.addtime.desc()).all()
     return render_template("base/reviews.html",reviews=reviews)
 
+<<<<<<< HEAD
 ## ===============删除评论=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/delreviews",methods=["POST"])
 def delreviews():
     review_id = request.form["review_id"]
@@ -381,6 +596,7 @@ def delreviews():
     review.isactive = False
     db.session.add(review)
     db.session.commit()
+<<<<<<< HEAD
     reviews = Review.query.filter(Review.travels_id==travel_id,
         Review.isactive==1).order_by(Review.addtime.desc()).all()
     return render_template("base/reviews.html",reviews=reviews)
@@ -408,12 +624,35 @@ def writetravels():
         data = form.data
 
         # 查看是否已存在同名游记
+=======
+    reviews = Review.query.filter(Review.travels_id==travel_id,Review.isactive==1).order_by(Review.addtime.desc()).all()
+    return render_template("base/reviews.html",reviews=reviews)
+
+
+@home.route("/showscenic/<scenic_id>")
+def showscenic(scenic_id):
+    scenic = Scenic.query.filter_by(id=scenic_id).first()
+    travels = Travels.query.filter(Travels.scenic_id==scenic_id,Travels.isactive==1).limit(5)
+    return render_template("base/scenic_info.html",scenic=scenic,travels=travels)
+
+@home.route("/writetravels",methods=["GET","POST"])
+def writetravels():
+    form = AddTravelsForm()
+    form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+    travels = Travels()
+    form.submit.label.text = "发布"
+    if form.validate_on_submit():
+        data = form.data
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         travel_count = Travels.query.filter_by(title=data["title"]).count()
         if travel_count == 1:
             flash("已存在同名游记,请使用别的标题","err")
             return render_template("base/writetravels.html",form = form)
         
+<<<<<<< HEAD
         # 保存游记的图片
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         file_cover = secure_filename(form.cover.data.filename)
         if not os.path.exists(UP_DIR):
             os.makedirs(UP_DIR)           
@@ -421,7 +660,10 @@ def writetravels():
         cover = change_filename(file_cover) 
         form.cover.data.save(UP_DIR + cover)
 
+<<<<<<< HEAD
         # 保存游记至数据库
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         travels.author_id = session["user_id"]
         travels.title = data["title"]
         travels.scenic_id = data["scenic_id"]
@@ -433,24 +675,35 @@ def writetravels():
         return render_template("base/writetravels.html",form=form)
     return render_template("base/writetravels.html",form=form)
 
+<<<<<<< HEAD
 ## ===============游记修改功能=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/traveledit/<travel_id>",methods=["GET","POST"])
 def traveledit(travel_id):
     form = AddTravelsForm()
     form.submit.label.text = "修改"
     form.scenic_id.choices = [(v.id, v.scenicname) for v in Scenic.query.all()]
+<<<<<<< HEAD
     form.cover.validators = []      # 将游记封面的验证规则改为空
     travel = Travels.query.filter_by(id=travel_id).first()
 
     # 当请求方式为get时，把原来的游记信息填入表单中
+=======
+    form.cover.validators = []
+    travel = Travels.query.filter_by(id=travel_id).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     if request.method == "GET":
         form.title.data = travel.title
         form.is_recommend.data = travel.is_recommend
         form.scenic_id.data = travel.scenic_id
         form.cover.data = travel.cover
         form.content.data = travel.content
+<<<<<<< HEAD
     
     # 当用户提交表单之后
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     if form.validate_on_submit():
         data = form.data
         travels_count = Travels.query.filter_by(title=data["title"]).count()
@@ -458,18 +711,27 @@ def traveledit(travel_id):
             flash("游记已经存在","err")
             return render_template("base/traveledit.html",form=form)
 
+<<<<<<< HEAD
         # 当存放封面的路径不存在时则创建
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         if not os.path.exists(UP_DIR):
             os.makedirs(UP_DIR)           
             os.chmod(UP_DIR,664)
 
+<<<<<<< HEAD
         # 当游记的封面数据不为空时，保存封面
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         if form.cover.data != "":
             file_cover = secure_filename(form.cover.data.filename)     
             travel.cover = change_filename(file_cover)                       
             form.cover.data.save(UP_DIR + travel.cover)
 
+<<<<<<< HEAD
         # 将修改好的游记保存至数据库
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         travel.title = data["title"]
         travel.is_recommend = data["is_recommend"]
         travel.scenic_id = data["scenic_id"]
@@ -481,7 +743,11 @@ def traveledit(travel_id):
         return render_template("base/traveledit.html",form=form)
     return render_template("base/traveledit.html",form=form)
 
+<<<<<<< HEAD
 ## ===============加载地区=============== ##
+=======
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/loadarea")
 def loadarea():
     areas = Area.query.all()
@@ -490,7 +756,10 @@ def loadarea():
         lst1.append(area.to_dic())
     return json.dumps(lst1)
 
+<<<<<<< HEAD
 ## ===============加载景区=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/loadscenic")
 def loadscenic():
     area_id = request.args["area_id"]
@@ -500,11 +769,17 @@ def loadscenic():
         lst1.append(scenic.to_dic())
     return json.dumps(lst1)
 
+<<<<<<< HEAD
 ## ===============收藏景区=============== ##
 @home.route("/collecttravel",methods=["POST"])
 @user_login
 def collecttravel():
     travel_id = request.form["travel_id"]   # 获取被收藏的游记id
+=======
+@home.route("/collecttravel",methods=["POST"])
+def collecttravel():
+    travel_id = request.form["travel_id"]
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     travelscollect = TravelsCollect()
     travelscollect.user_id = session["user_id"]
     travelscollect.travels_id = travel_id
@@ -512,6 +787,7 @@ def collecttravel():
     db.session.commit()
     return "ok"
 
+<<<<<<< HEAD
 ## ===============查看游记的收藏情况=============== ##
 @home.route("/checktravelcollected")
 @user_login
@@ -529,21 +805,42 @@ def cancelcollecttravel():
     travel_id = request.form["travel_id"]   # 获取被取消收藏的游记id
     trvlcollect = TravelsCollect.query.filter(TravelsCollect.user_id==
         session["user_id"],TravelsCollect.travels_id==travel_id).first()
+=======
+@home.route("/checktravelcollected")
+def checktravelcollected():
+    uid = request.args["uid"]
+    travel_id = request.args["travel_id"]
+    trvlcollect_count = TravelsCollect.query.filter(TravelsCollect.user_id==uid,TravelsCollect.travels_id==travel_id).count()
+    return str(trvlcollect_count)
+
+@home.route("/cancelcollecttravel",methods=["POST"])
+def cancelcollecttravel():
+    travel_id = request.form["travel_id"]
+    trvlcollect = TravelsCollect.query.filter(TravelsCollect.user_id==session["user_id"],TravelsCollect.travels_id==travel_id).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     db.session.delete(trvlcollect)
     db.session.commit()
     return "ok"
 
+<<<<<<< HEAD
 ## ===============删除游记=============== ##
 @home.route("/deletetravel",methods=["POST"])
 def deletetravel():
     travel_id = request.form["travel_id"]
     travel = Travels.query.filter(Travels.id==travel_id,
         Travels.author_id==session["user_id"]).first()  # 根据游记id和作者id获取游记
+=======
+@home.route("/deletetravel",methods=["POST"])
+def deletetravel():
+    travel_id = request.form["travel_id"]
+    travel = Travels.query.filter_by(id=travel_id).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     travel.isactive = False
     db.session.add(travel)
     db.session.commit()
     return "删除游记成功！"
 
+<<<<<<< HEAD
 ## ===============用户中心/评论列表=============== ##
 @home.route("/userinfo/review/<user_id>")
 def userinfo_review(user_id):
@@ -560,6 +857,18 @@ def userinfo_review(user_id):
         user=user,reviews=reviews)
 
 ## ===============全部景区=============== ##
+=======
+@home.route("/userinfo/review/<user_id>")
+def userinfo_review(user_id):
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
+    reviews = Review.query.filter(Review.user_id==user_id,Review.isactive==True).all()
+    user = User.query.filter_by(id=user_id).first()
+    return render_template("base/userinfo_review.html",is_friend=is_friend,user=user,reviews=reviews)
+
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/allscenics/")
 def allscenics():
     scenics = db.session.query(Scenic).filter_by(is_recommend=1).all()
@@ -574,6 +883,7 @@ def allscenics():
     else :                  # 搜索全部景区    
         page_data = Scenic.query.paginate(page=page, per_page=3)
     return render_template("base/allscenic.html",scenics=scenics,
+<<<<<<< HEAD
         page_data=page_data,area=area,area_id=area_id,star=star)
 
 ## ===============全部游记=============== ##
@@ -585,12 +895,25 @@ def alltravels():
     scenic_name = request.args.get("travelScenic",type=str) # 获取参数中的景区名
     traveltitle = request.args.get("travelTitle",type=str)  # 获取参数中的游记标题
     travel_author = request.args.get("travelAuthor",type=str)  # 获取参数中的游记作者
+=======
+    page_data=page_data,area=area,area_id=area_id,star=star)
+
+@home.route("/alltravels/")
+def alltravels():
+    travels = Travels.query.filter(Travels.isactive==1).all()
+    page = request.args.get('page', 1, type=int)
+    areaname = request.args.get("travelArea",type=str)
+    scenic_name = request.args.get("travelScenic",type=str)
+    traveltitle = request.args.get("travelTitle",type=str)
+    travel_author = request.args.get("travelAuthor",type=str)
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         
     if areaname or scenic_name or traveltitle or travel_author:
         # 获取地区条件
         travelareas = Area.query.filter(Area.areaName.like("%"+areaname+"%")).all()
         travelareas_id = [v.id for v in travelareas]
         scenics = Scenic.query.filter(Scenic.area_id.in_(travelareas_id)).all()
+<<<<<<< HEAD
         filter1 = and_(Travels.scenic_id.in_(v.id for v in scenics),
             Travels.isactive==1)
         
@@ -599,16 +922,28 @@ def alltravels():
             "%"+scenic_name+"%")).all()
         filter2 = and_(Travels.scenic_id.in_(v.id for v in 
             travelscenics),Travels.isactive==1)
+=======
+        filter1 = and_(Travels.scenic_id.in_(v.id for v in scenics),Travels.isactive==1)
+        
+        # 获取景区条件
+        travelscenics = Scenic.query.filter(Scenic.scenicname.like("%"+scenic_name+"%")).all()
+        filter2 = and_(Travels.scenic_id.in_(v.id for v in travelscenics),Travels.isactive==1)
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         
         # 获取游记标题
         filter3 = and_(Travels.title.like("%"+traveltitle+"%"),Travels.isactive==1)
 
         # 获取作者条件
         if travel_author:
+<<<<<<< HEAD
             travelauthors = User.query.filter(User.uname.like(
                 "%"+travel_author+"%")).all()
             filter4 = and_(Travels.author_id.in_(v.id for v in
                 travelauthors),Travels.isactive==1)
+=======
+            travelauthors = User.query.filter(User.uname.like("%"+travel_author+"%")).all()
+            filter4 = and_(Travels.author_id.in_(v.id for v in travelauthors),Travels.isactive==1)
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
         else:
             filter4 = and_( Travels.isactive == 1 )
 
@@ -620,6 +955,7 @@ def alltravels():
     
     return render_template("base/alltravels.html",page_data=page_data,travels=travels)
 
+<<<<<<< HEAD
 ## ===============用户中心/删除评论=============== ##
 @home.route("/userinfdeletereviews",methods=["POST"])
 @user_login
@@ -627,17 +963,29 @@ def userinfdeletereviews():
     review_id = request.form["review_id"]   # 获取要删除的评论id
     review = Review.query.filter(Review.id==review_id,
         Review.user_id==session["user_id"]).first() # 根据评论id和评论者id查询到该评论
+=======
+@home.route("/userinfdeletereviews",methods=["POST"])
+def userinfdeletereviews():
+    review_id = request.form["review_id"]
+    review = Review.query.filter_by(id=review_id).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     review.isactive = False
     db.session.add(review)
     db.session.commit()
     return "删除评论成功！"
 
+<<<<<<< HEAD
 ## ===============关于我们=============== ##
 @home.route("/aboutus",methods=["GET","POST"])
 def aboutus():
     form = SuggestForm()
 
     # 用户提交意见建议
+=======
+@home.route("/aboutus",methods=["GET","POST"])
+def aboutus():
+    form = SuggestForm()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     if form.validate_on_submit():
         data = form.data
         suggest = Suggest()
@@ -649,6 +997,7 @@ def aboutus():
         flash("提交成功！谢谢您的意见。","ok")
     return render_template("base/aboutus.html",form=form)
 
+<<<<<<< HEAD
 ## ===============用户中心/游记收藏=============== ##
 @home.route("/userinfo/travelscollect/<user_id>")
 def travel_collect(user_id):
@@ -656,6 +1005,13 @@ def travel_collect(user_id):
     if "user_id" in session:    # 如果用户已经登陆，查看用户与被查看者是否为关注关系
         is_friend = Friends.query.filter(Friends.focused_id==user_id,
             Friends.focuser_id==session["user_id"]).count()
+=======
+@home.route("/userinfo/travelscollect/<user_id>")
+def travel_collect(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     else:
         is_friend = 0
     travelcollects = TravelsCollect.query.filter(TravelsCollect.user_id==user_id).all()
@@ -663,6 +1019,7 @@ def travel_collect(user_id):
     travels = Travels.query.filter(Travels.id.in_(travel_ids),Travels.isactive==1).all()
     return render_template("base/travel_collect.html",user=user,travels=travels,is_friend=is_friend)
 
+<<<<<<< HEAD
 ## ===============取消关注=============== ##
 @home.route("/lost_focus",methods=["POST"])
 @user_login
@@ -670,15 +1027,28 @@ def lost_focus():
     focus_id = request.form["focus_id"] # 获取被取关者id
     lost_friend = Friends.query.filter(Friends.focused_id==focus_id,
         Friends.focuser_id==session["user_id"]).first()
+=======
+
+@home.route("/lost_focus",methods=["POST"])
+def lost_focus():
+    focus_id = request.form["focus_id"]
+    lost_friend = Friends.query.filter(Friends.focused_id==focus_id,Friends.focuser_id==session["user_id"]).first()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     db.session.delete(lost_friend)
     db.session.commit()
     return "ok"
 
+<<<<<<< HEAD
 ## ===============关注用户=============== ##
 @home.route("/get_focus",methods=["POST"])
 @user_login
 def get_focus():
     focus_id = request.form["focus_id"]     # 获取被关注者id
+=======
+@home.route("/get_focus",methods=["POST"])
+def get_focus():
+    focus_id = request.form["focus_id"]
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     friends = Friends()
     friends.focused_id = focus_id
     friends.focuser_id = session["user_id"]
@@ -686,6 +1056,7 @@ def get_focus():
     db.session.commit()
     return "ok"
 
+<<<<<<< HEAD
 ## ===============用户中心/关注列表=============== ##
 @home.route("/userinfo/focus/<user_id>")
 def user_focus(user_id):
@@ -696,43 +1067,70 @@ def user_focus(user_id):
         is_friend = 0
 
     be_focus = Friends.query.filter_by(focuser_id=user_id).all()    # 获取被查看者的所有关注
+=======
+
+@home.route("/userinfo/focus/<user_id>")
+def user_focus(user_id):
+    if "user_id" in session:
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
+    be_focus = Friends.query.filter_by(focuser_id=user_id).all()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     focused_ids = [v.focused_id for v in be_focus]
     user = User.query.filter_by(id=user_id).first()
     friends = User.query.filter(User.id.in_(focused_ids)).all()
     return render_template("base/focus.html",friends=friends,user=user,is_friend=is_friend)
 
+<<<<<<< HEAD
 ## ===============用户中心/关注/获取游记数量=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/gettravelnums")
 def gettravelnums():
     checkuserid = request.args["getuserid"]
     count = Travels.query.filter(Travels.author_id==checkuserid,Travels.isactive==1).count()
     return str(count)
 
+<<<<<<< HEAD
 ## ===============用户中心/关注/获取用户评论数量=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/getuserreviewnums")
 def getuserreviewnums():
     checkuserid = request.args["getuserid"]
     count = Review.query.filter(Review.user_id==checkuserid,Review.isactive==1).count()
     return str(count)
 
+<<<<<<< HEAD
 ## ===============用户中心/关注/获取粉丝数量=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/getuserfocusers")
 def getuserfocusers():
     checkuserid = request.args["getuserid"]
     count = Friends.query.filter(Friends.focused_id==checkuserid).count()
     return str(count)
 
+<<<<<<< HEAD
 ## ===============用户中心/关注/是否为关注=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/check_is_friend")
 def check_is_friend():
     focus_id = request.args["focus_id"]
     if "user_id" in session:
+<<<<<<< HEAD
         is_friend = Friends.query.filter(Friends.focused_id==focus_id,
             Friends.focuser_id==session['user_id']).count()
+=======
+        is_friend = Friends.query.filter(Friends.focused_id==focus_id,Friends.focuser_id==session['user_id']).count()
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     else:
         is_friend = 0
     return str(is_friend)
 
+<<<<<<< HEAD
 ## ===============留言功能=============== ##
 @home.route("/domessage",methods=["POST"])
 @user_login
@@ -743,15 +1141,29 @@ def domessage():
     message.receiver_id = receiver_id
     message.content = content
     message.send_id = session["user_id"]    # 发送者id
+=======
+@home.route("/domessage",methods=["POST"])
+def domessage():
+    receiver_id = request.form["user_id"]
+    content = request.form["content"]
+    message = Message()
+    message.receiver_id = receiver_id
+    message.content = content
+    message.send_id = session["user_id"]
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     db.session.add(message)
     db.session.commit()
     return "发送留言成功！"
 
+<<<<<<< HEAD
 ## ===============用户中心/留言=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/userinfo/message/<user_id>")
 def message(user_id):
     user = User.query.filter_by(id=user_id).first()
     if "user_id" in session:
+<<<<<<< HEAD
         is_friend = Friends.query.filter(Friends.focused_id==user_id,
             Friends.focuser_id==session["user_id"]).count()
     else:
@@ -770,11 +1182,29 @@ def delmessage():
     message_id = request.form["message_id"]     # 被删除留言id
     message = Message.query.filter_by(id=message_id).first()    # 根据id查询留言信息
     message.isalive = 0     # 将留言的状态改为被删除
+=======
+        is_friend = Friends.query.filter(Friends.focused_id==user_id,Friends.focuser_id==session["user_id"]).count()
+    else:
+        is_friend = 0
+    messages = Message.query.filter(Message.receiver_id==user_id,Message.isalive==1).order_by(Message.is_read,Message.addtime.desc()).all()
+    send_ids = [v.send_id for v in messages]
+    senders = User.query.filter(User.id.in_(send_ids)).all()
+    return render_template("base/message.html",user=user,is_friend=is_friend,messages=messages,senders=senders)
+
+@home.route("/delmessage",methods=["POSt"])
+def delmessage():
+    message_id = request.form["message_id"]
+    message = Message.query.filter_by(id=message_id).first()
+    message.isalive = 0 
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
     db.session.add(message)
     db.session.commit()
     return "ok"
 
+<<<<<<< HEAD
 ## ===============将留言标记为已读=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/mark_as_read",methods=["POST"])
 def mark_as_read():
     message_id = request.form["message_id"]
@@ -784,7 +1214,10 @@ def mark_as_read():
     db.session.commit()
     return "ok"
 
+<<<<<<< HEAD
 ## ===============获取围堵留言数量=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/getunreadcount")
 def getunreadcount():
     if "user_id" in session:
@@ -794,7 +1227,10 @@ def getunreadcount():
     else:
         return "0"
 
+<<<<<<< HEAD
 ## ===============搜索用户=============== ##
+=======
+>>>>>>> 18ae3fb1fff265da96c95730e7328defca54afd0
 @home.route("/getuser")
 def getuser():
     username = request.args["username"]
